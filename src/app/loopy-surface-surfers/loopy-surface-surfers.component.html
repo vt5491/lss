@@ -1,0 +1,30 @@
+<div>
+  <button (click)="getInfo()">Get Info</button>
+  <p>{{title}}, {{billBoard.z}}</p>
+</div>
+<div>
+  <a-scene lss-aframe-component>
+    <a-entity id="dolly">
+      <a-camera near="0.1" user-height="0" position="0 0.5 3" id="camera" vt-vr-state="off"></a-camera>
+    </a-entity>
+    <a-entity camera look-controls wasd-controls="fly:false inVrState:false"> </a-entity>
+    <!-- <a-box position="-1 0.5 -3" rotation="0 45 0" color="#fCC3D9"></a-box> -->
+    <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
+    <!-- <a-text value="Plane" position="{{billBoard.x}} {{billBoard.y}} {{billBoard.z}}" color="#806040" side="double"></a-text> -->
+    <a-entity id="bill-board">
+      <a-plane color="#CCC" height="0.5" width="1.5" position="0 0 0" id="plane-scene"></a-plane>
+      <a-text value="Plane" position="0 0 0" color="#806040" side="double" id='plane-text'></a-text>
+      <!-- <a-text value="{title}}" position="1 1 1" color="#806040" side="double"></a-text> -->
+      <!-- <a-text value={{title}} ng-attr-position="0 {{billBoard.y}} {{billBoard.z}}" color="#806040" side="double"></a-text> -->
+      <!-- <a-text value="Plane" [position]="pos_1" color="#806040" side="double"></a-text> -->
+      <a-plane color="#CCC" height="0.5" width="1.5" position="0 -1 0" id="luxor-scene"></a-plane>
+      <a-text value="Luxor" position="0 -1 0" color="#806040" side="double" id="luxor-text"></a-text>
+      <a-plane color="#CCC" height="0.5" width="1.5" position="0 -2 0" id="pool-hall-scene"></a-plane>
+      <a-text value="Pool Hall" position="0 -2 0" color="#806040" side="double"></a-text>
+    </a-entity>
+    <!-- <a-text value="Luxor" position="1 1 0" color="#806040" side="double" id='plane-text-2'></a-text> -->
+    <a-sky color="#8080EC"></a-sky>
+    <a-entity oculus-touch-controls="hand: left" id="oc-control-left"></a-entity>
+    <a-entity oculus-touch-controls="hand: right" id="oc-control-right"></a-entity>
+  </a-scene>
+</div>

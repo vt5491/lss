@@ -1,0 +1,7 @@
+{
+  "globalDependencies": {
+    "three": "registry:dt/three#0.84.0+20170323144537",
+    "three-vreffect": "registry:dt/three-vreffect#0.0.0+20161028135557",
+    "webvr-api": "registry:dt/webvr-api#0.0.0+20161228192002"
+  }
+}

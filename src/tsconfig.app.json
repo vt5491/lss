@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "module": "es2015",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "baseUrl": "",
+    "types": [],
+    "typeRoots": [
+      "../node_modules/@types",
+      "../typings/index.d.ts"
+    ]
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}
