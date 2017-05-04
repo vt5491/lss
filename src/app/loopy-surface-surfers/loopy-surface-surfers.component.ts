@@ -13,6 +13,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   ocLeftControllerElem : Element;
   ocRightController : AFrame.Component;
   ocRightControllerElem : Element;
+  // ocRightControllerElem : AFrame.Entity;
   billBoard : Object = {};
   title : string = "hello";
   pos_1 : string = "1 1 1";
@@ -20,8 +21,10 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   triggerRightDown: boolean = false;
   gripLeftDown: boolean = false;
   gripRightDown: boolean = false;
+  yOffset: number;
 
   constructor() {
+    this.yOffset = 2.5;
     this.billBoard['xOrigin'] = 0;
     this.billBoard['yOrigin'] = 1;
     this.billBoard['zOrigin'] = 0;
@@ -30,7 +33,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
         this.initSceneAng();
       },
       tick:  (time, timeDelta) => {
-        let posData = this.ocLeftController.el.components.position.data;
+        // let posData = this.ocLeftController.el.components.position.data;
         // console.log(`LoopySurfaceSurfers.tick: oc-posData.x=${posData.x}, y=${posData.y}, z=${posData.z}`);
       }
     });
@@ -95,7 +98,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     billBoardObj.position.y += this.billBoard['yOrigin'];
     billBoardObj.position.z += this.billBoard['zOrigin'];
 
-    this.initControllers();
+    // this.initControllers();
   }
 
   initControllers = () => {
@@ -130,6 +133,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
       this.triggerRightDown = true
       if ( this.gripRightDown) {
         console.log(`right hand squeezed - grip-trigger`);
+        this.moveCameraByGrip(this.ocRightControllerElem);
       }
     });
 
@@ -143,6 +147,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
       this.gripRightDown = true;
       if ( this.triggerRightDown) {
         console.log(`right hand squeezed - trigger-grip`);
+        this.moveCameraByGrip(this.ocRightControllerElem);
       }
     });
 
@@ -150,6 +155,22 @@ export class LoopySurfaceSurfersComponent implements OnInit {
       console.log('right grip is up');
       this.gripRightDown = false;
     });
+  }
+
+  moveCameraByGrip(el : Element) {
+    console.log(`LoopySurfaceSurfersComponent.moveCameraByGrip: entered`);
+    // let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
+    // let cameraEl = document.querySelector('#camera') as AFrame.Entity;
+    // let cameraObj = cameraEl.object3D;
+    let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
+    let dollyObj = dollyEl.object3D;
+
+    let controllerEl = document.querySelector('#oc-control-right');
+    let controllerObj = (controllerEl as AFrame.Entity).object3D;
+
+    dollyObj.position.x = controllerObj.position.x;
+    dollyObj.position.y = controllerObj.position.y;
+    dollyObj.position.z = controllerObj.position.z;
   }
 
   getBillBoardY() : number {
