@@ -22,6 +22,7 @@
         "styles.css"
       ],
       "scripts": [
+        "../node_modules/aframe-controller-cursor-component/dist/aframe-controller-cursor-component.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -4,14 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { AsterhedraComponent } from './asterhedra/asterhedra.component';
+//import { AsterhedraComponent } from './asterhedra/asterhedra.component';
 import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surface-surfers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AsterhedraComponent,
-    LoopySurfaceSurfersComponent
+    LoopySurfaceSurfersComponent,
+    PlaneSceneComponent
   ],
   imports: [
     BrowserModule,

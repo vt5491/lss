@@ -82,21 +82,28 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     // let sceneObj : THREE.Object3D = (sceneEl as AFrame.Entity).object3D();
     let sceneObj  = (sceneEl as AFrame.Entity).object3D;
 
-    let axisHelper = new THREE.AxisHelper(1);
-    sceneObj.add(axisHelper);
+    // let axisHelper = new THREE.AxisHelper(1);
+    // sceneObj.add(axisHelper);
 
-    // let planeTextEl  = document.querySelector('#plane-text') as AFrame.Entity;
-    // let planeTextObj = planeTextEl.object3D;
-    // // debugger;
-    // planeTextObj.position.x = 1;
-    // planeTextObj.position.y = 0;
-    // planeTextObj.position.z = 0;
     let billBoardEl = document.querySelector('#bill-board') as AFrame.Entity;
     let billBoardObj = billBoardEl.object3D;
 
     billBoardObj.position.x += this.billBoard['xOrigin'];
     billBoardObj.position.y += this.billBoard['yOrigin'];
     billBoardObj.position.z += this.billBoard['zOrigin'];
+
+    // document.querySelector('#plane-scene').on('click', this.planeSceneClick);
+    let list = document.querySelectorAll('.scene-select');
+
+    // for (var item of list) {
+    Array.prototype.forEach.call(list, (item) => {
+      item.addEventListener('mouseenter', this.sceneSelectMouseEnter, false);
+      item.addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
+      item.addEventListener('click', this.sceneSelectClick, {once : true});
+    })
+    ;
+    // document.querySelectorAll('.scene-select').addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
+    // document.querySelectorAll('.scene-select').addEventListener('click', this.sceneSelectClick, false);
 
     // this.initControllers();
   }
@@ -173,6 +180,44 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     dollyObj.position.z = controllerObj.position.z;
   }
 
+  // planeSceneMouseEnter(evt) {
+  //   evt.currentTarget.setAttribute('color', 'blue');
+  // }
+  //
+  // planeSceneMouseLeave(evt) {
+  //   evt.currentTarget.setAttribute('color', '#CCC');
+  // }
+  //
+  // planeSceneClick() {
+  //   console.log(`you clicked on plane scene`);
+  // }
+
+  sceneSelectMouseEnter(evt) {
+    evt.currentTarget.setAttribute('color', 'blue');
+  }
+
+  sceneSelectMouseLeave(evt) {
+    evt.currentTarget.setAttribute('color', '#CCC');
+  }
+
+  sceneSelectClick(evt) {
+    console.log(`you clicked on scene select evt.target.id=${evt.target.id}`);
+
+    switch(true) {
+      case /plane/.test(evt.target.id):
+        // evt.target.removeEventListener(evt.type, arguments.callee);
+        console.log(`calling plane scene`);
+        break;
+
+      case /luxor/.test(evt.target.id):
+        console.log(`calling luxor scene`);
+        break;
+
+      case /pool-hall/.test(evt.target.id):
+        console.log(`calling pool hall scene`);
+        break;
+    }
+  }
   getBillBoardY() : number {
     console.log(`now in getBillBoardY`);
     return this.billBoard['y'];

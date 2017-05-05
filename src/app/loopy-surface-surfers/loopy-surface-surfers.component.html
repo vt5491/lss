@@ -1,13 +1,14 @@
-<div>
-  <button (click)="getInfo()">Get Info</button>
-  <p>{{title}}, {{billBoard.z}}</p>
+<div id='header'>
+  <!-- <button (click)="getInfo()">Get Info</button> -->
+  <p></p>
 </div>
 <div>
   <a-scene lss-aframe-component tats>
     <a-entity id="dolly" position="0 0.5 3">
       <!-- <a-camera near="0.1" user-height="0" position="0 0.5 3" id="camera" vt-vr-state="off"></a-camera> -->
       <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera>
-      <a-entity hand-controls="right" position="0 0 -1" grab></a-entity>
+      <a-entity hand-controls="right" position="0 0 -1" grab controller-cursor></a-entity>
+      <!-- <a-entity oculus-touch-controls="hand: right" id="oc-control-right" grab></a-entity> --> -->
       <a-entity hand-controls="left" position="0 0 -1" grab></a-entity>
     </a-entity>
     <!-- <a-entity camera look-controls wasd-controls="fly:false inVrState:false"> </a-entity> -->
@@ -15,11 +16,11 @@
     <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
     <!-- <a-text value="Plane" position="{{billBoard.x}} {{billBoard.y}} {{billBoard.z}}" color="#806040" side="double"></a-text> -->
     <a-entity id="bill-board" position="0 0.5 0">
-      <a-plane color="#CCC" height="0.5" width="1.5" position="0 0 0" id="plane-scene"></a-plane>
+      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 0 0" id="plane-scene"></a-plane>
       <a-text value="Plane" position="0 0 0" color="#806040" side="double" id='plane-text'></a-text>
-      <a-plane color="#CCC" height="0.5" width="1.5" position="0 -1 0" id="luxor-scene"></a-plane>
+      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 -1 0" id="luxor-scene"></a-plane>
       <a-text value="Luxor" position="0 -1 0" color="#806040" side="double" id="luxor-text"></a-text>
-      <a-plane color="#CCC" height="0.5" width="1.5" position="0 -2 0" id="pool-hall-scene"></a-plane>
+      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 -2 0" id="pool-hall-scene"></a-plane>
       <a-text value="Pool Hall" position="0 -2 0" color="#806040" side="double"></a-text>
     </a-entity>
     <!-- <a-text value="hello" [attr.position]="'0 ' + yOffset +' 0'" color="red"></a-text> -->
