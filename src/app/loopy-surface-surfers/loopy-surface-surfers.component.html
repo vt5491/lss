@@ -16,12 +16,41 @@
     <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
     <!-- <a-text value="Plane" position="{{billBoard.x}} {{billBoard.y}} {{billBoard.z}}" color="#806040" side="double"></a-text> -->
     <a-entity id="bill-board" position="0 0.5 0">
-      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 0 0" id="plane-scene"></a-plane>
+        <a-plane *ngFor="let scene of asterhedraScenes; let i=index" id="{{scene.id}}" [attr.position]="'0 ' + i * -1 + ' 0'"
+          color="#CCC" height="0.5" width="1.5"
+          (click)="sceneSelectClick($event)"
+          (mouseenter)="sceneSelectMouseEnter($event)"
+          (mouseleave)="sceneSelectMouseLeave($event)" >
+        </a-plane>
+        <!-- <a-text *ngFor="let scene of asterhedraScenes; let i=index" [attr.value]="'' + scene.title + ''" color="#806040" [attr.position]="'0 ' + i * -2 + ' 0'"></a-text> -->
+        <a-text *ngFor="let scene of asterhedraScenes; let i=index" [attr.value]="scene.title" color="#806040" [attr.position]="'0 ' + i * -1 + ' 0'"></a-text>
+        <!-- <a-plane *ngFor="let scene of asterhedraScenes; let i = index" id="{{scene.id}}" color="#CCC" [attr.position]="{{scene.pos}}"></a-plane> -->
+      <!-- <a-plane *ngFor="let scene of asterhedraScenes; let i = index" id="{{scene.id}}" color="#CCC" height="0.5" width="1.5" position="0 {{index * -2}} 0"></a-plane> -->
+      <!-- <a-plane *ngFor="let scene of asterhedraScenes; let i = index" id="{{scene.id}}" color="#CCC" height="{{i * 4}}" width="1.5" position="0 0 0"></a-plane> -->
+    <!-- <a-entity id="bill-board" position="0 0.5 0" *ngFor="let scene of asterhedraScenes">
+      <a-plane id="{{scene.id}}" color="#CCC" height="0.5" width="1.5" position="0 0 0"></a-plane>
+      <a-text value="{{scene.title}}" position="0 0 0" color="#806040" side="double" id='{{scene.id-text}}'></a-text> -->
+      <!-- <a-plane *ngFor="let asterhedraScene of asterhedraScenes" -->
+      <!-- <tr *ngFor="let asterhedraScene of asterhedraScenes">
+        <td>
+          <a-plane id="{{asterhedraScene.id}}" color="#CCC" height="0.5" width="1.5" position="0 0 0"></a-plane>
+        </td>
+      </tr> -->
+      <!-- <template ngFor [ngForOf]="items" let-item>   -->
+      <!-- <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 0 0" id="plane-scene"
+        (click)="sceneSelectClick($event)"
+        (mouseenter)="sceneSelectMouseEnter($event)"
+        (mouseleave)="sceneSelectMouseLeave($event)"
+        ></a-plane>
       <a-text value="Plane" position="0 0 0" color="#806040" side="double" id='plane-text'></a-text>
-      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 -1 0" id="luxor-scene"></a-plane>
+      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 0 0" id="luxor-scene"
+        (click)="sceneSelectClick($event)"
+        (mouseenter)="sceneSelectMouseEnter($event)"
+        (mouseleave)="sceneSelectMouseLeave($event)" >
+      </a-plane>
       <a-text value="Luxor" position="0 -1 0" color="#806040" side="double" id="luxor-text"></a-text>
-      <a-plane class="scene-select" color="#CCC" height="0.5" width="1.5" position="0 -2 0" id="pool-hall-scene"></a-plane>
-      <a-text value="Pool Hall" position="0 -2 0" color="#806040" side="double"></a-text>
+      <a-plane class="scene-select" (click)="sceneSelectClick($event)" color="#CCC" height="0.5" width="1.5" position="0 -2 0" id="pool-hall-scene"></a-plane>
+      <a-text value="Pool Hall" position="0 -2 0" color="#806040" side="double"></a-text> -->
     </a-entity>
     <!-- <a-text value="hello" [attr.position]="'0 ' + yOffset +' 0'" color="red"></a-text> -->
     <a-sky color="#8080EC"></a-sky>

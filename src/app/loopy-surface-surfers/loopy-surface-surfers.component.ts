@@ -22,6 +22,12 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   gripLeftDown: boolean = false;
   gripRightDown: boolean = false;
   yOffset: number;
+  sceneSelected : boolean = false;
+  asterhedraScenes : Array<Object> = [
+    {title : 'Plane', id : 'plane-scene', pos : "0 0 0"},
+    {title : 'Luxor', id : 'luxor-scene', pos : "0 -2 0"},
+    {title : 'Pool Table', id : 'pool-table-scene', pos : "0 -4 0"},
+  ];
 
   constructor() {
     this.yOffset = 2.5;
@@ -97,9 +103,9 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
     // for (var item of list) {
     Array.prototype.forEach.call(list, (item) => {
-      item.addEventListener('mouseenter', this.sceneSelectMouseEnter, false);
-      item.addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
-      item.addEventListener('click', this.sceneSelectClick, {once : true});
+      // item.addEventListener('mouseenter', this.sceneSelectMouseEnter, false);
+      // item.addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
+      // item.addEventListener('click', this.sceneSelectClick, {once : true});
     })
     ;
     // document.querySelectorAll('.scene-select').addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
@@ -200,7 +206,16 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     evt.currentTarget.setAttribute('color', '#CCC');
   }
 
+  sceneSelectClick2(e : Event) {
+    if(this.sceneSelected) return;
+    this.sceneSelected = true;
+    console.log(`you clicked on scene select 2`);
+    console.log(`sceneSelectClick2: e.target.id=${(e.target as HTMLElement).id}`);
+  }
+
   sceneSelectClick(evt) {
+    if(this.sceneSelected) return;
+    this.sceneSelected = true;
     console.log(`you clicked on scene select evt.target.id=${evt.target.id}`);
 
     switch(true) {
