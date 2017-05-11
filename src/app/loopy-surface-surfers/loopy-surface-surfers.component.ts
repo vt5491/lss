@@ -199,11 +199,13 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   // }
 
   sceneSelectMouseEnter(evt) {
-    evt.currentTarget.setAttribute('color', 'blue');
+    // evt.currentTarget.setAttribute('color', 'blue');
+    evt.target.setAttribute('color', 'blue');
   }
 
   sceneSelectMouseLeave(evt) {
-    evt.currentTarget.setAttribute('color', '#CCC');
+    // evt.currentTarget.setAttribute('color', '#CCC');
+    evt.target.setAttribute('color', '#CCC');
   }
 
   sceneSelectClick2(e : Event) {

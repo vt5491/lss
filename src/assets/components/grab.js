@@ -148,7 +148,7 @@ AFRAME.registerComponent('grab', {
       var position;
 
       this.updateDelta();
-      let pullLeverage = 5.0;
+      let pullLeverage = 30.0;
       // let dollyObj = dollyEl.object3D;
       position = dollyEl.getAttribute('position');
       dollyEl.setAttribute('position', {

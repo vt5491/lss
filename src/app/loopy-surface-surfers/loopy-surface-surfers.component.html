@@ -6,7 +6,8 @@
   <a-scene lss-aframe-component tats>
     <a-entity id="dolly" position="0 0.5 3">
       <!-- <a-camera near="0.1" user-height="0" position="0 0.5 3" id="camera" vt-vr-state="off"></a-camera> -->
-      <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera>
+      <!-- <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera> -->
+      <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" wasd-controls look-controls></a-camera>
       <a-entity hand-controls="right" position="0 0 -1" grab controller-cursor></a-entity>
       <!-- <a-entity oculus-touch-controls="hand: right" id="oc-control-right" grab></a-entity> --> -->
       <a-entity hand-controls="left" position="0 0 -1" grab></a-entity>
@@ -15,13 +16,12 @@
     <!-- <a-box position="-1 0.5 -3" rotation="0 45 0" color="#fCC3D9"></a-box> -->
     <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
     <!-- <a-text value="Plane" position="{{billBoard.x}} {{billBoard.y}} {{billBoard.z}}" color="#806040" side="double"></a-text> -->
-    <a-entity id="bill-board" position="0 0.5 0">
+    <a-entity id="bill-board" position="0 0.5 0"
+      (click)="sceneSelectClick($event)"
+      (mouseenter)="sceneSelectMouseEnter($event)"
+      (mouseleave)="sceneSelectMouseLeave($event)" >
         <a-plane *ngFor="let scene of asterhedraScenes; let i=index" id="{{scene.id}}" [attr.position]="'0 ' + i * -1 + ' 0'"
-          color="#CCC" height="0.5" width="1.5"
-          (click)="sceneSelectClick($event)"
-          (mouseenter)="sceneSelectMouseEnter($event)"
-          (mouseleave)="sceneSelectMouseLeave($event)" >
-        </a-plane>
+          color="#CCC" height="0.5" width="1.5" > </a-plane>
         <!-- <a-text *ngFor="let scene of asterhedraScenes; let i=index" [attr.value]="'' + scene.title + ''" color="#806040" [attr.position]="'0 ' + i * -2 + ' 0'"></a-text> -->
         <a-text *ngFor="let scene of asterhedraScenes; let i=index" [attr.value]="scene.title" color="#806040" [attr.position]="'0 ' + i * -1 + ' 0'"></a-text>
         <!-- <a-plane *ngFor="let scene of asterhedraScenes; let i = index" id="{{scene.id}}" color="#CCC" [attr.position]="{{scene.pos}}"></a-plane> -->

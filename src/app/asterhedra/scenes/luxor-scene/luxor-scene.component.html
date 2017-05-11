@@ -1,19 +1,29 @@
 <div id='header'>
   <p></p>
 </div>
-<a-scene luxor-scene-aframe-component>
-  <!-- <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera> -->
-  <!-- <a-assets> -->
-    <!-- <a-asset-item id="luxor-pyramid" src="../../../../assets/models/luxor_pyramid_decorated.dae"></a-asset-item> -->
-    <!-- <a-asset-item id="luxor-pyramid" src="assets/models/luxor_pyramid_decorated.dae"></a-asset-item> -->
-    <!-- <a-asset-item id="luxor-pyramid" src="../assets/models/luxor_pyramid_decorated.dae"></a-asset-item> -->
-    <!-- <a-asset-item id="luxor-pyramid" src="./luxor_pyramid_decorated.dae"></a-asset-item> -->
-  <!-- </a-assets> -->
-  <!-- <a-entity collada-model="#luxor-pyramid"></a-entity> -->
-  <!-- <a-entity collada-model="url(luxor_pyramid_decorated.dae)"></a-entity> -->
+<a-scene luxor-scene-aframe-component >
+  <a-entity id="dolly" position="0 0.5 13">
+    <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera>
+    <a-entity hand-controls="right" position="0 0 -1" grab></a-entity>
+    <a-entity hand-controls="left" position="0 0 -1" grab></a-entity>
+  </a-entity>
+  <a-assets>
+    <img id="vegas-vic-full" src="assets/img/vegas_vic_full_no_wc.png" >
+    <!-- <a-asset-item id="tree-obj" src="assets/models_out/luxor_lss.obj"></a-asset-item>
+    <a-asset-item id="tree-mtl" src="assets/models_out/luxor_lss.mtl"></a-asset-item> -->
+  </a-assets>
   <!-- works -->
-  <a-entity collada-model="url(assets/models/luxor_pyramid_decorated.dae)"></a-entity>
-  <!-- <a-box color="#CCC" position="0 0 0"></a-box> -->
-  <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+  <!-- <a-entity collada-model="url(assets/models/luxor_pyramid_decorated.dae)"></a-entity> -->
+  <!-- <a-entity collada-model="url(assets/models/luxor_lss.dae)" animation-mixer="duration : 5"></a-entity> -->
+  <a-entity id="luxor-model"
+    gltf-model="url(assets/models_out/luxor_lss.gltf)"
+    animation-mixer="duration : 5"
+    (model-loaded)="initScene($event)">
+  </a-entity>
+  <!-- <a-entity json-model="url(assets/models_out/luxor_lss.json)" animation-mixer="duration : 5"></a-entity> -->
+  <!-- <a-entity obj-model="obj: #tree-obj; mtl: #tree-mtl" animation-mixer="duration : 5"></a-entity> -->
+  <!-- <a-entity obj-model="obj: #tree-obj; mtl: #tree-mtl"></a-entity> -->
+  <!-- <a-entity obj-model="obj: #tree-obj" animation-mixer="duration : 5"></a-entity> -->
+
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

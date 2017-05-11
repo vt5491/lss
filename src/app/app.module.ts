@@ -9,6 +9,14 @@ import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surf
 //import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene';
 import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene/plane-scene.component';
 import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
+//vt add
+import {RouterModule, Routes} from '@angular/router';
+//vt end
+//vt add
+const appRoutes:Routes = [ 
+  {path: '**', component: LuxorSceneComponent} 
+];
+//vt end
 
 @NgModule({
   declarations: [
@@ -20,6 +28,9 @@ import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene
   ],
   imports: [
     BrowserModule,
+    //vt add
+    RouterModule.forRoot(appRoutes),
+    //vt end
     FormsModule,
     HttpModule
   ],
