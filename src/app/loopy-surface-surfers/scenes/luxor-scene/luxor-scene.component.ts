@@ -120,7 +120,7 @@ export class LuxorSceneComponent implements OnInit {
     //   }
     // });
 
-    console.log(`LuxorSceneComponent.initScene: entered`);
+    console.log(`LuxorSceneComponent.initScene: entered -lss version`);
     let img = document.querySelector('#vegas-vic-full');
     console.log(`initScene.img=${img}`);
     let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/vegas_vic_full_no_wc.png" );

@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
 import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surface-surfers.component';
 //import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene';
 import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene/plane-scene.component';
-import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
+//import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
+import { LuxorSceneComponent } from './loopy-surface-surfers/scenes/luxor-scene/luxor-scene.component';
 //vt add
 import {RouterModule, Routes} from '@angular/router';
 //vt end
