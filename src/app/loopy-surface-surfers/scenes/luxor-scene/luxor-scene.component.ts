@@ -12,6 +12,7 @@ export class LuxorSceneComponent implements OnInit {
 
   constructor() {
     let luxorSceneComponent = this;
+    console.log(`LuxorSceneComponent.ctor: entered`);
     // note : you really need to put in a scene load handler.  This doesnt
     // always work when done in the ctor.
     // note2: not true.  A component.init is only driven once a scene has loaded.
@@ -19,6 +20,9 @@ export class LuxorSceneComponent implements OnInit {
     // want to run it once the scene has loaded
     AFRAME.registerComponent('luxor-scene-aframe-component', {
       init: () => {
+        console.log(`LoopySurfaceSurfers.AFRAME.init: entered`);
+        
+        
         // var manager = new THREE.LoadingManager();
 				// manager.onProgress = function ( item, loaded, total ) {
 				// 	console.log('LuxorSceneComponent.onProgress: ' , item, loaded, total );
@@ -28,6 +32,11 @@ export class LuxorSceneComponent implements OnInit {
       //     console.log(`scene loaded`);
       //     this.initScene()})
       //   // this.initScene();
+        setTimeout( function () {     
+          console.log('entering VR');
+          // var scene: any = document.querySelector('a-scene');
+          // scene.enterVR();
+         }, 1000);
       },
       // tick:  (time, timeDelta) => {
       //   let a = 1;
@@ -39,86 +48,32 @@ export class LuxorSceneComponent implements OnInit {
       // }.bind(this)
       }
     });
+        window.addEventListener('load', function () {
+          var scene: any = document.querySelector('a-scene');
+          if (scene.hasLoaded) {
+            scene.enterVR();
+          } else {
+            // scene.el.sceneEl.enterVR();
+            (scene.parentEl as any).addEventListener('loaded', function () {
+              console.log('Automatically entering VR...');
+              scene.enterVR();
+            });
+          }
+        });
+
   }
 
   ngOnInit() {
   }
 
-  // doIt(e : Event){
   doIt(){
-    // e.d
-
-    // console.log(`doIt: e.target.id=${(e as any).target.id}`);
     console.log(`LuxorSceneComponet.doIt: entered`);
-    
   }
-
-  // initColladaScene( e : Event) {
-  //   e.detail.model.traverse( function ( child ) {
-  //     if ( child instanceof THREE.SkinnedMesh ) {
-  //       var animation = new THREE.Animation( child, child.geometry.animation );
-  //       animation.play();
-  //     }
-  //     this.initScene();
-  //   })
-  // }
 
   initScene() {
     this.sceneObj = (document.querySelector('a-scene') as any).object3D;
     this.pyramid = this.sceneObj.getObjectByName('Pyramid');
-    // debugger;
     var fontLoader = new THREE.FontLoader();
-
-    // fontLoader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-    //
-    //   var textGeom = new THREE.TextGeometry( 'hi', {
-    //     font: font,;
-    //     size: 80,
-    //     height: 1,
-    //   } as any);
-    //   let textMat = new THREE.MeshBasicMaterial({ color: 0x00ff00});
-    //
-    //   let vertices = (this.pyramid.children[0] as any).geometry.getAttribute('position');
-    //
-    //   let boxGeom = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-    //   let boxMat = new THREE.MeshBasicMaterial({ color: 0xff0000});
-    //   for( let i=16; i < vertices.count ; i += 2) {
-    //     var pos_1 = new THREE.Vector3();
-    //     pos_1.x = vertices.array[i + 0];
-    //     pos_1.y = vertices.array[i + 1];
-    //     pos_1.z = vertices.array[i + 2];
-    //
-    //     let markerBox = new THREE.Mesh(boxGeom, boxMat);
-    //     markerBox.position.x = pos_1.x;
-    //     markerBox.position.y = pos_1.y;
-    //     markerBox.position.z = pos_1.z;
-    //     this.sceneObj.add(markerBox);
-    //
-    //     let textMesh = new THREE.Mesh( textGeom, textMat );
-    //     textMesh.position.x = pos_1.x;
-    //     textMesh.position.y = pos_1.y;
-    //     textMesh.position.z = pos_1.z;
-    //     this.sceneObj.add(textMesh);
-    //
-    //     var pos_2 = new THREE.Vector3();
-    //     pos_2.x = vertices.array[i + 3];
-    //     pos_2.y = vertices.array[i + 4];
-    //     pos_2.z = vertices.array[i + 5];
-    //
-    //     var material = new THREE.LineBasicMaterial({
-    //       // color: 0xffffff
-    //       color : Math.random() * 65535 * 255,
-    //       linewidth: 4
-    //     });
-    //     var geometry = new THREE.Geometry();
-    //     geometry.vertices.push(
-    //       pos_1, pos_2
-    //     );
-    //
-    //     var line = new THREE.Line( geometry, material );
-    //     this.sceneObj.add( line );
-    //   }
-    // });
 
     console.log(`LuxorSceneComponent.initScene: entered -lss version`);
     let img = document.querySelector('#vegas-vic-full');
@@ -135,25 +90,9 @@ export class LuxorSceneComponent implements OnInit {
     // let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_arm.png" );
     let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_arm_black.png" );
     vicArmTexture.flipY = false;
-    // this is the right hand
-    // let blendCharacter = (document.querySelector('a-scene') as any).object3D.children[0].children[1].children[0];
-    // let blendCharacter = (document.querySelector('a-scene') as any).object3D.children[0].children[2].children[0];
-    // let side = blendCharacter.material.side;
-    // console.log(`LuxorSceneComponent.initScene: material.side pre=${side}`)
-    // side = THREE.DoubleSide;
-    // blendCharacter.material.color.setHex(0xff0000);
-    // blendCharacter.material.needsUpdate = true;
-    // blendCharacter.material.update();
-    // console.log(`LuxorSceneComponent.initScene: material.side post=${side}`)
-    // console.log(`LuxorSceneComponent.initScene: material.needsUpdate=${blendCharacter.material.needsUpdate}`)
+
     let sceneObj = (document.querySelector('a-scene') as any).object3D;
-    // // Arm
-    // let armMesh = sceneObj.getObjectByName('Arm');
-    // let armMat = armMesh.children[0].material;
-    // armMat.side = THREE.DoubleSide;
-    // armMat.map = vegasVicTexture;
-    // armMat.needsUpdate = true;
-    // armMat.update();
+
     // Arm
     let armMesh = sceneObj.getObjectByName('Arm');
     let armMat = armMesh.children[0].material;

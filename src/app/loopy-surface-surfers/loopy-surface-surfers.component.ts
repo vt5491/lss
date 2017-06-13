@@ -1,6 +1,9 @@
 ///<reference path="../../../typings/index.d.ts" />
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
+import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
+import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loopy-surface-surfers',
@@ -29,7 +32,13 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     {title : 'Pool Table', id : 'pool-table-scene', pos : "0 -4 0"},
   ];
 
-  constructor() {
+  constructor(
+    private innerGame : AsteroidsGame,
+    private injector: Injector,
+    private router: Router
+  ) {
+    console.log(`LoopySurfaceSurfers.ctor: innerGame.buttonPressed=${this.innerGame.buttonPressed(0)}`);
+    
     this.yOffset = 2.5;
     this.billBoard['xOrigin'] = 0;
     this.billBoard['yOrigin'] = 1;
@@ -228,6 +237,9 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
       case /luxor/.test(evt.target.id):
         console.log(`calling luxor scene`);
+        // this.injector.get(LuxorSceneComponent);
+        this.router.navigateByUrl('/luxorScene');
+        console.log(`LoopySurfaceSurders.sceneSelectClick: back from naviate`);
         break;
 
       case /pool-hall/.test(evt.target.id):

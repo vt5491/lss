@@ -15,8 +15,22 @@ import {RouterModule, Routes} from '@angular/router';
 //vt end
 //vt add
 const appRoutes:Routes = [ 
-  {path: '**', component: LuxorSceneComponent} 
+  //{path: '**', component: LuxorSceneComponent} 
+  //{path: '**', component: LoopySurfaceSurfersComponent},
+  {path: '', component: LoopySurfaceSurfersComponent},
+  {path: 'luxorScene', component: LuxorSceneComponent} 
 ];
+import { BaseService  } from './services/base.service';
+import { AsteroidsGame  } from './inner-games/asteroids/asteroids-game';
+import { AsteroidsKbdHandler  } from './inner-games/asteroids/asteroids-kbd-handler';
+import { Ship  } from './inner-games/asteroids/ship';
+import { Asteroid  } from './inner-games/asteroids/asteroid';
+import { ThreeJsSceneProvider, UtilsService,
+ ThreeJsWebGLRendererProvider,
+ //EmptyParmsServiceProvider
+} from './services/utils.service';
+
+
 //vt end
 
 @NgModule({
@@ -35,7 +49,18 @@ const appRoutes:Routes = [
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    //vt add
+    BaseService,
+    //KbdHandlerRouterService,
+    //CameraKbdHandlerService,
+    AsteroidsKbdHandler,
+    Ship,
+    AsteroidsGame,
+    UtilsService,
+    ThreeJsSceneProvider,
+    //vt end
+  ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
