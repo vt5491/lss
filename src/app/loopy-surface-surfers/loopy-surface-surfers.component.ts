@@ -1,15 +1,21 @@
 ///<reference path="../../../typings/index.d.ts" />
 
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
 import { Router } from '@angular/router';
+import { GameSceneDirective } from '../directives/game-scene.directive';
+
 
 @Component({
   selector: 'app-loopy-surface-surfers',
   templateUrl: './loopy-surface-surfers.component.html',
-  styleUrls: ['./loopy-surface-surfers.component.css']
+  styleUrls: ['./loopy-surface-surfers.component.css'],
 })
+// @View({
+//     // template: `<div #content></div>`,
+//     directives: [LuxorSceneComponent]
+// })
 export class LoopySurfaceSurfersComponent implements OnInit {
   camera : THREE.Camera;
   ocLeftController : AFrame.Component;
@@ -31,11 +37,13 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     {title : 'Luxor', id : 'luxor-scene', pos : "0 -2 0"},
     {title : 'Pool Table', id : 'pool-table-scene', pos : "0 -4 0"},
   ];
+  @ViewChild(GameSceneDirective) appGameScene: GameSceneDirective;
 
   constructor(
     private innerGame : AsteroidsGame,
     private injector: Injector,
-    private router: Router
+    private router: Router,
+    private _componentFactoryResolver: ComponentFactoryResolver
   ) {
     console.log(`LoopySurfaceSurfers.ctor: innerGame.buttonPressed=${this.innerGame.buttonPressed(0)}`);
     
@@ -45,11 +53,26 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     this.billBoard['zOrigin'] = 0;
     AFRAME.registerComponent('lss-aframe-component', {
       init: () => {
-        this.initSceneAng();
+        setTimeout( () => {
+          this.initSceneAng();
+        }, 0);
       },
       tick:  (time, timeDelta) => {
+        console.log(`LoopySurfaceSurfers.lss-aframe-component.tick: entered`);
+        
         // let posData = this.ocLeftController.el.components.position.data;
         // console.log(`LoopySurfaceSurfers.tick: oc-posData.x=${posData.x}, y=${posData.y}, z=${posData.z}`);
+      },
+      pause: function () {
+      // pause: () => {
+        console.log(`LoopySurfaceSurfers.lss-aframe-component.pause: entered`);
+        
+        // this.removeEventListeners()
+      },
+      play: function () {
+      // play: () => {
+        console.log(`LoopySurfaceSurfers.lss-aframe-component.play: entered`);
+        // this.addEventListeners()
       }
     });
   }
@@ -79,7 +102,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     // let sceneEl : AFrame.Entity  = document.querySelector('a-scene') as AFrame.Entity;
     let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
     sceneEl.addEventListener('enter-vr', function () {
-      console.log("ENTERED VR");
+      console.log("LoopySurfaceSurfers.initSceneAng: ENTERED VR");
       // let cameraEl = document.querySelector('[wasd-controls]');
       let cameraEl = document.querySelector('#camera');
       (cameraEl as any).setAttribute('wasd-controls','inVrState','true')
@@ -179,6 +202,19 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     });
   }
 
+  loadComponent() {
+    // this.currentAddIndex = (this.currentAddIndex + 1) % this.ads.length;
+    // let adItem = this.ads[this.currentAddIndex];
+
+    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(LuxorSceneComponent);
+
+    let viewContainerRef = this.appGameScene.viewContainerRef;
+    viewContainerRef.clear();
+
+    let componentRef = viewContainerRef.createComponent(componentFactory);
+    // (<AdComponent>componentRef.instance).data = appGameScene.data;
+  }
+
   moveCameraByGrip(el : Element) {
     console.log(`LoopySurfaceSurfersComponent.moveCameraByGrip: entered`);
     // let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
@@ -217,6 +253,11 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     evt.target.setAttribute('color', '#CCC');
   }
 
+  actionButtonClick(e : Event) {
+    console.log(`LoopySurfaceSurfers.actionButtonClick: entered.  Now calling luxor scene`);
+    (e.target as any).id='luxor';
+    this.sceneSelectClick(e);
+  }
   sceneSelectClick2(e : Event) {
     if(this.sceneSelected) return;
     this.sceneSelected = true;
@@ -237,9 +278,56 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
       case /luxor/.test(evt.target.id):
         console.log(`calling luxor scene`);
-        // this.injector.get(LuxorSceneComponent);
-        this.router.navigateByUrl('/luxorScene');
-        console.log(`LoopySurfaceSurders.sceneSelectClick: back from naviate`);
+        // let luxorScene = this.injector.get(LuxorSceneComponent);
+        // console.log(`LoopySurfaceSurders.sceneSelectClick: LuxorSceneComponent injected^`);
+        /*
+        var el = document.querySelector('#intro-scene');
+        (el as any).pause();
+        el.parentNode.removeChild(el);
+
+        var headerDiv = document.querySelector("#header");
+        (headerDiv as any).style.width = window.innerWidth;
+        (headerDiv as any).style.height = window.innerHeight;
+        this.loadComponent();
+        */
+
+        // setTimeout(() => {
+        //   console.log(`LoopySurfaceSurders.sceneSelectClick: delayed action click exp`);
+        //   var enterVrButton = document.querySelector('.a-enter-vr-button');
+        //   (enterVrButton as any).click();
+        // },1000);
+        // var scene: any = document.querySelector('a-scene');
+        // attempt cleanup on parent
+        let cameraEl = document.querySelector('#camera');
+        (cameraEl as any).setAttribute('wasd-controls', 'inVrState', 'false')
+        var el = document.querySelector('#intro-scene');
+        // el.exitVR();
+        (el as any).sceneEl.exitVR();
+        el.parentNode.removeChild(el);
+        // and xfer to new url
+        this.router.navigateByUrl('/luxorScene', { });
+        // this.router.navigateByUrl('/luxorScene', { skipLocationChange: true });
+        // console.log(`LoopySurfaceSurders.sceneSelectClick: back from naviate`);
+        // window.addEventListener('load', function () {
+        //   var scene: any = document.querySelector('a-scene');
+        //   if (scene.hasLoaded) {
+        //     console.log('Automatically entering VR 1');
+        //     scene.enterVR();
+        //   }
+        //   else {
+        //     // scene.el.sceneEl.enterVR();
+        //     // (scene.parentEl as any).addEventListener('loaded', function () {
+        //     (scene as any).addEventListener('loaded', function () {
+        //       console.log('Automatically entering VR 2');
+        //       // scene.enterVR();
+        //       setTimeout(function () {
+        //         console.log('entering VR 3');
+        //         var scene: any = document.querySelector('a-scene');
+        //         scene.enterVR();
+        //       }, 1000);
+        //     });
+        //   }
+        // });
         break;
 
       case /pool-hall/.test(evt.target.id):

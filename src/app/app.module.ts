@@ -29,6 +29,7 @@ import { ThreeJsSceneProvider, UtilsService,
  ThreeJsWebGLRendererProvider,
  //EmptyParmsServiceProvider
 } from './services/utils.service';
+import { GameSceneDirective } from './directives/game-scene.directive';
 
 
 //vt end
@@ -39,7 +40,11 @@ import { ThreeJsSceneProvider, UtilsService,
  //   AsterhedraComponent,
     LoopySurfaceSurfersComponent,
     PlaneSceneComponent,
-    LuxorSceneComponent
+    LuxorSceneComponent,
+    GameSceneDirective,
+    //vt add
+    // LuxorSceneComponent
+    //vt end
   ],
   imports: [
     BrowserModule,
@@ -59,6 +64,17 @@ import { ThreeJsSceneProvider, UtilsService,
     AsteroidsGame,
     UtilsService,
     ThreeJsSceneProvider,
+    {
+      provide: LuxorSceneComponent,
+      // useFactory: (base, utils) => {
+      //   return new Asteroid(base, utils, {});
+      // useFactory: () => {
+      useFactory: function() {
+        return new LuxorSceneComponent();
+      },
+      // deps: [BaseService, UtilsService]
+    }
+
     //vt end
   ],
   bootstrap: [AppComponent],

@@ -1,6 +1,7 @@
 ///<reference path="../../../../../typings/index.d.ts" />
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 
+@Injectable()
 @Component({
   selector: 'app-luxor-scene',
   templateUrl: './luxor-scene.component.html',
@@ -32,11 +33,22 @@ export class LuxorSceneComponent implements OnInit {
       //     console.log(`scene loaded`);
       //     this.initScene()})
       //   // this.initScene();
-        setTimeout( function () {     
-          console.log('entering VR');
-          // var scene: any = document.querySelector('a-scene');
-          // scene.enterVR();
-         }, 1000);
+        // setTimeout( function () {     
+        //   console.log('entering VR');
+        //   var scene: any = document.querySelector('a-scene');
+        //   scene.enterVR();
+        //  }, 1000);
+        // setTimeout(() => {
+        //   console.log(`LoopySurfaceSurfers.AFRAME.init: clicking vr button`);
+        //   // var enterVrButton = document.querySelector('.a-enter-vr-button');
+        //   var enterVrButton = document.querySelector('#vt-button');
+        //   enterVrButton.addEventListener('click', () => {
+        //     console.log('now in click handler');
+        //     var scene: any = document.querySelector('a-scene');
+        //     scene.enterVR();
+        //   });
+        //   (enterVrButton as any).click();
+        // }, 1000);
       },
       // tick:  (time, timeDelta) => {
       //   let a = 1;
@@ -48,19 +60,33 @@ export class LuxorSceneComponent implements OnInit {
       // }.bind(this)
       }
     });
-        window.addEventListener('load', function () {
-          var scene: any = document.querySelector('a-scene');
-          if (scene.hasLoaded) {
-            scene.enterVR();
-          } else {
-            // scene.el.sceneEl.enterVR();
-            (scene.parentEl as any).addEventListener('loaded', function () {
-              console.log('Automatically entering VR...');
-              scene.enterVR();
-            });
-          }
-        });
 
+    // window.addEventListener('load', function () {
+    //   var scene: any = document.querySelector('a-scene');
+    //   var enterVrButton = document.querySelector('.a-enter-vr-button');
+
+    //   if (scene.hasLoaded) {
+    //     console.log('Automatically entering VR 1');
+    //     // scene.enterVR();
+    //     (enterVrButton as any).click();
+    //   } 
+    //   else {
+    //     // scene.el.sceneEl.enterVR();
+    //     // (scene.parentEl as any).addEventListener('loaded', function () {
+    //     (scene as any).addEventListener('loaded', function () {
+    //       console.log('Automatically entering VR 2');
+    //       // (enterVrButton as any).click();
+    //       // scene.enterVR();
+    //       setTimeout(function () {
+    //         console.log('entering VR 3');
+    //         // var scene: any = document.querySelector('a-scene');
+    //         // scene.enterVR();
+    //         var enterVrButton = document.querySelector('.a-enter-vr-button');
+    //         (enterVrButton as any).click();
+    //       }, 1000);
+    //     });
+    //   }
+    // });
   }
 
   ngOnInit() {

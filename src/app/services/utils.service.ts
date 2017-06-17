@@ -355,7 +355,8 @@ export let WebGLRenderTargetProvider = {
 
 export let ThreeJsSceneProvider = {
   provide: THREE.Scene,
-  useFactory: () => {
+  // useFactory: () => {
+  useFactory: function () {
     return new THREE.Scene();
   },
 };

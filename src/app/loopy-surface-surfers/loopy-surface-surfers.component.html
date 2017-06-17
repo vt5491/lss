@@ -1,9 +1,13 @@
 <div id='header'>
-  <!-- <button (click)="getInfo()">Get Info</button> -->
-  <p></p>
+  <button (click)="actionButtonClick($event)">action</button>
+  <p>
+    <!-- <app-luxor-scene></app-luxor-scene> -->
+    <ng-template appGameScene></ng-template>
+  </p>
 </div>
 <div>
-  <a-scene lss-aframe-component tats>
+  <a-scene lss-aframe-component tats id="intro-scene">
+    <!-- <ng-template appGameScene></ng-template> -->
     <a-entity id="dolly" position="0 0.5 3">
       <!-- <a-camera near="0.1" user-height="0" position="0 0.5 3" id="camera" vt-vr-state="off"></a-camera> -->
       <!-- <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera> -->
