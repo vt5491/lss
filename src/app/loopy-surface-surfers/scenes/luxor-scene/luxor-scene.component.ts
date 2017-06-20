@@ -99,6 +99,11 @@ export class LuxorSceneComponent implements OnInit {
   initScene() {
     this.sceneObj = (document.querySelector('a-scene') as any).object3D;
     this.pyramid = this.sceneObj.getObjectByName('Pyramid');
+    let pyramidMat = (this.pyramid as any).children[0].material;
+    pyramidMat.side = THREE.DoubleSide;
+    pyramidMat.needsUpdate = true;
+    
+
     var fontLoader = new THREE.FontLoader();
 
     console.log(`LuxorSceneComponent.initScene: entered -lss version`);
@@ -118,6 +123,16 @@ export class LuxorSceneComponent implements OnInit {
     vicArmTexture.flipY = false;
 
     let sceneObj = (document.querySelector('a-scene') as any).object3D;
+    //Ground
+
+    let ground = sceneObj.getObjectByName('Ground');
+    // let newGroundMat = new THREE.MeshPhongMaterial(
+    //   { transparent: false, map: THREE.ImageUtils.loadTexture('../../../../assets/img/vegas_vic_full_no_wc.png') });
+    let groundMat = (ground as any).children[0].material;
+    groundMat.map = vegasVicTexture;
+    // groundMat = newGroundMat;
+    // groundMat.side = THREE.DoubleSide;
+    groundMat.needsUpdate = true;
 
     // Arm
     let armMesh = sceneObj.getObjectByName('Arm');
@@ -156,7 +171,7 @@ export class LuxorSceneComponent implements OnInit {
       welcomeToLasVegasTexture.flipY = false;
 
       let objects : string[] = [];
-      objects.push('CircleW', 'CircleE1', 'CircleL', 'CircleC', 'CircleO', 'CircleM', 'CircleE2', 'MainBoard');
+      objects.push('CircleW', 'CircleE1', 'CircleL', 'CircleC', 'CircleO', 'CircleM', 'CircleE2', 'MainBoard', 'Pyramid');
 
       for(let i=0; i < objects.length; i++ ) {
         let o = objects[i];

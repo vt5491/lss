@@ -61,6 +61,17 @@ AFRAME.registerComponent('dynamic-scene-texture-2', {
     //   pyr.material.map = this.offscreenImageBuf;
     // }
 
+    // if(this.el.sceneEl.object3D.getObjectByName('Pyramid')) {
+    //   var mesh = this.el.sceneEl.object3D.getObjectByName('Pyramid');
+    // if(this.el.sceneEl.object3D.getObjectByName('Cube')) {
+    //   var mesh = this.el.sceneEl.object3D.getObjectByName('Cube');
+    if(this.el.sceneEl.object3D.getObjectByName('Plane')) {
+      var mesh = this.el.sceneEl.object3D.getObjectByName('Plane');
+      mesh.material.map = this.offscreenImageBuf;
+      mesh.material.needsUpdate = true;
+      mesh.material.map.needsUpdate = true;
+      this.offscreenImageBuf.needsUpdate = true; //need this
+    }
     // works: Plane.001 is vics shirt
     if(this.el.sceneEl.object3D.getObjectByName('Plane.001')) {
       var mesh = this.el.sceneEl.object3D.getObjectByName('Plane.001');

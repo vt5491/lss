@@ -4,13 +4,15 @@
   var factory = {};
 
   //Note how 'this' refers to the parent object not to the factory object due
-  // to the the bind() call at the end.
+  // to the the bind() call at the end.  This is intentional.
   factory.init = () => {
     console.log(`innerSceneCube.init: entered`);
     this.innerScene = new THREE.Scene();
 
     // var geometry = new THREE.BoxGeometry( 20, 10, 10 );
-    var geometry = new THREE.BoxGeometry( 2, 1, 1 );
+    // you can at least see this a little bit on vic's arm
+    // var geometry = new THREE.BoxGeometry( 2, 1, 1 );
+    var geometry = new THREE.BoxGeometry( 2, 3, 1 );
     // var geometry = new THREE.BoxGeometry( .2, .1, .1 );
     var material = new THREE.MeshBasicMaterial( { color: "#433F81" } );
     this.cube = new THREE.Mesh( geometry, material );
