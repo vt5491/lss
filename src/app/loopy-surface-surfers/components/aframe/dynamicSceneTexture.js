@@ -63,10 +63,12 @@ AFRAME.registerComponent('dynamic-scene-texture-2', {
 
     // if(this.el.sceneEl.object3D.getObjectByName('Pyramid')) {
     //   var mesh = this.el.sceneEl.object3D.getObjectByName('Pyramid');
-    // if(this.el.sceneEl.object3D.getObjectByName('Cube')) {
-    //   var mesh = this.el.sceneEl.object3D.getObjectByName('Cube');
-    if(this.el.sceneEl.object3D.getObjectByName('Plane')) {
-      var mesh = this.el.sceneEl.object3D.getObjectByName('Plane');
+    if(this.el.sceneEl.object3D.getObjectByName('Cube')) {
+      var mesh = this.el.sceneEl.object3D.getObjectByName('Cube');
+    // if(this.el.sceneEl.object3D.getObjectByName('Plane')) {
+    //   var mesh = this.el.sceneEl.object3D.getObjectByName('Plane');
+    // if(this.el.sceneEl.object3D.getObjectByName('Pyramid')) {
+    //   var mesh = this.el.sceneEl.object3D.getObjectByName('Pyramid');
       mesh.material.map = this.offscreenImageBuf;
       mesh.material.needsUpdate = true;
       mesh.material.map.needsUpdate = true;

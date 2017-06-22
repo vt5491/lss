@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 //import { AsterhedraComponent } from './asterhedra/asterhedra.component';
 import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surface-surfers.component';
 //import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene';
-import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene/plane-scene.component';
+// import { PlaneSceneComponent } from './asterhedra/scenes/plane-scene/plane-scene.component';
 //import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
 import { LuxorSceneComponent } from './loopy-surface-surfers/scenes/luxor-scene/luxor-scene.component';
+import { PlaneSceneComponent } from './loopy-surface-surfers/scenes/plane-scene/plane-scene.component';
 //vt add
 import {RouterModule, Routes} from '@angular/router';
 //vt end
@@ -18,7 +19,8 @@ const appRoutes:Routes = [
   //{path: '**', component: LuxorSceneComponent} 
   //{path: '**', component: LoopySurfaceSurfersComponent},
   {path: '', component: LoopySurfaceSurfersComponent},
-  {path: 'luxorScene', component: LuxorSceneComponent} 
+  {path: 'luxorScene', component: LuxorSceneComponent},
+  {path: 'planeScene', component: PlaneSceneComponent} 
 ];
 import { BaseService  } from './services/base.service';
 import { AsteroidsGame  } from './inner-games/asteroids/asteroids-game';
@@ -30,8 +32,6 @@ import { ThreeJsSceneProvider, UtilsService,
  //EmptyParmsServiceProvider
 } from './services/utils.service';
 import { GameSceneDirective } from './directives/game-scene.directive';
-
-
 //vt end
 
 @NgModule({
@@ -69,7 +69,7 @@ import { GameSceneDirective } from './directives/game-scene.directive';
       // useFactory: (base, utils) => {
       //   return new Asteroid(base, utils, {});
       useFactory: () => {
-      // useFactory: function() {
+      // useFactory:  function() {
         return new LuxorSceneComponent();
       },
       // deps: [BaseService, UtilsService]
