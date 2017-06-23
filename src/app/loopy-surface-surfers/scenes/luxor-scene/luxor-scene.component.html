@@ -20,15 +20,14 @@
     gltf-model="url(assets/models_out/luxor_lss.gltf)"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
-    dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj"
+    asteroids-inner-scene-aframe-component
     >
   </a-entity>
     <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
   <a-plane id="test-plane" position=" 1 1 6" color="#CC1" height="3" width="3"
     material="side: double;"
-    dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj"
     >
-    <!-- dynamic-scene-texture="inner-scene-script: #old-inner-scene" -->
+    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
   </a-plane>
   <!-- <a-cylinder id="test-cyl" position=" -1 1 6" color="#CC1" height="3" radius="3"
     material="side: double;"
@@ -36,8 +35,8 @@
     >
   </a-cylinder> -->
   <a-sphere position="-2 2 6" color="red" radius="1"
-    dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj"
   >
+    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
   </a-sphere>
 
   <a-sky color="#8080EC"></a-sky>

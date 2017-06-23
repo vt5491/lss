@@ -1,5 +1,6 @@
 ///<reference path="../../../../../typings/index.d.ts" />
 import { Component, OnInit, Injectable } from '@angular/core';
+import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
 
 @Injectable()
 @Component({
@@ -11,7 +12,7 @@ export class LuxorSceneComponent implements OnInit {
   sceneObj : THREE.Object3D;
   pyramid : THREE.Object3D;
 
-  constructor() {
+  constructor(public asteroidsGame: AsteroidsGame) {
     let luxorSceneComponent = this;
     console.log(`LuxorSceneComponent.ctor: entered`);
     // note : you really need to put in a scene load handler.  This doesnt

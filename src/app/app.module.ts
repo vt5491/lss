@@ -68,11 +68,12 @@ import { GameSceneDirective } from './directives/game-scene.directive';
       provide: LuxorSceneComponent,
       // useFactory: (base, utils) => {
       //   return new Asteroid(base, utils, {});
-      useFactory: () => {
+      useFactory: (asteroidsGame) => {
       // useFactory:  function() {
-        return new LuxorSceneComponent();
+        return new LuxorSceneComponent(asteroidsGame);
       },
       // deps: [BaseService, UtilsService]
+      deps: [AsteroidsGame]
     }
 
     //vt end

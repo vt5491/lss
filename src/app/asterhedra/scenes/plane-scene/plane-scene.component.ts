@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
 
 @Component({
   selector: 'app-plane-scene',
@@ -8,9 +7,7 @@ import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
 })
 export class PlaneSceneComponent implements OnInit {
 
-  constructor(public asteroidsGame: AsteroidsGame) { 
-
-  }
+  constructor() { }
 
   ngOnInit() {
   }

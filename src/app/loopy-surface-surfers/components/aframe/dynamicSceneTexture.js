@@ -12,12 +12,16 @@ AFRAME.registerComponent('dynamic-scene-texture-2', {
     this.offscreenImageBuf = this.generateDataTexture(this.innerGameWidth, this.innerGameHeight, new THREE.Color(0x000000));
 
     if (this.data.innerSceneObj && THREE.Cache.files[this.data.innerSceneObj]) {
-      var innerSceneObj = eval(THREE.Cache.files[this.data.innerSceneObj]);
+      // var innerSceneObj = eval(THREE.Cache.files[this.data.innerSceneObj]);
+      //
+      // innerSceneObj.init();
+      this.innerSceneObj = eval(THREE.Cache.files[this.data.innerSceneObj]);
 
-      innerSceneObj.init();
+      this.innerSceneObj.init();
     }
     else {
       console.log('dynamicSceneTexture.init: please provide an inner scene');
+      // this.innerSceneObj = new
     }
 
   },
@@ -25,7 +29,8 @@ AFRAME.registerComponent('dynamic-scene-texture-2', {
     //TODO: put the scene update controls in the innerSceneObj
     // this.theta += Math.PI / 180.0 * 2.0;
 
-    this.cube.rotateY(Math.PI / 180.0 * 2.0);
+    // this.cube.rotateY(Math.PI / 180.0 * 2.0);
+    this.innerSceneObj.tick();
     this.webGLRenderer = document.querySelector('a-scene').renderer;
     this.gl_webGLRenderer = this.webGLRenderer.getContext();
     // this.innerWebGLRenderer.render(
@@ -63,6 +68,14 @@ AFRAME.registerComponent('dynamic-scene-texture-2', {
 
     // if(this.el.sceneEl.object3D.getObjectByName('Pyramid')) {
     //   var mesh = this.el.sceneEl.object3D.getObjectByName('Pyramid');
+    // document.querySelector('#test-plane').object3D.children[0].material.map
+    // if(document.querySelector('#test-plane')) {
+    //   var mesh = document.querySelector('#test-plane').object3D.children[0];
+    //   mesh.material.map = this.offscreenImageBuf;
+    //   mesh.material.needsUpdate = true;
+    //   mesh.material.map.needsUpdate = true;
+    //   this.offscreenImageBuf.needsUpdate = true; //need this
+    // }
     if(this.el.sceneEl.object3D.getObjectByName('Cube')) {
       var mesh = this.el.sceneEl.object3D.getObjectByName('Cube');
     // if(this.el.sceneEl.object3D.getObjectByName('Plane')) {

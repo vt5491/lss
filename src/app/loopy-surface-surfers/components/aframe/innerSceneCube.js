@@ -25,5 +25,9 @@
     this.theta = 0;
   }
 
+  factory.tick = () => {
+    this.cube.rotateY(Math.PI / 180.0 * 1.0);
+  }
+
   return factory;
 }.bind(this))()
