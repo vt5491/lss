@@ -7,6 +7,7 @@ import { InnerGame } from '../../interfaces/inner-game';
 import { ThreeJsSceneProvider } from '../../services/utils.service';
 import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
+import { InnerSceneRendererService } from '../../services/aframe/inner-scene-renderer.service';
 // import { ParmsService } from '../../services/parms.service';
 import { IMainCharacterInfo } from '../../interfaces/main-character-info';
 import { IMoveableGameObject } from '../../interfaces/imoveable-game-object';
@@ -42,22 +43,27 @@ export class AsteroidsGame implements InnerGame {
   private webGLRenderer : THREE.WebGLRenderer;
   private gl_webGLRenderer: WebGLRenderingContext;
   private innerSceneCamera : THREE.PerspectiveCamera;
+  private innerSceneRenderer: InnerSceneRendererService;
   //vt end
 
   constructor(
     private _ship : Ship,
     private _base : BaseService,
     private injector : Injector,
-    private _utils : UtilsService
+    private _utils : UtilsService,
+    // private innerSceneRenderer : InnerSceneRendererService,
   ) {
     // I seem to have to manually inject THREE.Scene because it's a third-party Component
     // and I can't wrap it in @Ijnectable?
     this._scene = this.injector.get(THREE.Scene);
     // this.asteroids.push( new Asteroid());
     this.base.projectionBoundary = this.BOUND_VAL;
+    // we don't DI this because we need to bind it to our runtime 'this'
+    // this.innerSceneRenderer = new InnerSceneRendererService(this);
 
     this.initScene();
     //vt add
+    /*
     AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {
       init: () => {
       // init: function () {
@@ -143,18 +149,19 @@ export class AsteroidsGame implements InnerGame {
       },
     },
     );
+    */
     //vt end
   }
 
-  generateDataTexture (width, height, color) {
-    var size = width * height;
-    var data = new Uint8Array(4 * size);
+  // generateDataTexture (width, height, color) {
+  //   var size = width * height;
+  //   var data = new Uint8Array(4 * size);
 
-    var texture = new (THREE.DataTexture as any)(data, width, height, THREE.RGBAFormat)
-    texture.needsUpdate = true;
+  //   var texture = new (THREE.DataTexture as any)(data, width, height, THREE.RGBAFormat)
+  //   texture.needsUpdate = true;
 
-    return texture;
-  };
+  //   return texture;
+  // };
 
   initScene() {
     //vt add

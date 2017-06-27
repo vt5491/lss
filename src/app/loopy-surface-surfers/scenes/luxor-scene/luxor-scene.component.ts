@@ -1,6 +1,7 @@
 ///<reference path="../../../../../typings/index.d.ts" />
 import { Component, OnInit, Injectable } from '@angular/core';
-import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
+import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
+import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 
 @Injectable()
 @Component({
@@ -11,10 +12,14 @@ import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
 export class LuxorSceneComponent implements OnInit {
   sceneObj : THREE.Object3D;
   pyramid : THREE.Object3D;
+  private innerSceneRenderer: InnerSceneRendererService;
 
-  constructor(public asteroidsGame: AsteroidsGame) {
+  constructor(public innerGame: AsteroidsGame) {
     let luxorSceneComponent = this;
     console.log(`LuxorSceneComponent.ctor: entered`);
+    // Note: the client that invokes this needs an updateScene method 
+    // and an 'innerGame' instance variable (they will be called back and referred to)
+    this.innerSceneRenderer = new InnerSceneRendererService(this);
     // note : you really need to put in a scene load handler.  This doesnt
     // always work when done in the ctor.
     // note2: not true.  A component.init is only driven once a scene has loaded.
@@ -186,6 +191,16 @@ export class LuxorSceneComponent implements OnInit {
 
   animateTowerSides() {
 
+  }
+
+  getProjectionMesh() : THREE.Mesh {
+    let projectionMesh = null;
+
+    if ((document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube')) {
+      projectionMesh = (document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube'); 
+    }
+
+    return projectionMesh;
   }
 
 }

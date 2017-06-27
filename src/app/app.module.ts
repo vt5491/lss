@@ -32,6 +32,7 @@ import { ThreeJsSceneProvider, UtilsService,
  //EmptyParmsServiceProvider
 } from './services/utils.service';
 import { GameSceneDirective } from './directives/game-scene.directive';
+import { InnerSceneRendererService  } from './services/aframe/inner-scene-renderer.service';
 //vt end
 
 @NgModule({
@@ -68,14 +69,14 @@ import { GameSceneDirective } from './directives/game-scene.directive';
       provide: LuxorSceneComponent,
       // useFactory: (base, utils) => {
       //   return new Asteroid(base, utils, {});
-      useFactory: (asteroidsGame) => {
+      useFactory:  (asteroidsGame) => {
       // useFactory:  function() {
         return new LuxorSceneComponent(asteroidsGame);
       },
       // deps: [BaseService, UtilsService]
       deps: [AsteroidsGame]
-    }
-
+    },
+    // InnerSceneRendererService,
     //vt end
   ],
   bootstrap: [AppComponent],
