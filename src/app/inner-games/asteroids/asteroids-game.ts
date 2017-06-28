@@ -8,6 +8,7 @@ import { ThreeJsSceneProvider } from '../../services/utils.service';
 import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
 import { InnerSceneRendererService } from '../../services/aframe/inner-scene-renderer.service';
+import { AsteroidsGameControllerListenerService } from './aframe/asteroids-game-controller-listener.service';
 // import { ParmsService } from '../../services/parms.service';
 import { IMainCharacterInfo } from '../../interfaces/main-character-info';
 import { IMoveableGameObject } from '../../interfaces/imoveable-game-object';
@@ -44,6 +45,7 @@ export class AsteroidsGame implements InnerGame {
   private gl_webGLRenderer: WebGLRenderingContext;
   private innerSceneCamera : THREE.PerspectiveCamera;
   private innerSceneRenderer: InnerSceneRendererService;
+  private asteroidsGameControllerListener: AsteroidsGameControllerListenerService;
   //vt end
 
   constructor(
@@ -52,6 +54,7 @@ export class AsteroidsGame implements InnerGame {
     private injector : Injector,
     private _utils : UtilsService,
     // private innerSceneRenderer : InnerSceneRendererService,
+    // private asteroidsGameControllerListener : AsteroidsGameControllerListenerService,
   ) {
     // I seem to have to manually inject THREE.Scene because it's a third-party Component
     // and I can't wrap it in @Ijnectable?
@@ -60,8 +63,16 @@ export class AsteroidsGame implements InnerGame {
     this.base.projectionBoundary = this.BOUND_VAL;
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
+    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this);
 
     this.initScene();
+
+    AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {
+      init: () => {
+
+      }
+    });
+
     //vt add
     /*
     AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {

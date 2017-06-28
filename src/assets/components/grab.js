@@ -28,6 +28,8 @@ AFRAME.registerComponent('grab', {
     el.addEventListener('gripclose', this.onGripClose);
     el.addEventListener('gripopen', this.onGripOpen);
     //vt add
+    //el.addEventListener('gripdown', this.onGripDown, {once: false});
+    //el.addEventListener('gripdown', this.onGripDown, {once: true});
     el.addEventListener('gripdown', this.onGripDown);
     el.addEventListener('gripup', this.onGripUp);
     // el.addEventListener('triggerdown', this.onTriggerDown);
