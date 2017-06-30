@@ -70,7 +70,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
       provide: LuxorSceneComponent,
       // useFactory: (base, utils) => {
       //   return new Asteroid(base, utils, {});
-      useFactory: (asteroidsGame) => {
+      useFactory:  (asteroidsGame) => {
       // useFactory:  function() {
         return new LuxorSceneComponent(asteroidsGame);
       },

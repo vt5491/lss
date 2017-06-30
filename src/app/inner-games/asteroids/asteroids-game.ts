@@ -46,6 +46,7 @@ export class AsteroidsGame implements InnerGame {
   private innerSceneCamera : THREE.PerspectiveCamera;
   private innerSceneRenderer: InnerSceneRendererService;
   private asteroidsGameControllerListener: AsteroidsGameControllerListenerService;
+  public shipRotFactor : number = 4.0;
   //vt end
 
   constructor(
@@ -63,7 +64,7 @@ export class AsteroidsGame implements InnerGame {
     this.base.projectionBoundary = this.BOUND_VAL;
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this);
+    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base);
 
     this.initScene();
 

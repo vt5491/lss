@@ -44,17 +44,6 @@ export class Asteroid implements IMoveableGameObject {
     this.x = 0.0;
     this.vx = 0.003;
     this.vy = 0;
-    // console.log(`parmsSerice=${this.parmsService}`);
-    // if (this.parmsService !== undefined) {
-    //   this.parms = this.parmsService.parms;
-    //   console.log(`parms=${this.parms}`);
-    // }
-    // else {
-    //   this.parms = {};
-    // }
-
-    // this.width = this.parms['width'] || this.DEFAULT_WIDTH;
-    // this.height = this.parms['height'] || this.DEFAULT_HEIGHT;
 
     this.init();
   };
@@ -68,7 +57,8 @@ export class Asteroid implements IMoveableGameObject {
     // this.geom = new THREE.PlaneBufferGeometry(0.2, 0.4);
     this.geom = new THREE.PlaneBufferGeometry(this.width, this.height);
     this.geom.computeBoundingBox();
-    this.mat = new THREE.MeshBasicMaterial({ color: 0x70FF20, side: THREE.DoubleSide });
+    // this.mat = new THREE.MeshBasicMaterial({ color: 0x70FF20, side: THREE.DoubleSide });
+    this.mat = new THREE.MeshBasicMaterial({ color: 0xF0FF20, side: THREE.DoubleSide });
 
     this.mesh = new THREE.Mesh(this.geom, this.mat);
     // this.mesh.position.z = 1.0;
