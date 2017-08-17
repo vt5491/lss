@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AsteroidsGame } from '../asteroids-game'
 import { BaseService } from '../../../services/base.service';
 
+//Vive original: gripdown -> fire bullet
+//             : triggerdown -> thrust 
+
 @Injectable()
 export class AsteroidsGameControllerListenerService {
   public touchOn : boolean;
@@ -26,7 +29,8 @@ export class AsteroidsGameControllerListenerService {
           console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
           asteroidsGame.shipFiredBullet();
         });
-        el.addEventListener('gripdown', function (e) {
+        el.addEventListener('gripdown', function (e) { //Vive
+        // el.addEventListener('triggerdown', function (e) {
           console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
           asteroidsGame.shipFiredBullet();
         });
@@ -54,32 +58,44 @@ export class AsteroidsGameControllerListenerService {
         //   console.log(`AsteroidsGameControllerListenerService.AFRAME.buttonchanged: e.value=${e.detail.state.value}`);
         // });
         // el.addEventListener('axismove', function (e) {
+        // this axismove handler works well for the Vive, but isn't so good on the rift
+        // comment out for now, as I'm developing on the Rift at the moment, but
+        // leave in as the OR version may not be so good on the Vive.
+        // el.addEventListener('axismove', (e) => {
+        //   console.log(`AsteroidsGameControllerListenerService.AFRAME.init: axismove event: e=${e}`);
+        //   if (angParentComponent.touchOn) {
+        //     var theta = -Math.atan2(e.detail.axis[0], e.detail.axis[1]);
+        //     // round to tenths to reduce sensitivity
+        //     theta = Number(theta.toFixed(1));
+
+        //     if (theta > angParentComponent.lastTouchPadTheta) {
+        //       asteroidsGame.ship.theta += base.ONE_DEG * asteroidsGame.shipRotFactor;
+        //     }
+        //     else if (theta < angParentComponent.lastTouchPadTheta) {
+        //       asteroidsGame.ship.theta -= base.ONE_DEG * asteroidsGame.shipRotFactor;
+        //     }
+        //     angParentComponent.lastTouchPadTheta = theta;
+        //   }
         el.addEventListener('axismove', (e) => {
           console.log(`AsteroidsGameControllerListenerService.AFRAME.init: axismove event: e=${e}`);
-          // if (e.detail.changed[0] || e.detail.changed[1]) {
-          // if (this.data.touchOn) {
           if (angParentComponent.touchOn) {
+            var horizAxis = e.detail.axis[0];
+            var upAxis = e.detail.axis[1];
             var theta = -Math.atan2(e.detail.axis[0], e.detail.axis[1]);
             // round to tenths to reduce sensitivity
-            // theta /= 1000000;
-            // theta *= 1000000;
-            // theta = parseInt(theta.toFixed(12));
-            // theta = parseInt(theta.toPrecision(5));
-            // theta = Number(theta.toPrecision(3));
             theta = Number(theta.toFixed(1));
-            // asteroidsGame.ship.theta = theta;
-            if (theta > angParentComponent.lastTouchPadTheta) {
-              asteroidsGame.ship.theta += base.ONE_DEG * asteroidsGame.shipRotFactor;
+
+            if (theta > 0) {
+              asteroidsGame.ship.theta += base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
             }
-            else if (theta < angParentComponent.lastTouchPadTheta) {
-              asteroidsGame.ship.theta -= base.ONE_DEG * asteroidsGame.shipRotFactor;
+            else if (theta < 0) {
+              asteroidsGame.ship.theta -= base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
             }
-            angParentComponent.lastTouchPadTheta = theta;
           }
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.buttonchanged: e.value=${e.detail.state.value}`);
         });
-        // el.addEventListener('triggerdown', function (e) {
-        el.addEventListener('triggerdown', (e) => {
+        el.addEventListener('triggerdown', function (e) {
+        // el.addEventListener('triggerdown', (e) => { // Vive
+        // el.addEventListener('gripdown', (e) => {
           console.log(`AsteroidsGameControllerListenerService.AFRAME.init: triggerdown event: e=${e}`);
           angParentComponent.thrusterEngaged = true;
           // asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta);
@@ -88,7 +104,9 @@ export class AsteroidsGameControllerListenerService {
           // asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta);
           // asteroidsGame.ship.mesh.translateY(asteroidsGame.ship.vy);
         });
-        el.addEventListener('triggerup', (e) => {
+        el.addEventListener('triggerup', (e) => { //Vive
+        // el.addEventListener('triggerup', (e) => {
+        // el.addEventListener('gripup', (e) => {
           angParentComponent.thrusterEngaged = false;
         });
         // el.addEventListener('gripdown', function (e) {

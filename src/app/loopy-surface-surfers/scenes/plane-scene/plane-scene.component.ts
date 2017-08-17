@@ -13,6 +13,10 @@ export class PlaneSceneComponent implements OnInit {
   constructor(public innerGame: AsteroidsGame) { 
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
+    // more accurately, the component that instantiates InnerSceneRender 
+    // e.g this module (plane-scene.component in this case) must have
+    // an innerScene object, and that innerScene object must have an 'udateScene'
+    // method (unless it's a static scene, in which case it doesn't need 'updatScene')
     this.innerSceneRenderer = new InnerSceneRendererService(this);
 
   }

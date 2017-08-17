@@ -11,11 +11,14 @@
   <!-- Note: if using aframe, do not include a separate copy of three.js lib in -->
   <!-- here or in .angular-cli.json.  Aframe includes three.js and if you include -->
   <!-- another instance of three.js, it may not be the same version as what aframe -->
-  <!-- is expecting and lead to unexpected results.    -->
+  <!-- is expecting and lead to unexpected results.  This will only occur if  -->
+  <!-- load three.js *after* aframe.  If you load it before, then the three.js -->
+  <!-- used by aframe will "dominate" -->
   <!-- Note: mozilla firefox has a tendancy to work better with later version of aframe -->
   <!-- and chrome with older version -->
   <!-- chrome work with this -->
   <script src="../node_modules/aframe/dist/aframe-master.js"></script>
+  <!-- <script src="assets/lib/three.js"></script> -->
   <!-- note: the following is v0.4.0 and chrome works best with -->
   <!-- mozilla nightly doesnt work with this -->
   <!-- <script src="../node_modules/aframe/build/aframe.js"></script> -->

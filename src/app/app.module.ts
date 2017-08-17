@@ -11,6 +11,7 @@ import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surf
 //import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
 import { LuxorSceneComponent } from './loopy-surface-surfers/scenes/luxor-scene/luxor-scene.component';
 import { PlaneSceneComponent } from './loopy-surface-surfers/scenes/plane-scene/plane-scene.component';
+// import { PoolHallSceneComponent } from './loopy-surface-surfers/scenes/pool-hall-scene/pool-hall-scene.component';
 //vt add
 import {RouterModule, Routes} from '@angular/router';
 //vt end
@@ -20,7 +21,8 @@ const appRoutes:Routes = [
   //{path: '**', component: LoopySurfaceSurfersComponent},
   {path: '', component: LoopySurfaceSurfersComponent},
   {path: 'luxorScene', component: LuxorSceneComponent},
-  {path: 'planeScene', component: PlaneSceneComponent} 
+  {path: 'planeScene', component: PlaneSceneComponent}, 
+  // {path: 'poolHallScene', component: PoolHallSceneComponent} 
 ];
 import { BaseService  } from './services/base.service';
 import { AsteroidsGame  } from './inner-games/asteroids/asteroids-game';
@@ -34,6 +36,7 @@ import { ThreeJsSceneProvider, UtilsService,
 import { GameSceneDirective } from './directives/game-scene.directive';
 import { InnerSceneRendererService  } from './services/aframe/inner-scene-renderer.service';
 import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
+// import { PoolHallSceneComponent } from './loopy-surface-surfers/scenes/pool-hall-scene/pool-hall-scene.component';
 //vt end
 
 @NgModule({
@@ -44,6 +47,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
     PlaneSceneComponent,
     LuxorSceneComponent,
     GameSceneDirective,
+    // PoolHallSceneComponent,
     //vt add
     // LuxorSceneComponent
     //vt end
@@ -70,7 +74,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
       provide: LuxorSceneComponent,
       // useFactory: (base, utils) => {
       //   return new Asteroid(base, utils, {});
-      useFactory:  (asteroidsGame) => {
+      useFactory:(asteroidsGame) => {
       // useFactory:  function() {
         return new LuxorSceneComponent(asteroidsGame);
       },
