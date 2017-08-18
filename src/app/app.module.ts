@@ -11,7 +11,7 @@ import { LoopySurfaceSurfersComponent } from './loopy-surface-surfers/loopy-surf
 //import { LuxorSceneComponent } from './asterhedra/scenes/luxor-scene/luxor-scene.component';
 import { LuxorSceneComponent } from './loopy-surface-surfers/scenes/luxor-scene/luxor-scene.component';
 import { PlaneSceneComponent } from './loopy-surface-surfers/scenes/plane-scene/plane-scene.component';
-// import { PoolHallSceneComponent } from './loopy-surface-surfers/scenes/pool-hall-scene/pool-hall-scene.component';
+import { PoolHallSceneComponent } from './loopy-surface-surfers/scenes/pool-hall-scene/pool-hall-scene.component';
 //vt add
 import {RouterModule, Routes} from '@angular/router';
 //vt end
@@ -22,7 +22,7 @@ const appRoutes:Routes = [
   {path: '', component: LoopySurfaceSurfersComponent},
   {path: 'luxorScene', component: LuxorSceneComponent},
   {path: 'planeScene', component: PlaneSceneComponent}, 
-  // {path: 'poolHallScene', component: PoolHallSceneComponent} 
+  {path: 'poolHallScene', component: PoolHallSceneComponent} 
 ];
 import { BaseService  } from './services/base.service';
 import { AsteroidsGame  } from './inner-games/asteroids/asteroids-game';
@@ -47,7 +47,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
     PlaneSceneComponent,
     LuxorSceneComponent,
     GameSceneDirective,
-    // PoolHallSceneComponent,
+    PoolHallSceneComponent
     //vt add
     // LuxorSceneComponent
     //vt end
