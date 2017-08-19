@@ -1,0 +1,36 @@
+<div id='header'>
+  <p></p>
+  <button name="vt-button" id='vt-button'>Click me</button>
+</div>
+<a-scene id="pool-hall-scene" inner-scene-renderer >
+<!-- <a-scene id="pool-hall-scene"  > -->
+  <a-assets>
+  </a-assets>
+  <a-entity id="dolly" position="0 6.5 13" wasd-plus-controls>
+    <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
+  </a-entity>
+  <a-entity hand-controls="right" position="0 0 -1"
+    grab
+    asteroids-game-controller-listener
+  >
+  </a-entity>
+  <a-entity id="pool-hall-model"
+  gltf-model="url(assets/models/pool-hall-paid/pool-hall.gltf)"
+  animation-mixer="duration : 5"
+  (model-loaded)="initScene($event)"
+  >
+  <!-- gltf-model="url(assets/models/pool-hall/pool-hall.gltf)" -->
+  <!-- gltf-model="url(assets/models/pool-hall/pool-hall.gltf)" -->
+  <!-- gltf-model="#tree" -->
+  </a-entity>
+  <!-- <a-entity id="luxor-model"
+    gltf-model="url(assets/models_out/pool_table.gltf)"
+    animation-mixer="duration : 5"
+    (model-loaded)="initScene($event)"
+    >
+  </a-entity> -->
+  <!-- <a-entity obj-model="obj: #tree-obj; mtl: #tree-mtl"></a-entity> -->
+  <!-- <a-entity collada-model="#tree"></a-entity> -->
+  <!-- <a-sphere position="-2 2 6" color="blue" radius="1"></a-sphere> -->
+  <a-sky color="#8080EC"></a-sky>
+</a-scene>
