@@ -74,119 +74,9 @@ export class AsteroidsGame implements InnerGame {
       }
     });
 
-    //vt add
-    /*
-    AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {
-      init: () => {
-      // init: function () {
-        console.log(`AsteroidsGame.AFRAME.init: entered`);
-        console.log(`AsteroidsGame.AFRAME.init: seedAsteroidsCount=${this.seedAsteroidCount}`);
-        console.log('dynamicSceneTexture.init: entered');
-        this.innerWebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
-        this.gl_innerWebGLRenderer = this.innerWebGLRenderer.getContext();
-        this.offscreenBuffer = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
-        this.innerGameWidth = window.innerWidth;
-        this.innerGameHeight = window.innerHeight;
-        this.offscreenImageBuf = this.generateDataTexture(this.innerGameWidth, this.innerGameHeight, new THREE.Color(0x000000));
-        this.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
-        this.innerSceneCamera.position.z = 5.0;
-
-      },
-      // tick: function (t, dt) {
-      tick: (t, dt) => {
-        let a = 1;
-        
-        this.updateScene();
-        this.webGLRenderer = (document.querySelector('a-scene') as any).renderer;
-        this.gl_webGLRenderer = this.webGLRenderer.getContext();
-        // this.innerWebGLRenderer.render(
-        this.webGLRenderer.render(
-          // this.innerScene,
-          // this._scene,
-          this.scene,
-          this.innerSceneCamera,
-          this.offscreenBuffer
-          // this.offscreenImageBuf
-        );
-
-        try {
-          // note: readPixels puts the result into the fourth function arg
-          // e.g this.offscreenImageBuf.image.data
-          this.gl_webGLRenderer.readPixels(0, 0,
-            window.innerWidth, window.innerHeight,
-            this.gl_webGLRenderer.RGBA,
-            this.gl_webGLRenderer.UNSIGNED_BYTE,
-            this.offscreenImageBuf.image.data
-          );
-        }
-        catch (e) {
-          console.log(`torus.proj.mainLoop: caught error ${e}`)
-        }
-
-    this.offscreenImageBuf.needsUpdate = true; //need this
-
-        if (document.querySelector('#test-plane')) {
-          var mesh = (document.querySelector('#test-plane') as any).object3D.children[0];
-          mesh.material.map = this.offscreenImageBuf;
-          mesh.material.needsUpdate = true;
-          mesh.material.map.needsUpdate = true;
-          this.offscreenImageBuf.needsUpdate = true; //need this
-        }
-        // if ((this as any).el.sceneEl.object3D.getObjectByName('Cube')) {
-        // document.querySelector('#luxor-model').object3D.getObjectByName('LuxorTower')
-        // if (this.scene.getObjectByName('Cube')) {
-        // if ((document.querySelector('#luxor-model') as any).object3D.getObjectByName('LuxorTower')) {
-        if ((document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube')) {
-          // var mesh = (this as any).el.sceneEl.object3D.getObjectByName('Cube');
-          // var mesh = (this.scene.getObjectByName('Cube') as any);
-          var mesh = (document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube');   
-          // if(this.el.sceneEl.object3D.getObjectByName('Plane')) {
-          //   var mesh = this.el.sceneEl.object3D.getObjectByName('Plane');
-          // if(this.el.sceneEl.object3D.getObjectByName('Pyramid')) {
-          //   var mesh = this.el.sceneEl.object3D.getObjectByName('Pyramid');
-          mesh.material.map = this.offscreenImageBuf;
-          mesh.material.needsUpdate = true;
-          mesh.material.map.needsUpdate = true;
-          this.offscreenImageBuf.needsUpdate = true; //need this
-        }
-      },
-      generateDataTexture: function (width, height, color) {
-        var size = width * height;
-        var data = new Uint8Array(4 * size);
-
-        var texture = new (THREE.DataTexture as any)(data, width, height, THREE.RGBAFormat)
-        texture.needsUpdate = true;
-
-        return texture;
-      },
-    },
-    );
-    */
-    //vt end
   }
 
-  // generateDataTexture (width, height, color) {
-  //   var size = width * height;
-  //   var data = new Uint8Array(4 * size);
-
-  //   var texture = new (THREE.DataTexture as any)(data, width, height, THREE.RGBAFormat)
-  //   texture.needsUpdate = true;
-
-  //   return texture;
-  // };
-
   initScene() {
-    //vt add
-    // var geometry = new THREE.BoxGeometry( 2, 3, 1 );
-    // // var geometry = new THREE.BoxGeometry( .2, .1, .1 );
-    // var material = new THREE.MeshBasicMaterial( { color: "#433F81" } );
-    // var cube = new THREE.Mesh( geometry, material );
-
-    // this.scene.add(cube);
-
-    // this.innerSceneCamera = new THREE.PerspectiveCamera(75, this.innerGameWidth / this.innerGameHeight);
-    // this.innerSceneCamera.position.z = 5.0;
-    //vt end
     this.initAsteroids();
     // development hack to make asteroid 0 bigger so we can identify it visually
     this.asteroids[0].mesh.scale.x = 2.0;
@@ -250,26 +140,6 @@ export class AsteroidsGame implements InnerGame {
   updateScene() {
     // 3.7 is a little short. 3.8 is a little long
     let boundVal = this.BOUND_VAL;
-
-    // read gamepad
-    // this.gamepadHandler();
-    // if (this.gpad) {
-    //   // if (this.buttonPressed(this.gpad.buttons[0])) {
-    //   if (this.gpad.buttons[0].pressed) {
-    //     console.log(`AsteroidsGame.updateScene-1: gPad button 0 pressed`);
-    //     // (<AsteroidsGame>this.innerGame).shipThrust();
-    //   }
-
-    //   console.log(`gpad.axes=${this.gpad.axes[0]}`);
-    // }
-
-    
-    // this.gpad = new Gamepad();
-
-    // this.gpad.on('press', 'button_1', () => {
-    //   console.log('button 1 was pressed!');
-    // });
-    // this.gpad
 
     // update asteroids
     for (let i = 0; i < this.asteroids.length; i++) {

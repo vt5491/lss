@@ -38,4 +38,11 @@ export class PoolHallSceneComponent implements OnInit {
     return projectionMesh;
   }
 
+  // this is the base texture that will be wrapped around the projection Mesh, onto
+  // which the inner game will also be projected.
+  getBaseTexture() : THREE.Texture {
+    return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+  }
+
 }

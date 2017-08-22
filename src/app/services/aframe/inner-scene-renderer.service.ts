@@ -27,6 +27,14 @@ export class InnerSceneRendererService {
         this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameWidth, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
         this.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
         this.innerGame.innerSceneCamera.position.z = 5.0;
+        //vt add
+        // this.poolBallTexture = new THREE.TextureLoader().load( "../../assets/img/two_ball.jpg" ); 
+        this.poolBallTexture = this.getBaseTexture(); 
+        this.vertShader = document.getElementById('simple-vertex-shader').innerHTML;
+        this.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
+        // this.vertShader = document.getElementById('simple-vertex-shader');
+        // this.fragShader = document.getElementById('simple-fragment-shader');
+        //vt end
       }.bind(embeddedContext),
       tick: function(t, dt) {
       // tick: (t, dt) => {
@@ -60,23 +68,38 @@ export class InnerSceneRendererService {
           console.log(`torus.proj.mainLoop: caught error ${e}`)
         }
 
+        //vt add
+        let attributes = {};
+        let uniforms = {
+          t1: { type: "t", value: this.poolBallTexture },
+          t2: { type: "t", value: this.innerGame.offscreenImageBuf }
+        };
+
+        let defines = {};
+        defines["USE_MAP"] = "";
+
+        let material_shader = new THREE.ShaderMaterial({
+          uniforms: uniforms,
+          defines: defines,
+          vertexShader: this.vertShader,
+          fragmentShader: this.fragShader
+        });
+
+        //vt end
         this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
 
         var mesh;
-        // if (document.querySelector('#test-plane')) {
-        //   mesh = (document.querySelector('#test-plane') as any).object3D.children[0];
+        mesh = this.getProjectionMesh();
+        // if (mesh) {
         //   mesh.material.map = this.innerGame.offscreenImageBuf;
         //   mesh.material.needsUpdate = true;
         //   mesh.material.map.needsUpdate = true;
         //   this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
         // }
-        // if ((document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube')) {
-        mesh = this.getProjectionMesh();
         if (mesh) {
-          // var mesh = (document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube');
-          mesh.material.map = this.innerGame.offscreenImageBuf;
+          mesh.material = material_shader;
           mesh.material.needsUpdate = true;
-          mesh.material.map.needsUpdate = true;
+          // mesh.material.map.needsUpdate = true;
           this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
         }
       }.bind(embeddedContext),

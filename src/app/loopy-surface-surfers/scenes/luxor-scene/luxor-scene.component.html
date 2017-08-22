@@ -4,9 +4,8 @@
 </div>
 <a-scene  id="luxor-scene"
   luxor-scene-aframe-component
-  asteroids-game-controller-listener
 >
-<!-- <a-scene > -->
+  <!-- asteroids-game-controller-listener -->
   <a-assets>
     <!-- <a-asset-item id="inner-scene-obj" src="../../components/aframe/innerSceneCube.js"></a-asset-item> -->
     <a-asset-item id="inner-scene-obj" src="src/app/loopy-surface-surfers/components/aframe/innerSceneCube.js"></a-asset-item>
@@ -16,7 +15,9 @@
   <a-entity id="luxor-scene" ></a-entity>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
-    <a-entity hand-controls="right" position="0 0 -1" grab></a-entity>
+    <a-entity hand-controls="right" position="0 0 -1" grab
+    asteroids-game-controller-listener
+    ></a-entity>
     <!--<a-entity hand-controls="left" position="0 0 -1" grab></a-entity>-->
   </a-entity>
   <a-entity id="luxor-model"
@@ -27,21 +28,5 @@
     >
     <!-- asteroids-inner-scene-aframe-component -->
   </a-entity>
-    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
-  <!-- <a-plane id="test-plane" position=" 1 1 6" color="#CC1" height="3" width="3"
-    material="side: double;"
-    >
-  </a-plane> -->
-    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
-  <!-- <a-cylinder id="test-cyl" position=" -1 1 6" color="#CC1" height="3" radius="3"
-    material="side: double;"
-    dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj"
-    >
-  </a-cylinder> -->
-  <!-- <a-sphere position="-2 2 6" color="red" radius="1" -->
-  <!-- > -->
-    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
-  <!-- </a-sphere> -->
-
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

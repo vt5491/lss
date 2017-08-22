@@ -15,7 +15,7 @@ export class PlaneSceneComponent implements OnInit {
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
     // more accurately, the component that instantiates InnerSceneRender 
     // e.g this module (plane-scene.component in this case) must have
-    // an innerScene object, and that innerScene object must have an 'udateScene'
+    // an innerScene object, and that innerScene object must have an 'updateScene'
     // method (unless it's a static scene, in which case it doesn't need 'updatScene')
     this.innerSceneRenderer = new InnerSceneRendererService(this);
 
@@ -32,6 +32,13 @@ export class PlaneSceneComponent implements OnInit {
     }
 
     return projectionMesh;
+  }
+
+  // this is the base texture that will be wrapped around the projection Mesh, onto
+  // which the inner game will also be projected.
+  getBaseTexture() : THREE.Texture {
+    // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
+    return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
   }
 
 }
