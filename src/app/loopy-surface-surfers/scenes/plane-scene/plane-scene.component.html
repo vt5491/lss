@@ -2,15 +2,19 @@
   <p></p>
   <button name="vt-button" id='vt-button'>Click me</button>
 </div>
-<a-scene plane-scene-aframe-component id="plane-scene" inner-scene-renderer>
+<a-scene plane-scene-aframe-component id="plane-scene"
+ inner-scene-renderer
+ (innerSceneTick)="onInnerSceneTick($event)"
+ >
   <a-assets>
     <a-asset-item id="inner-scene-obj" src="src/app/loopy-surface-surfers/components/aframe/innerSceneCube.js"></a-asset-item>
   </a-assets>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
     <a-entity hand-controls="right" position="0 0 -1" hrab
-    asteroids-game-controller-listener
+    asteroids-game-controller-listener="shipRotFactor: -1;"
     ></a-entity>
+    <!-- asteroids-game-controller-listener="shipRotFactor: -1;" -->
     <!-- asteroids-game-controller-listener -->
     <!--<a-entity hand-controls="left" position="0 0 -1" grab></a-entity>-->
   </a-entity>

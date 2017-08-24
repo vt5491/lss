@@ -5,12 +5,16 @@
 // other angular components, but it's really an aframe component at heart.
 // It refers back to the outer scene.  The outer scene object must have an
 // 'udateScene' method, and an 'innerGame' object.
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
+// import { OuterGameService } from '../../services/outer-game.service';
 
 @Injectable()
 export class InnerSceneRendererService {
+  // @Output() innerSceneTick : EventEmitter<any> = new EventEmitter();
+  // // outerGameService : OuterGameService;
 
   constructor(embeddedContext: any) {
+    // this.outerGameService = new OuterGameService();
     AFRAME.registerComponent('inner-scene-renderer', {
       init: function() {
         this.init_ang(this.generateDataTexture_af);
@@ -37,7 +41,6 @@ export class InnerSceneRendererService {
         //vt end
       }.bind(embeddedContext),
       tick: function(t, dt) {
-      // tick: (t, dt) => {
         let a = 1;
         
         // the parent context needs to have an updateScene method.
@@ -102,6 +105,11 @@ export class InnerSceneRendererService {
           // mesh.material.map.needsUpdate = true;
           this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
         }
+        // and emit an event for any observers who may need to respond to this
+        // this.innerSceneTick.emit(null);
+        // this.outerGameService.onInnerSceneTick();
+        // debugger;
+        this.trackDolly(this.innerGame.ship.mesh.position);
       }.bind(embeddedContext),
       generateDataTexture_af: function (width, height, color) {
         console.log(`inner-scene-renderer.generateDataTexture_af: entered`);

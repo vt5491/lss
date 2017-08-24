@@ -27,6 +27,7 @@ import { ThreeJsSceneProvider, UtilsService,
 import { GameSceneDirective } from './directives/game-scene.directive';
 import { InnerSceneRendererService  } from './services/aframe/inner-scene-renderer.service';
 import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
+import { OuterGameService} from './services/outer-game.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
     AsteroidsGame,
     UtilsService,
     ThreeJsSceneProvider,
+    OuterGameService,
     // AsteroidsGameControllerListenerService,
     // {
     //   provide: AsteroidsGameControllerListenerService,
@@ -60,7 +62,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame)  => {
+      useFactory:(asteroidsGame) => {
         return new LuxorSceneComponent(asteroidsGame);
       },
       deps: [AsteroidsGame]

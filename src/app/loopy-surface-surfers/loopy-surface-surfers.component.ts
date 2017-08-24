@@ -58,7 +58,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
         }, 0);
       },
       tick:  (time, timeDelta) => {
-        console.log(`LoopySurfaceSurfers.lss-aframe-component.tick: entered`);
+        // console.log(`LoopySurfaceSurfers.lss-aframe-component.tick: entered`);
         
         // let posData = this.ocLeftController.el.components.position.data;
         // console.log(`LoopySurfaceSurfers.tick: oc-posData.x=${posData.x}, y=${posData.y}, z=${posData.z}`);

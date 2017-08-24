@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
+import { OuterGameService } from '../../../services/outer-game.service';
 
 @Injectable()
 @Component({
@@ -11,13 +12,14 @@ import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-
 export class PoolHallSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;  
 
-  constructor(public innerGame: AsteroidsGame) { 
+  constructor(public innerGame: AsteroidsGame, public outerGameService: OuterGameService) { 
     console.log('PoolHallSceneComponent: now in ctor');
 
     this.innerSceneRenderer = new InnerSceneRendererService(this);
   }
 
   ngOnInit() {
+    this.outerGameService.init();
   }
 
   initScene() {
@@ -31,7 +33,8 @@ export class PoolHallSceneComponent implements OnInit {
     if ((document.querySelector('#pool-hall-model') as any).object3D.getObjectByName('PoolBall')) {
       projectionMesh = (document.querySelector('#pool-hall-model') as any)
         .object3D
-        .getObjectByName('PoolBall')
+        // .getObjectByName('PoolBall')
+        .getObjectByName('PoolBall_002')
         .children[0]; 
     }
 
@@ -43,6 +46,11 @@ export class PoolHallSceneComponent implements OnInit {
   getBaseTexture() : THREE.Texture {
     return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
     // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+  }
+  
+  trackDolly (pos : THREE.Vector3 ) {
+    this.outerGameService.dolly.position.x = pos.x;
+    this.outerGameService.dolly.position.y = pos.y;
   }
 
 }

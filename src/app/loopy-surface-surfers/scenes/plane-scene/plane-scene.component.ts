@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game'
+import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
+import { OuterGameService } from '../../../services/outer-game.service';
 
 @Component({
   selector: 'app-plane-scene',
@@ -9,8 +10,10 @@ import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-
 })
 export class PlaneSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;
+  // private outerGameService : OuterGameService;
 
-  constructor(public innerGame: AsteroidsGame) { 
+  constructor(public innerGame: AsteroidsGame, public outerGameService: OuterGameService) { 
+    // this.outerGameService = new OuterGameService();
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
     // more accurately, the component that instantiates InnerSceneRender 
@@ -22,6 +25,9 @@ export class PlaneSceneComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('PlaneSceneComponent: now in ngOnInit');
+    this.outerGameService.init();
+    
   }
 
   getProjectionMesh() : THREE.Mesh {
@@ -38,7 +44,16 @@ export class PlaneSceneComponent implements OnInit {
   // which the inner game will also be projected.
   getBaseTexture() : THREE.Texture {
     // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
-    return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    return new THREE.TextureLoader().load("../../../../assets/img/coke-label.jpg");  
   }
+
+  trackDolly (pos : THREE.Vector3 ) {
+    this.outerGameService.dolly.position.x = pos.x;
+    this.outerGameService.dolly.position.y = pos.y;
+  }
+
+  // onInnerSceneTick( e: Event)  {
+  //   console.log('PlaneSceneComponent.onInnerSceneTick: hello');
+  // }
 
 }
