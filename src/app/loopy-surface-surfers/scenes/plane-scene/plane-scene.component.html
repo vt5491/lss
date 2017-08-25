@@ -4,26 +4,22 @@
 </div>
 <a-scene plane-scene-aframe-component id="plane-scene"
  inner-scene-renderer
- (innerSceneTick)="onInnerSceneTick($event)"
  >
+ <!-- (innerSceneTick)="onInnerSceneTick($event)" -->
   <a-assets>
     <a-asset-item id="inner-scene-obj" src="src/app/loopy-surface-surfers/components/aframe/innerSceneCube.js"></a-asset-item>
   </a-assets>
-  <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
+  <a-entity id="dolly" position="0 0 8" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
-    <a-entity hand-controls="right" position="0 0 -1" hrab
+    <a-entity hand-controls="right" position="2.0 0 0"
     asteroids-game-controller-listener="shipRotFactor: -1;"
     ></a-entity>
-    <!-- asteroids-game-controller-listener="shipRotFactor: -1;" -->
-    <!-- asteroids-game-controller-listener -->
-    <!--<a-entity hand-controls="left" position="0 0 -1" grab></a-entity>-->
+    <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   </a-entity>
-  <!-- <a-entity tracked-controls="controller: 0; idPrefix: OpenVR"></a-entity> -->
-  <a-plane id="test-plane" position=" 1 1 6" color="#CC1" height="8" width="8"
+  <a-plane id="test-plane" position="0 0 0" color="#CC1" height="8" width="8"
     material="side: double;"
     asteroids-inner-scene-aframe-component
     >
-    <!-- dynamic-scene-texture-2="inner-scene-obj: #inner-scene-obj" -->
   </a-plane>
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

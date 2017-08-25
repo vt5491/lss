@@ -6,6 +6,7 @@
 // It refers back to the outer scene.  The outer scene object must have an
 // 'udateScene' method, and an 'innerGame' object.
 import { Injectable, Output, EventEmitter } from '@angular/core';
+import { BaseService } from '../base.service';
 // import { OuterGameService } from '../../services/outer-game.service';
 
 @Injectable()
@@ -24,12 +25,15 @@ export class InnerSceneRendererService {
         console.log(`inner-scene-renderer.init: seedAsteroidsCount=${this.innerGame.seedAsteroidCount}`);
         this.innerGame.innerWebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
         this.innerGame.gl_innerWebGLRenderer = this.innerGame.innerWebGLRenderer.getContext();
-        this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
-        this.innerGame.innerGameWidth = window.innerWidth;
-        this.innerGame.innerGameHeight = window.innerHeight;
-        // this.offscreenImageBuf = this.generateDataTexture(this.innerGameWidth, this.innerGameHeight, new THREE.Color(0x000000));
-        this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameWidth, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
-        this.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+        //vt-x this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
+        this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(this.base.innerImgDim, this.base.innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
+        this.innerGame.innerGameWidth = this.base.innerImgDim;
+        this.innerGame.innerGameHeight = this.base.innerImgDim;
+        //vt-x this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameWidth, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
+        this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameHeight, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
+        // this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameHeight, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
+        //vt-xthis.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+        this.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight);
         this.innerGame.innerSceneCamera.position.z = 5.0;
         //vt add
         // this.poolBallTexture = new THREE.TextureLoader().load( "../../assets/img/two_ball.jpg" ); 
@@ -60,8 +64,9 @@ export class InnerSceneRendererService {
         try {
           // note: readPixels puts the result into the fourth function arg
           // e.g this.offscreenImageBuf.image.data
+          //vt-x
           this.innerGame.gl_webGLRenderer.readPixels(0, 0,
-            window.innerWidth, window.innerHeight,
+            this.base.innerImgDim, this.base.innerImgDim,
             this.innerGame.gl_webGLRenderer.RGBA,
             this.innerGame.gl_webGLRenderer.UNSIGNED_BYTE,
             this.innerGame.offscreenImageBuf.image.data

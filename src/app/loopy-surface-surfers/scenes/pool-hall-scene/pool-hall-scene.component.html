@@ -9,16 +9,14 @@
   <a-entity id="dolly" position="0 6.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
   </a-entity>
-  <a-entity hand-controls="right" position="0 0 -1"
-    grab
-    asteroids-game-controller-listener
-  >
-  </a-entity>
+  <a-entity hand-controls="right" position="0 0 -1" asteroids-game-controller-listener></a-entity> >
+  <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   <a-entity id="pool-hall-model"
-  gltf-model="url(assets/models/pool-hall-paid/pool-hall.gltf)"
-  animation-mixer="duration : 5"
-  (model-loaded)="initScene($event)"
+    gltf-model="url(assets/models/pool-hall-paid/pool-hall.gltf)"
+    animation-mixer="duration : 5"
+    (model-loaded)="initScene($event)"
   >
   </a-entity>
+  <a-sphere id="aframe-sphere" radius="5" position="-7 10.5 0"></a-sphere>
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

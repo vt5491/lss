@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterGameService } from '../../../services/outer-game.service';
+import { BaseService } from '../../../services/base.service';
 
 @Injectable()
 @Component({
@@ -12,7 +13,10 @@ import { OuterGameService } from '../../../services/outer-game.service';
 export class PoolHallSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;  
 
-  constructor(public innerGame: AsteroidsGame, public outerGameService: OuterGameService) { 
+  constructor(public innerGame: AsteroidsGame, 
+    public outerGameService: OuterGameService,
+    private base : BaseService
+  ) { 
     console.log('PoolHallSceneComponent: now in ctor');
 
     this.innerSceneRenderer = new InnerSceneRendererService(this);
@@ -27,15 +31,25 @@ export class PoolHallSceneComponent implements OnInit {
 
   }
 
+  // getProjectionMesh() : THREE.Mesh {
+  //   let projectionMesh = null;
+
+  //   if ((document.querySelector('#pool-hall-model') as any).object3D.getObjectByName('PoolBall')) {
+  //     projectionMesh = (document.querySelector('#pool-hall-model') as any)
+  //       .object3D
+  //       // .getObjectByName('PoolBall')
+  //       .getObjectByName('PoolBall_002')
+  //       .children[0]; 
+  //   }
+
+  //   return projectionMesh;
+  // }
+
   getProjectionMesh() : THREE.Mesh {
     let projectionMesh = null;
 
-    if ((document.querySelector('#pool-hall-model') as any).object3D.getObjectByName('PoolBall')) {
-      projectionMesh = (document.querySelector('#pool-hall-model') as any)
-        .object3D
-        // .getObjectByName('PoolBall')
-        .getObjectByName('PoolBall_002')
-        .children[0]; 
+    if (document.querySelector('#aframe-sphere')) {
+      projectionMesh = (document.querySelector('#aframe-sphere') as any).object3D.children[0];
     }
 
     return projectionMesh;
@@ -49,8 +63,8 @@ export class PoolHallSceneComponent implements OnInit {
   }
   
   trackDolly (pos : THREE.Vector3 ) {
-    this.outerGameService.dolly.position.x = pos.x;
-    this.outerGameService.dolly.position.y = pos.y;
+    // this.outerGameService.dolly.position.x = pos.x;
+    // this.outerGameService.dolly.position.y = pos.y;
   }
 
 }

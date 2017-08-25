@@ -61,7 +61,8 @@ export class AsteroidsGame implements InnerGame {
     // and I can't wrap it in @Ijnectable?
     this._scene = this.injector.get(THREE.Scene);
     // this.asteroids.push( new Asteroid());
-    this.base.projectionBoundary = this.BOUND_VAL;
+    // this.base.projectionBoundary = this.BOUND_VAL;
+    this.base.projectionBoundary = this.base.projectionBoundary;
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
     this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base);

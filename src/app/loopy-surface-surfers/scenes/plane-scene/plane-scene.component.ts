@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterGameService } from '../../../services/outer-game.service';
+import { BaseService } from '../../../services/base.service';
 
 @Component({
   selector: 'app-plane-scene',
@@ -12,7 +13,10 @@ export class PlaneSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;
   // private outerGameService : OuterGameService;
 
-  constructor(public innerGame: AsteroidsGame, public outerGameService: OuterGameService) { 
+  constructor(public innerGame: AsteroidsGame, 
+    public outerGameService: OuterGameService,
+    private base : BaseService,
+  ) { 
     // this.outerGameService = new OuterGameService();
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)

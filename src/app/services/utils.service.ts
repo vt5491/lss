@@ -27,15 +27,15 @@ export class UtilsService {
 
   constructor(
     private injector: Injector,
-    // private datGUI : dat.GUI  
-    ) { 
+    // private datGUI : dat.GUI
+    ) {
     // console.log(`UtilsService: now in ctor`);
     // this.datGUI = this.injector.get(dat.GUI);
     // this.datGUI = new dat.GUI();
     // this.addControls();
     // console.log(`UtilsService.cotr: datGUI=${this.datGUI}}`);
 
-    this.parms = {}; 
+    this.parms = {};
   }
 
   addControls(controlObject) {
@@ -51,19 +51,22 @@ export class UtilsService {
     // document.body.appendChild( (<any>this.stats).domElement );
     // document.getElementsByTagName('h1')[0].appendChild( (<any>this.stats).domElement );
     // this puts it at the top
-    // let appRootElem = document.getElementsByTagName('app-root')[0]; 
-    let insertPointElem = document.getElementById('webgl-container'); 
-    
+    // let appRootElem = document.getElementsByTagName('app-root')[0];
+    let insertPointElem = document.getElementById('webgl-container');
+
     // insertPointElem.insertBefore(
-    //   (<any>this.stats).domElement, 
+    //   (<any>this.stats).domElement,
     //   insertPointElem.childNodes[insertPointElem.childNodes.length - 1] );
   }
 
   updatePos(moveableGameObject: IMoveableGameObject, boundVal: number) {
     // console.log(`Utils.UpdatePos: entered`);
-    
+
     let meshX = moveableGameObject.mesh.position.x;
     let meshY = moveableGameObject.mesh.position.y;
+    // if (moveableGameObject.tag === 'ship') {
+    //   console.log(`Utils.updatePos: meshX=${meshX}, meshY=${meshY}`);
+    // }
 
     meshX += moveableGameObject.vx;
     meshY += moveableGameObject.vy;
@@ -127,7 +130,7 @@ export class UtilsService {
   }
 
   // Because the sspSurface and sspMaterial variables will be nested two functions
-  // deep at the time they are updated, we can't rely on simple pass by reference 
+  // deep at the time they are updated, we can't rely on simple pass by reference
   // to update them properl.
   // (empirically determined during testing).  Thus we have to pass closure functions
   // that update them instead:
@@ -233,11 +236,11 @@ export class UtilsService {
     return promise;
   }
 
-  loadColladaModel(fp, scene, sspName, 
+  loadColladaModel(fp, scene, sspName,
     sspSurfaceUpdateFn, sspMaterialUpdateFn,
-    setAnimationsClosure, getKfAnimationsClosure 
+    setAnimationsClosure, getKfAnimationsClosure
     ) {
-      console.log(`now in loadColladaModel`); 
+      console.log(`now in loadColladaModel`);
       var loader = new (THREE as any).ColladaLoader();
       loader.options.convertUpAxs = true;
 
@@ -282,7 +285,7 @@ export class UtilsService {
   loadTexture (fp) {
     let promise = new Promise((resolve, reject) => {
       console.log(`Utils: point a`);
-      
+
       let loader = new THREE.TextureLoader();
       // debugger;
       loader.load(fp, (texture) => {
