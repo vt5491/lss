@@ -19,7 +19,7 @@ export class BaseService {
   init() {
     //TODO: magic number dependency.  It's actualy proportional to physical screen size?
     // this.projectionBoundary = 3.79;
-    this.projectionBoundary = 3.81;
+    this.projectionBoundary = 3.81; //the best with camera.position= 5.0
     // this.projectionBoundary = 3.75; //2017-08-24
     // this.projectionBoundary = 1.0;
     // this.projectionBoundary = 0.5;

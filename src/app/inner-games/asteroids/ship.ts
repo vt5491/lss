@@ -91,8 +91,8 @@ export class Ship implements IMoveableGameObject {
 
     // this.mesh.position.x = -3;
     // this.mesh.position.y = 12;
-    this.mesh.position.y = 2;
-    // this.mesh.position.y = 0;
+    // this.mesh.position.y = 2;
+    this.mesh.position.y = 0;
     // this.mesh.position.z = -10;
     this.mesh.position.z = 0;
     // console.log(`Ship: mesh=${this.mesh}`);
@@ -161,12 +161,12 @@ export class Ship implements IMoveableGameObject {
   public set VX_MAX(v : number) {
     this._VX_MAX = v;
   }
-  
+
   public get VY_MAX() : number {
     return this._VY_MAX;
   }
   public set VY_MAX(v : number) {
     this._VY_MAX = v;
   }
-   
+
 }

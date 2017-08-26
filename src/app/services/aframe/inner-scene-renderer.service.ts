@@ -25,6 +25,14 @@ export class InnerSceneRendererService {
         console.log(`inner-scene-renderer.init: seedAsteroidsCount=${this.innerGame.seedAsteroidCount}`);
         this.innerGame.innerWebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
         this.innerGame.gl_innerWebGLRenderer = this.innerGame.innerWebGLRenderer.getContext();
+        // default size is (300, 150)
+        // changing the default size doesn't really make any difference
+        // I'm only leaving in as a reminder that I at least tried this in an
+        // attempt to change the inner game logical size of 3.79
+        this.innerGame.innerWebGLRenderer.setSize(1024,1024);
+        let tmp = this.innerGame.innerWebGLRenderer.getSize();
+        // debugger;
+        console.log(`InnerSceneRendererService.init_ang: innerWebGLRenderer.getSize.width=${tmp.width}`);
         //vt-x this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
         this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(this.base.innerImgDim, this.base.innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
         this.innerGame.innerGameWidth = this.base.innerImgDim;
@@ -34,7 +42,11 @@ export class InnerSceneRendererService {
         // this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameHeight, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
         //vt-xthis.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
         this.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight);
+        // campera.position.z= 5.0 corresponds to BoundVal of 3.79.
+        // campera.position.z= 1.319 corresponds to BoundVal of 1.0.
         this.innerGame.innerSceneCamera.position.z = 5.0;
+        // this.innerGame.innerSceneCamera.position.z = 15.0;
+        // this.innerGame.innerSceneCamera.position.z = 1.319;
         //vt add
         // this.poolBallTexture = new THREE.TextureLoader().load( "../../assets/img/two_ball.jpg" ); 
         this.poolBallTexture = this.getBaseTexture(); 
