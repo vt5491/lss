@@ -1,0 +1,41 @@
+//Created: 2017-08-23
+//
+// Note: this is really just a supporting service for the scene level components
+// e.g plane-scene.service.  In other words, this doesn't drive the scene, but
+// rather the scene drives this.  The main objective of this service is to store
+// all the scene independent state and methods, so you don't have to define things
+// multiple time for each scene.  The best example of a scene independent object
+// is the dolly/cammera.
+
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class OuterSceneService {
+  dolly : THREE.Object3D; 
+  projObj : THREE.Object3D;
+  projScene : THREE.Object3D;
+  discreteInnerSceneScroll : Boolean;
+  discreteInnerSceneScrollQuanta: Number;
+
+  constructor() { 
+  }
+
+  init() {
+    let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
+    this.dolly = dollyEl.object3D;
+    console.log("OuterGameService.init: this.dolly=${this.dolly}");
+    let projObjEl = document.querySelector('.proj-obj') as AFrame.Entity;
+    this.projObj = projObjEl.object3D;
+    let projSceneEl = document.querySelector('.proj-scene') as AFrame.Entity;
+    this.projScene = projSceneEl.object3D;
+  }
+
+  onInnerSceneTick( e: Event)  {
+    console.log('OuterGameService.onInnerSceneTick: hello');
+  }
+
+  // trackDolly (pos : THREE.Vector3 ) {
+
+  // }
+}
+

@@ -62,7 +62,7 @@ import { OuterSceneService} from './services/outer-scene.service';
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame)=> {
+      useFactory:(asteroidsGame)  => {
         return new LuxorSceneComponent(asteroidsGame);
       },
       deps: [AsteroidsGame]
