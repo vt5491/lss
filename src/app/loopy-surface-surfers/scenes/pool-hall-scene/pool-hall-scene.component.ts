@@ -14,6 +14,9 @@ export class PoolHallSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;  
   // private projSphere = {};
   // private dollyRadius : number; // the distance the dolly is from the proj-obj
+  private innerSceneScrollQuanta : number; 
+  private lastPhi : number;
+  private lastTheta : number;
 
   constructor(public innerGame: AsteroidsGame, 
     public outerSceneSvc: OuterSceneService,
@@ -23,6 +26,9 @@ export class PoolHallSceneComponent implements OnInit {
     // this.projSphere['pos'] = new THREE.Vector3();
 
     this.innerSceneRenderer = new InnerSceneRendererService(this);
+    this.innerSceneScrollQuanta = base.ONE_DEG * 1.0;
+    this.lastPhi = 0.0;
+    this.lastTheta = 0.0;
   }
 
   ngOnInit() {
@@ -100,29 +106,68 @@ export class PoolHallSceneComponent implements OnInit {
 
     let dollyRadius = this.outerSceneSvc.dolly.position.distanceTo(this.outerSceneSvc.projObj.position);
     // let dollyRadius = Math.sqrt(projObjX ^ 2 + projObjY ^2 + projObjZ ^ 2);
-    // dollyRadius = 10;
+    dollyRadius = 10;
 
+    // up and down (vertical) scrolling
     let phi = (pos.y / this.base.projectionBoundary) * Math.PI;
     phi /= 2.0;
-    console.log(`trackDolly: phi=${phi}, dollyRadius=${dollyRadius},projObjY=${projObjY},projObjZ=${projObjZ}`);
-    
-    this.outerSceneSvc.dolly.position.x = projObjX + dollyRadius * Math.cos(phi); 
-    this.outerSceneSvc.dolly.position.y = projObjY + dollyRadius * Math.sin(phi); 
-    // this.outerSceneSvc.dolly.position.z = projObjZ + dollyRadius * Math.cos(phi); 
-    let dollyX= this.outerSceneSvc.dolly.position.x;
-    let dollyY= this.outerSceneSvc.dolly.position.y;
-    let dollyZ= this.outerSceneSvc.dolly.position.z;
-    console.log(`trackDolly: dolly.x=${dollyX},dolly.y=${dollyY}, dolly.z=${dollyZ}`);
+    // console.log(`trackDolly: phi=${phi}, dollyRadius=${dollyRadius},projObjY=${projObjY},projObjZ=${projObjZ}`);
+    if (Math.abs(phi - this.lastPhi) > this.innerSceneScrollQuanta) {
+      if (phi > this.lastPhi) {
+        this.lastPhi = this.lastPhi + this.innerSceneScrollQuanta;
+      }
+      else{
+        this.lastPhi = this.lastPhi - this.innerSceneScrollQuanta;
+      }
 
-    let quat1 = new THREE.Quaternion();
-    quat1.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), Math.PI / 2 );
-    // this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat);
+      this.outerSceneSvc.dolly.position.x = projObjX + dollyRadius * Math.cos(phi);
+      this.outerSceneSvc.dolly.position.y = projObjY + dollyRadius * Math.sin(phi);
+      // this.outerSceneSvc.dolly.position.z = projObjZ + dollyRadius * Math.cos(phi); 
+      let dollyX = this.outerSceneSvc.dolly.position.x;
+      let dollyY = this.outerSceneSvc.dolly.position.y;
+      let dollyZ = this.outerSceneSvc.dolly.position.z;
+      // console.log(`trackDolly: dolly.x=${dollyX},dolly.y=${dollyY}, dolly.z=${dollyZ}`);
 
-    let quat2 = new THREE.Quaternion();
-    quat2.setFromAxisAngle( new THREE.Vector3( 0, 0, 1 ),  phi );
-    quat2.multiply(quat1);
-    // this.outerSceneSvc.dolly.lookAt(new THREE.Vector3(projObjX, projObjY, projObjZ));
-    this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat2);
+      let quat1 = new THREE.Quaternion();
+      quat1.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+      // this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat);
+
+      let quat2 = new THREE.Quaternion();
+      quat2.setFromAxisAngle(new THREE.Vector3(0, 0, 1), phi);
+      quat2.multiply(quat1);
+      // this.outerSceneSvc.dolly.lookAt(new THREE.Vector3(projObjX, projObjY, projObjZ));
+      this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat2);
+    } 
+
+    // dollyRadius = this.outerSceneSvc.dolly.position.distanceTo(this.outerSceneSvc.projObj.position);
+    // left and right (horizontal) scrolling
+    let theta = (pos.x / this.base.projectionBoundary) * Math.PI + 0 * Math.PI / 2;
+    theta /= 1.0;
+    theta *= -1;
+    theta -= Math.PI / 2;
+    // console.log(`trackDolly: theta=${theta}, dollyRadius=${dollyRadius},projObjY=${projObjY},projObjZ=${projObjZ}`);
+    if (Math.abs(theta - this.lastTheta) > this.innerSceneScrollQuanta) {
+      if (theta > this.lastTheta) {
+        this.lastTheta = this.lastTheta + this.innerSceneScrollQuanta;
+      }
+      else{
+        this.lastTheta = this.lastTheta - this.innerSceneScrollQuanta;
+      }
+
+      this.outerSceneSvc.dolly.position.x = projObjX - dollyRadius * Math.sin(theta + 0 * Math.PI / 2.0);
+      this.outerSceneSvc.dolly.position.z = projObjZ + dollyRadius * Math.cos(theta + 0 * Math.PI / 2.0);
+
+      let quat1 = new THREE.Quaternion();
+      quat1.setFromAxisAngle(new THREE.Vector3(0, 1, 0), -0 * Math.PI / 2);
+      // this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat);
+
+      let quat2 = new THREE.Quaternion();
+      // quat2.setFromAxisAngle(new THREE.Vector3(0, 1, 0), -1 *theta - Math.PI / 2.0);
+      quat2.setFromAxisAngle(new THREE.Vector3(0, 1, 0), -1 * theta + 0 *Math.PI / 2.0);
+      quat2.multiply(quat1);
+      // this.outerSceneSvc.dolly.lookAt(new THREE.Vector3(projObjX, projObjY, projObjZ));
+      this.outerSceneSvc.dolly.rotation.setFromQuaternion(quat2);
+    } 
     
   }
 

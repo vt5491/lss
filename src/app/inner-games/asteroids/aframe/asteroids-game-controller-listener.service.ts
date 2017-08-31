@@ -73,9 +73,10 @@ export class AsteroidsGameControllerListenerService {
       },
       tick: () => {
         if (angParentComponent.thrusterEngaged) {
-          asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta) * 0.2;
+          // I don't know why I have to add 90 deg, but I do as empirically determined
+          asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2;
 
-          asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta) * 0.2;
+          asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2;
 
           // and emit an event for any observers who may need to respond to this
           // this.shipMove.emit(null);

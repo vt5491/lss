@@ -15,11 +15,14 @@ export class OuterSceneService {
   projObj : THREE.Object3D;
   projScene : THREE.Object3D;
   discreteInnerSceneScroll : Boolean;
-  discreteInnerSceneScrollQuanta: Number;
+  // discreteInnerSceneScrollQuanta: Number;
 
   constructor() { 
+    this.discreteInnerSceneScroll = true;
   }
 
+  // init is for things that are not available when the ctor runs e.g certain dom entities
+  // that need to be driven by clients of this service on 'ngOnInit' events.
   init() {
     let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
     this.dolly = dollyEl.object3D;
@@ -28,6 +31,10 @@ export class OuterSceneService {
     this.projObj = projObjEl.object3D;
     let projSceneEl = document.querySelector('.proj-scene') as AFrame.Entity;
     this.projScene = projSceneEl.object3D;
+
+    let axisHelper = new THREE.AxisHelper(1);
+    this.projScene.add(axisHelper);
+    this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
   }
 
   onInnerSceneTick( e: Event)  {

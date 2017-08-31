@@ -126,7 +126,9 @@ export class InnerSceneRendererService {
         // this.innerSceneTick.emit(null);
         // this.outerGameService.onInnerSceneTick();
         // debugger;
-        this.trackDolly(this.innerGame.ship.mesh.position);
+        if (this.trackDolly) {
+          this.trackDolly(this.innerGame.ship.mesh.position);
+        }
       }.bind(embeddedContext),
       generateDataTexture_af: function (width, height, color) {
         console.log(`inner-scene-renderer.generateDataTexture_af: entered`);

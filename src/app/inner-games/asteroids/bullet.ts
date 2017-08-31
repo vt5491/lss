@@ -47,8 +47,9 @@ export class Bullet {
   // update the bullet's position, and keep track of life cycle events
   update() {
     // add the vx and vy to the mesh's position
-    this.mesh.position.x += this.vScalar * Math.cos(this.vTheta);
-    this.mesh.position.y += this.vScalar * Math.sin(this.vTheta);
+    // The need to add 90 deg is an empirically determined hack and a mystery
+    this.mesh.position.x += this.vScalar * Math.cos(this.vTheta + Math.PI / 2.0);
+    this.mesh.position.y += this.vScalar * Math.sin(this.vTheta + Math.PI / 2.0);
 
     let boundVal = this.base.projectionBoundary;
 

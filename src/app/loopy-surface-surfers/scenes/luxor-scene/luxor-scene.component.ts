@@ -3,6 +3,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { AsteroidsGameControllerListenerService } from '../../../inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
+import { BaseService } from '../../../services/base.service';
 
 @Injectable()
 @Component({
@@ -17,6 +18,7 @@ export class LuxorSceneComponent implements OnInit {
 
   constructor(
     public innerGame: AsteroidsGame, 
+    private base : BaseService,
     // private asteroidsGameEvtHandler : AsteroidsGameControllerListenerService
   ) {
     let luxorSceneComponent = this;

@@ -64,11 +64,12 @@ export class Ship implements IMoveableGameObject {
     // this.deltaTheta = 5.0 * this.base.ONE_DEG;
     this.deltaTheta = 10.0 * this.base.ONE_DEG;
 
-    // this makes it go in the y-dir
-    // this.vTheta = this.base.ONE_DEG * 90.0;
+    // this makes it go in the up y-dir
+    // this.theta = this.base.ONE_DEG * 0.0;
+    // this makes it go in the neg x-dir
     this.theta = this.base.ONE_DEG * 90.0;
-    // this makes it go in the x-dir
-    // this.vTheta = this.base.ONE_DEG * 0.0;
+    // this makes it go in the pos x-dir
+    // this.theta = this.base.ONE_DEG * -90.0;
     this.thetaLast = this.theta;
 
     // create the ship
@@ -95,6 +96,7 @@ export class Ship implements IMoveableGameObject {
     this.mesh.position.y = 0;
     // this.mesh.position.z = -10;
     this.mesh.position.z = 0;
+    this.mesh.rotation.z = this.theta;
     // console.log(`Ship: mesh=${this.mesh}`);
     // let noseGeom = new THREE.CircleGeometry(0.05, 8);
     let noseGeom = new THREE.PlaneGeometry(0.15,0.04);
@@ -115,9 +117,11 @@ export class Ship implements IMoveableGameObject {
     this.thetaLast = this.theta;
   };
 
+  // Note: this has been supplanted by utils.service.updatePos
   thrust(throttleFactor : number = 1.0) {
-    this.vx += this.accelScalar * throttleFactor * Math.cos(this.theta);
-    this.vy += this.accelScalar * throttleFactor * Math.sin(this.theta);
+    // console.log('Ship.thrusht: entered');
+    this.vx += this.accelScalar * throttleFactor * Math.sin(this.theta);
+    this.vy += this.accelScalar * throttleFactor * Math.cos(this.theta);
 
     // limit to max velocity
     // this.vx = Math.min(this.vx, this.VX_MAX);

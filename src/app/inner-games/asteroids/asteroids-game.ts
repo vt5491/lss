@@ -37,7 +37,7 @@ export class AsteroidsGame implements InnerGame {
   // inner scene vars
   private innerWebGLRenderer : THREE.WebGLRenderer;
   private gl_innerWebGLRenderer: WebGLRenderingContext;
-  private offscreenBuffer : THREE.WebGLRenderTarget; 
+  private offscreenBuffer : THREE.WebGLRenderTarget;
   private innerGameWidth : number;
   private innerGameHeight : number;
   private offscreenImageBuf : THREE.DataTexture;
@@ -103,6 +103,9 @@ export class AsteroidsGame implements InnerGame {
 
     this.scene.add(gridXMesh);
     this.scene.add(gridYMesh);
+
+    let axisHelper = new THREE.AxisHelper(1);
+    this.scene.add(axisHelper);
   };
 
   initAsteroids() {
@@ -289,14 +292,14 @@ export class AsteroidsGame implements InnerGame {
 
   //   if (gPads) {
   //     var gpad = gPads[0];
-       
+
   //     if (gpad) {
   //       if (gpad.buttons[0].pressed && !this.gpadFirstPressUsedUp) {
   //         console.log(`AsteroidsGame.updateScene-2: gPad button 0 pressed`);
   //         this.gpadFirstPressUsedUp = true;
 
   //         this.shipFiredBullet();
-  //       } 
+  //       }
   //       else if (!gpad.buttons[0].pressed) {
   //         this.gpadFirstPressUsedUp = false;
   //       }
