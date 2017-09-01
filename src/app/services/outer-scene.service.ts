@@ -18,7 +18,7 @@ export class OuterSceneService {
   // discreteInnerSceneScrollQuanta: Number;
 
   constructor() { 
-    this.discreteInnerSceneScroll = true;
+    this.discreteInnerSceneScroll = false;
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities
