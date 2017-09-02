@@ -16,9 +16,11 @@ export class OuterSceneService {
   projScene : THREE.Object3D;
   discreteInnerSceneScroll : Boolean;
   // discreteInnerSceneScrollQuanta: Number;
+  trackDolly : Boolean;
 
   constructor() { 
     this.discreteInnerSceneScroll = false;
+    this.trackDolly = false;
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities

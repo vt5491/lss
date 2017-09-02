@@ -119,7 +119,7 @@ export class PoolHallSceneComponent implements OnInit {
     let longitude = (pos.x / this.base.projectionBoundary) * Math.PI + 1 * Math.PI / 2;
     let latitude = (pos.y / this.base.projectionBoundary) * Math.PI + 0 * Math.PI /2;
     latitude /= 2.0;
-    let radius = 20.0
+    let radius = 5.0
     // let projObjX = this.outerSceneSvc.projObj.position.x;
     // let projObjY = this.outerSceneSvc.projObj.position.y;
     // let projObjZ = this.outerSceneSvc.projObj.position.z;
@@ -180,7 +180,7 @@ export class PoolHallSceneComponent implements OnInit {
     }
 
     // this.dollyTranslation.makeTranslation(projObjX, projObjY, projObjZ + radius);
-    this.dollyTranslation.makeTranslation(0, 0, 10);
+    this.dollyTranslation.makeTranslation(0, 0, radius);
     // let dollyTranslation2 = new THREE.Matrix4();
     // dollyTranslation2.makeTranslation(projObjX, projObjY, projObjZ);
     // this.dollyTranslation.makeTranslation(0, 0, radius);
@@ -205,7 +205,7 @@ export class PoolHallSceneComponent implements OnInit {
 
     let dollyRadius = this.outerSceneSvc.dolly.position.distanceTo(this.outerSceneSvc.projObj.position);
     // let dollyRadius = Math.sqrt(projObjX ^ 2 + projObjY ^2 + projObjZ ^ 2);
-    dollyRadius = 10;
+    dollyRadius = 5;
 
     // up and down (vertical) scrolling
     let phi = (pos.y / this.base.projectionBoundary) * Math.PI;

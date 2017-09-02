@@ -126,7 +126,7 @@ export class InnerSceneRendererService {
         // this.innerSceneTick.emit(null);
         // this.outerGameService.onInnerSceneTick();
         // debugger;
-        if (this.trackDolly) {
+        if (this.outerSceneSvc.trackDolly && this.trackDolly) {
           this.trackDolly(this.innerGame.ship.mesh.position);
         }
       }.bind(embeddedContext),

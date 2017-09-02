@@ -25,6 +25,7 @@ export class BaseService {
     // this.projectionBoundary = 0.5;
     // console.log(`BaseService.init: projectionBoundary=${this.projectionBoundary}`);
     this.innerImgDim = 1400;
+    // this.innerImgDim = 2000;
   };
 
   //getters and setters
