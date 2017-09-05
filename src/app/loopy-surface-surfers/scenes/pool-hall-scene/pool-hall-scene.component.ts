@@ -3,6 +3,7 @@ import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
+import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
 
 @Injectable()
 @Component({
@@ -10,38 +11,41 @@ import { BaseService } from '../../../services/base.service';
   templateUrl: './pool-hall-scene.component.html',
   styleUrls: ['./pool-hall-scene.component.css']
 })
-export class PoolHallSceneComponent implements OnInit {
-  private innerSceneRenderer: InnerSceneRendererService;  
-  // private projSphere = {};
-  // private dollyRadius : number; // the distance the dolly is from the proj-obj
-  private innerSceneScrollQuanta : number; 
-  private lastPhi : number;
-  private lastTheta : number;
-  private lastLongitude : number;
-  private lastLatitude : number;
-  private dollyRotX : THREE.Matrix4;
-  private dollyRotY : THREE.Matrix4;
-  private dollyTranslation : THREE.Matrix4;
-  private dollyTransform : THREE.Matrix4;
+export class PoolHallSceneComponent extends LssScene implements OnInit {
+  // private innerSceneRenderer: InnerSceneRendererService;  
+  // private innerSceneScrollQuanta : number; 
+  // private lastPhi : number;
+  // private lastTheta : number;
+  // private lastLongitude : number;
+  // private lastLatitude : number;
+  // private dollyRotX : THREE.Matrix4;
+  // private dollyRotY : THREE.Matrix4;
+  // private dollyTranslation : THREE.Matrix4;
+  // private dollyTransform : THREE.Matrix4;
 
-  constructor(public innerGame: AsteroidsGame, 
-    public outerSceneSvc: OuterSceneService,
+  constructor(
+    // note: you cannot dependencty inject at the base class level:
+    // see https://stackoverflow.com/questions/40800657/injecting-angular2-service-into-components-base-class
+    // thus we have to do it here.
+    private innerGame: AsteroidsGame, 
+    private outerSceneSvc: OuterSceneService,
     private base : BaseService
   ) { 
-    // console.log('PoolHallSceneComponent: now in ctor');
-    // this.projSphere['pos'] = new THREE.Vector3();
+    super(innerGame, outerSceneSvc, base);
+    this.dollyRadius = 5.0;
+    // super(innerGame, outerSceneSvc);
 
-    this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.innerSceneScrollQuanta = base.ONE_DEG * 30.0;
-    this.lastPhi = 0.0;
-    this.lastTheta = 0.0;
-    this.lastLatitude = 0.0;
-    this.lastLongitude = 0.0;
+    // this.innerSceneRenderer = new InnerSceneRendererService(this);
+    // this.innerSceneScrollQuanta = base.ONE_DEG * 30.0;
+    // this.lastPhi = 0.0;
+    // this.lastTheta = 0.0;
+    // this.lastLatitude = 0.0;
+    // this.lastLongitude = 0.0;
 
-    this.dollyRotX = new THREE.Matrix4();
-    this.dollyRotY = new THREE.Matrix4();
-    this.dollyTranslation = new THREE.Matrix4();
-    this.dollyTransform = new THREE.Matrix4();
+    // this.dollyRotX = new THREE.Matrix4();
+    // this.dollyRotY = new THREE.Matrix4();
+    // this.dollyTranslation = new THREE.Matrix4();
+    // this.dollyTransform = new THREE.Matrix4();
   }
 
   ngOnInit() {
@@ -72,9 +76,9 @@ export class PoolHallSceneComponent implements OnInit {
     this.outerSceneSvc.projScene.add(axisHelper);
 
     // this.outerSceneSvc.projObj.translate(= new THREE.Vector3(0,0,0);
-    console.log(`PoolHallScene: projObj.x=${this.outerSceneSvc.projObj.position.x}`);
-    console.log(`PoolHallScene: projObj.y=${this.outerSceneSvc.projObj.position.y}`);
-    console.log(`PoolHallScene: projObj.z=${this.outerSceneSvc.projObj.position.z}`);
+    // console.log(`PoolHallScene: projObj.x=${this.outerSceneSvc.projObj.position.x}`);
+    // console.log(`PoolHallScene: projObj.y=${this.outerSceneSvc.projObj.position.y}`);
+    // console.log(`PoolHallScene: projObj.z=${this.outerSceneSvc.projObj.position.z}`);
     
   };
 

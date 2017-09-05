@@ -1,0 +1,10 @@
+<a-scene id="globe-scene" inner-scene-renderer class="proj-scene">
+  <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
+    <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
+    <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
+    <a-entity hand-controls="right" position="0.1 -0.2 0"
+      asteroids-game-controller-listener="shipRotFactor: -1"></a-entity> >
+  </a-entity>
+  <a-sphere id="aframe-globe" class="proj-obj" radius="3" position="0 0 0"></a-sphere>
+  <a-sky color="#101010"></a-sky>
+</a-scene>

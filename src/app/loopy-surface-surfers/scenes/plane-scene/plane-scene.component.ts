@@ -14,7 +14,7 @@ export class PlaneSceneComponent implements OnInit {
   // private outerGameService : OuterGameService;
 
   constructor(public innerGame: AsteroidsGame, 
-    public outerSceneService: OuterSceneService,
+    public outerSceneSvc: OuterSceneService,
     private base : BaseService,
   ) { 
     // this.outerGameService = new OuterGameService();
@@ -30,7 +30,7 @@ export class PlaneSceneComponent implements OnInit {
 
   ngOnInit() {
     console.log('PlaneSceneComponent: now in ngOnInit');
-    this.outerSceneService.init();
+    this.outerSceneSvc.init();
     
   }
 
@@ -52,8 +52,8 @@ export class PlaneSceneComponent implements OnInit {
   }
 
   trackDolly (pos : THREE.Vector3 ) {
-    this.outerSceneService.dolly.position.x = pos.x;
-    this.outerSceneService.dolly.position.y = pos.y;
+    this.outerSceneSvc.dolly.position.x = pos.x;
+    this.outerSceneSvc.dolly.position.y = pos.y;
   }
 
   // onInnerSceneTick( e: Event)  {

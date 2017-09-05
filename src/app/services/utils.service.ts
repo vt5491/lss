@@ -6,6 +6,7 @@ import { IMoveableGameObject } from '../interfaces/imoveable-game-object';
 // import { ParmsService } from './parms.service';
 import { BaseService } from './base.service';
 import { Asteroid } from '../inner-games/asteroids/asteroid';
+// import { LssScene } from "../interfaces/lss-scene";
 // import * as _ from 'lodash';
 // import {GUI} from 'dat.GUI';
 // import {dat} from 'dat-gui/vendor/dat.gui';
@@ -27,6 +28,7 @@ export class UtilsService {
 
   constructor(
     private injector: Injector,
+    private base : BaseService
     // private datGUI : dat.GUI
     ) {
     // console.log(`UtilsService: now in ctor`);
@@ -99,16 +101,6 @@ export class UtilsService {
   // the caller to wrap this in a cluser so the gpad object is set locally
   // initGamepadConnectedListener(cb : () => boolean) {
   // initGamepadConnectedListener(cb : () => boolean) {
-
-  // }
-  // getGamepadConnectedPromise(cb : () => boolean) {
-
-  // Example of how to call this function
-  // let gpadPromise = _utils.getGamepadConnectedPromise();
-  // gpadPromise.then( (res) => {
-  //   console.log(`AsteroidsGame.gpadPromise.then: res=${res}`);
-  //   this.gpad = <Gamepad>res;
-  // })
   getGamepadConnectedPromise() {
     return new Promise((resolve, reject) => {
       window.addEventListener("gamepadconnected", function (e : any) {
@@ -297,16 +289,6 @@ export class UtilsService {
     return promise;
   }
 
-  // sspSurfaceUpdateFn(newMesh) {
-  //   console.log('SspCylScene.init: now in sspSurfaceUpdateFn');
-  //   this.sspSurface = newMesh;
-  // };
-
-  // sspMaterialUpdateFn (newMaterial) => {
-  //   console.log('SspCylScene.init: now in sspMaterialUpdateFn');
-  //   this.sspMaterial = newMaterial;
-  // };
-  // sspSurfaceUpdateFn = (newMesh) => {
   sspSurfaceUpdateFn = function(newMesh) {
     console.log('SspCylScene.init: now in sspSurfaceUpdateFn');
     this.sspSurface = newMesh;
@@ -345,10 +327,72 @@ export class UtilsService {
     }
   }
 
-}
+  trackDollySpherical (pos : THREE.Vector3, lssScene : any ) {
+    let longitude = (pos.x / lssScene.base.projectionBoundary) * Math.PI + 1 * Math.PI / 2;
+    let latitude = (pos.y / lssScene.base.projectionBoundary) * Math.PI + 0 * Math.PI /2;
+    latitude /= 2.0;
+    // let radius = 5.0
+    let radius = lssScene.dollyRadius; 
+    // Note: as I understand it X (horizontal) is associated with longitude and y (vertical)
+    // is associated with latitude.   However, in the relative rotations, we have to use
+    // the opposite.  I don't know why lssScene is, it just is.
+    // Just note that in the following the "RotX" is dealing with the y direction, and
+    // "RotY" is dealing with the sideways rotation.  I tried "flipping" these semantics
+    // and things just didn't work, so I don't think this is just a coding problem.
+    // see https://stackoverflow.com/questions/11030101/three-js-camera-flying-around-sphere
+    // this.dollyRotX.identity();
+    if (lssScene.outerSceneSvc.discreteInnerSceneScroll) {
+      lssScene.dollyRotX.makeRotationX(-lssScene.lastLatitude);
+      if (Math.abs(latitude - lssScene.lastLatitude) > lssScene.innerSceneScrollQuanta) {
+
+        if (latitude > lssScene.lastLatitude) {
+          lssScene.dollyRotX.makeRotationX(-1 * latitude);
+          lssScene.lastLatitude = lssScene.lastLatitude + lssScene.innerSceneScrollQuanta / 1;
+        }
+        else {
+          lssScene.dollyRotX.makeRotationX(-1 * latitude);
+          lssScene.lastLatitude = lssScene.lastLatitude - lssScene.innerSceneScrollQuanta;
+        }
+      }
+    }
+    else {
+      // debugger;
+      lssScene.dollyRotX.makeRotationX(-latitude);
+    }
+
+    if (lssScene.outerSceneSvc.discreteInnerSceneScroll) {
+      lssScene.dollyRotY.makeRotationY(lssScene.lastLongitude);
+      if (Math.abs(longitude - lssScene.lastLongitude) > lssScene.innerSceneScrollQuanta) {
+        if (longitude > lssScene.lastLongitude) {
+          lssScene.dollyRotY.makeRotationX(longitude);
+          lssScene.lastLongitude = lssScene.lastLongitude + lssScene.innerSceneScrollQuanta;
+        }
+        else {
+          lssScene.dollyRotY.makeRotationX(longitude);
+          lssScene.lastLongitude = lssScene.lastLongitude - lssScene.innerSceneScrollQuanta;
+        }
+      }
+    }
+    else {
+      lssScene.dollyRotY.makeRotationY(longitude);
+    }
+
+    lssScene.dollyTranslation.makeTranslation(0, 0, radius);
+    // Note: the order of mults is important on the following line
+    lssScene.dollyTransform = lssScene.dollyRotY.multiply(lssScene.dollyRotX);
+    lssScene.dollyTransform.multiply(lssScene.dollyTranslation);
+
+    lssScene.outerSceneSvc.dolly.matrix.identity();
+    lssScene.outerSceneSvc.dolly.applyMatrix(lssScene.dollyTransform);
+  }
+
+} // end UtilsService class deff
+
 
 // here's where we define the providers for things that don't have their own native
 // class with the app.
+// Note: these are not functions that are part of the utils class.  If you add any
+// methods to the utils class add them above
 export let WebGLRenderTargetProvider = {
   provide: THREE.WebGLRenderTarget,
   useFactory: () => {
@@ -370,13 +414,6 @@ export let ThreeJsWebGLRendererProvider = {
     return new THREE.WebGLRenderer({antialias : true});
   },
 };
-
-// export let EmptyParmsServiceProvider = {
-//   provide: ParmsService,
-//   useFactory: () => {
-//     return new ParmsService({});
-//   },
-// };
 
 export let AsteroidNoParmsProvider = {
     provide: Asteroid,

@@ -14,7 +14,9 @@ const appRoutes:Routes = [
   {path: '', component: LoopySurfaceSurfersComponent},
   {path: 'luxorScene', component: LuxorSceneComponent},
   {path: 'planeScene', component: PlaneSceneComponent}, 
-  {path: 'poolHallScene', component: PoolHallSceneComponent} 
+  {path: 'poolHallScene', component: PoolHallSceneComponent},
+  {path: 'globeScene', component: GlobeSceneComponent},
+  {path: 'cokeCanScene', component: CokeCanSceneComponent},
 ];
 import { BaseService  } from './services/base.service';
 import { AsteroidsGame  } from './inner-games/asteroids/asteroids-game';
@@ -28,6 +30,8 @@ import { GameSceneDirective } from './directives/game-scene.directive';
 import { InnerSceneRendererService  } from './services/aframe/inner-scene-renderer.service';
 import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
 import { OuterSceneService} from './services/outer-scene.service';
+import { GlobeSceneComponent } from './loopy-surface-surfers/scenes/globe-scene/globe-scene.component';
+import { CokeCanSceneComponent } from './loopy-surface-surfers/scenes/coke-can-scene/coke-can-scene.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { OuterSceneService} from './services/outer-scene.service';
     PlaneSceneComponent,
     LuxorSceneComponent,
     GameSceneDirective,
-    PoolHallSceneComponent
+    PoolHallSceneComponent,
+    GlobeSceneComponent,
+    CokeCanSceneComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +68,7 @@ import { OuterSceneService} from './services/outer-scene.service';
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame, baseService)  => {
+      useFactory:(asteroidsGame, baseService) => {
         return new LuxorSceneComponent(asteroidsGame, baseService);
       },
       deps: [AsteroidsGame, BaseService]
