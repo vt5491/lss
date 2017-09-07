@@ -31,7 +31,8 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
     private outerSceneSvc: OuterSceneService,
     private base : BaseService
   ) { 
-    super(innerGame, outerSceneSvc, base);
+    // super(innerGame, outerSceneSvc, base);
+    super( base);
     this.dollyRadius = 5.0;
     // super(innerGame, outerSceneSvc);
 

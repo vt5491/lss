@@ -19,10 +19,63 @@ export class AsteroidsGameControllerListenerService {
 
     AFRAME.registerComponent('asteroids-game-controller-listener', {
       schema : { 
-        shipRotFactor: {type : 'number', default: 1}},
+        shipRotFactor: {type : 'number', default: 1},
+        fireSoundStartCount: {type: 'number', default: 0},
+        fireSoundStopCount: {type: 'number', default: 0},
+      },
       init: function () {
-        // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: entered`);
+        console.log(`AsteroidsGameControllerListenerService.AFRAME.init: entered..`);
         var el = this.el;
+        //vt add
+        // debugger;
+        // let sky = document.getElementById('sky');
+        let cylEl = (document.getElementById('aframe-cyl') as any).object3D.el;
+        // cylEl.setAttribute('sound', {
+        //   src: 'url(src/assets/sounds/asteroids/asteroids-ship-fire.ogg',
+        //   on: 'fire-bullet',
+        //   volume: 0.5,
+        //   poolSize: 20
+        // });
+        // debugger;
+        // let projObj = document.getElementsByClassName('proj-obj');
+        // let f = (e : MouseEvent) => {console.log('you clicked on sky')};
+        // // sky.onclick = f;
+        // sky.onclick = function (){ console.log('hi from click')};
+        // sky.addEventListener('click', function (evt) {'hi from click2' });
+        // projObj.addEventListener('click', function (evt) {'hi from click2' });
+        // debugger;
+        // this.el.addEventListener('shoot', ()=> {console.log('hi from shoot')});
+        // this.el.addEventListener('shoot');
+        this.data.fireSoundStartCount = 0;
+        this.data.fireSoundStopCount = 0;
+        this.el.setAttribute('sound', {
+          // src: 'url(assets/sounds/gun.ogg)',
+          // src: 'url(assets/sounds/asteroids/gun.ogg)',
+          // src: 'url(assets/sounds/asteroids/asteroids-ship-fire.ogg)',
+          // src: 'url(assets/sounds/asteroids/fire_orig.wav)',
+          // src: 'url(assets/sounds/asteroids/thrust_orig.wav)',
+          // src: 'url(assets/sounds/space-rumble.wav)',
+          src: 'url(assets/sounds/asteroids/space-rumble.ogg)',
+          // src: 'url(../../../../assets/sounds/gun.ogg)',
+          // src: 'url(../../../../assets/sounds/asteroids-ship-fire.ogg)',
+          on: 'thrust-start',
+          volume: 0.5,
+          poolSize: 20
+        });
+        el.addEventListener('thrust-stop', ()=> {
+          // var entity = document.querySelector('[sound]');
+          // entity.components.sound.stopSound();
+          this.el.components.sound.stopSound();
+          // this.el.components.sound.pauseSound();
+        });
+        el.addEventListener('sound-ended', ()=> {
+          console.log('sound ended'); 
+          this.data.fireSoundStopCount++;
+          console.log(`fireSoundStartCount=${this.data.fireSoundStartCount}, fireSoundStopCount=${this.data.fireSoundStopCount}`);
+        });
+        el.addEventListener('sound-loaded', ()=> {console.log('sound loaded')});
+
+        //vt end
         el.addEventListener('buttondown', function (e) {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
         });
@@ -30,8 +83,12 @@ export class AsteroidsGameControllerListenerService {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
           asteroidsGame.shipFiredBullet();
         });
-        el.addEventListener('gripdown', function (e) { //Vive
+        // el.addEventListener('gripdown', function (e) { //Vive
+        el.addEventListener('gripdown', (e) => { 
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
+          // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: emitting shoot event`);
+          el.emit('fire-bullet');
+          this.data.fireSoundStartCount++;
           asteroidsGame.shipFiredBullet();
         });
         el.addEventListener('touchstart',  (e) => {
@@ -66,9 +123,11 @@ export class AsteroidsGameControllerListenerService {
         // el.addEventListener('gripdown', (e) => {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: triggerdown event: e=${e}`);
           angParentComponent.thrusterEngaged = true;
+          el.emit('thrust-start');
         });
         el.addEventListener('triggerup', (e) => { //Vive
           angParentComponent.thrusterEngaged = false;
+          el.emit('thrust-stop');
         });
       },
       tick: () => {

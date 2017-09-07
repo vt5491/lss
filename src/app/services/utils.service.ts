@@ -335,10 +335,10 @@ export class UtilsService {
     let radius = lssScene.dollyRadius; 
     // Note: as I understand it X (horizontal) is associated with longitude and y (vertical)
     // is associated with latitude.   However, in the relative rotations, we have to use
-    // the opposite.  I don't know why lssScene is, it just is.
+    // the opposite.  I don't know why this is: it just is.
     // Just note that in the following the "RotX" is dealing with the y direction, and
     // "RotY" is dealing with the sideways rotation.  I tried "flipping" these semantics
-    // and things just didn't work, so I don't think this is just a coding problem.
+    // but things just didn't work out, so I don't think this is just a coding problem.
     // see https://stackoverflow.com/questions/11030101/three-js-camera-flying-around-sphere
     // this.dollyRotX.identity();
     if (lssScene.outerSceneSvc.discreteInnerSceneScroll) {
@@ -364,11 +364,11 @@ export class UtilsService {
       lssScene.dollyRotY.makeRotationY(lssScene.lastLongitude);
       if (Math.abs(longitude - lssScene.lastLongitude) > lssScene.innerSceneScrollQuanta) {
         if (longitude > lssScene.lastLongitude) {
-          lssScene.dollyRotY.makeRotationX(longitude);
+          lssScene.dollyRotY.makeRotationY(longitude);
           lssScene.lastLongitude = lssScene.lastLongitude + lssScene.innerSceneScrollQuanta;
         }
         else {
-          lssScene.dollyRotY.makeRotationX(longitude);
+          lssScene.dollyRotY.makeRotationY(longitude);
           lssScene.lastLongitude = lssScene.lastLongitude - lssScene.innerSceneScrollQuanta;
         }
       }
@@ -384,6 +384,37 @@ export class UtilsService {
 
     lssScene.outerSceneSvc.dolly.matrix.identity();
     lssScene.outerSceneSvc.dolly.applyMatrix(lssScene.dollyTransform);
+  }
+
+  // Note how we only rotate about the x-axis and don't move up and down in the y.
+  // This is because we want to minimize the amount of acceleration experienced by the user.
+  // It might useful in the future to add a "full" track, but I'm leaving it for now with 
+  // a minimalist scroll because I think it works pretty good.
+  trackDollyCylinder (pos : THREE.Vector3, lssScene : any ) {
+    let boundVal = lssScene.base.projectionBoundary;
+    let longitude = (pos.x / boundVal) * Math.PI + -1 * Math.PI / 1;
+
+    let radius = lssScene.dollyRadius;
+
+    lssScene.dollyRotY.makeRotationY(longitude);
+
+    lssScene.dollyTranslation.makeTranslation(0, 0, radius);
+    lssScene.dollyTransform = lssScene.dollyRotY.multiply(lssScene.dollyTranslation);
+
+    lssScene.outerSceneSvc.dolly.matrix.identity();
+    lssScene.outerSceneSvc.dolly.applyMatrix(lssScene.dollyTransform );
+    // lssScene.dollyRotX.makeRotationX(-lati)
+
+    // let theta = (Math.PI / boundVal) * pos.x;
+    // theta += Math.PI;
+
+    // result.x = Math.sin(theta);
+    // result.z = Math.cos(theta);
+
+    // result.y = innerY;
+
+    // result.rotQuat = new THREE.Quaternion();
+    // result.rotQuat.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
   }
 
 } // end UtilsService class deff

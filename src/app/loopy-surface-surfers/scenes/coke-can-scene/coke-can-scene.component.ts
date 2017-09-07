@@ -24,6 +24,13 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   ngOnInit() {
+    this.outerSceneSvc.init();
+    this.initScene();    
+  }
+
+  initScene() {
+    let axisHelper = new THREE.AxisHelper(10);
+    this.outerSceneSvc.projScene.add(axisHelper);
   }
 
   getProjectionMesh() : THREE.Mesh {
@@ -41,7 +48,7 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   trackDolly (pos : THREE.Vector3){
-    return this.utils.trackDollySpherical(pos, this);
+    return this.utils.trackDollyCylinder(pos, this);
   }
 
 }

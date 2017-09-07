@@ -1,11 +1,41 @@
+<div>
+  <audio controls id='audio-ctrl'>
+    <source src="assets/sounds/horse.ogg" id="horse" type="audio/ogg">
+  </audio>
+    <!-- <source src="../../../../assets/sounds/horse.ogg" id="horse" type="audio/ogg"> -->
+</div>
 <a-scene id="coke-can-scene" inner-scene-renderer class="proj-scene">
+<!-- <script>
+console.log('hi....');
+</script> -->
+  <a-assets>
+    <!-- <audio id="gunFire" src="url(../../../../assets/sounds/horse.ogg)" crossorigin="anonymous" preload="auto" type="audio/ogg"></audio> -->
+    <!-- <audio id="gunFire" src="url(assets/sounds/horse.ogg)" crossorigin="anonymous" preload="auto" type="audio/ogg"></audio> -->
+    <audio id="gunFire" src="assets/sounds/horse.ogg" type="audio/ogg"></audio>
+  </a-assets>
   <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
-    <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
-    <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
+    <a-camera near="0.1" user-height="0" position="0 0 0" id="camera">
+      <a-cursor color="#ffba70" position="0 0 -1"></a-cursor>
+    </a-camera>
+    <a-entity hand-controls="left" position="-0.1 -0.2 0"
+      grab
+      bullet-fire
+    ></a-entity>
     <a-entity hand-controls="right" position="0.1 -0.2 0"
-      asteroids-game-controller-listener="shipRotFactor: -1"></a-entity> >
+      asteroids-game-controller-listener="shipRotFactor: -1"
+      cullet-fire
+    >
+    </a-entity>
   </a-entity>
   <a-cylinder id="aframe-cyl" class="proj-obj"
-    height="10" radius="3" position="0 0 0"></a-cylinder>
-  <a-sky color="#8080EC"></a-sky>
+    height="10" radius="3" position="0 0 0"
+    onclick="console.log('hi')"
+    sound="src: #gunFire; on: shoot; poolSize = 10"
+    ></a-cylinder>
+    <!-- sound="src: assets/sounds/horse.ogg; on: click" -->
+    <!-- sound="src: url(../../../../assets/sounds/hosre.ogg); on: click" -->
+  <a-sky color="#8080EC" id="sky"
+   onclick="console.log('hi from click')"
+  ></a-sky>
+    <!-- sound="src: #gunFire; on: click; autoplay: true" -->
 </a-scene>
