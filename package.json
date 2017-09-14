@@ -26,6 +26,7 @@
     "aframe-redux-component": "^3.0.2",
     "core-js": "^2.4.1",
     "dat.gui": "^0.6.1",
+    "jquery": "^3.2.1",
     "rxjs": "^5.1.0",
     "stats-js": "^1.0.0-alpha1",
     "zone.js": "^0.8.7"
@@ -35,6 +36,7 @@
     "@angular/compiler-cli": "^4.0.0",
     "@types/core-js": "^0.9.41",
     "@types/jasmine": "2.5.38",
+    "@types/jquery": "^3.2.12",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",

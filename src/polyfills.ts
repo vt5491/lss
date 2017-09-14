@@ -53,6 +53,12 @@ import 'core-js/es7/reflect';
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
+//vt add
+// import 'aframe';
+// import 'three';
+// import 'aframe-log-component';
+// import 'aframe-controller-cursor-component';
+//vt end
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 

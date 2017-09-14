@@ -1,6 +1,9 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { AsteroidsGame } from '../asteroids-game'
 import { BaseService } from '../../../services/base.service';
+import { UtilsService } from '../../../services/utils.service';
+// import $ from 'jquery';
+import * as $ from 'jquery';
 
 //Vive original: gripdown -> fire bullet
 //             : triggerdown -> thrust 
@@ -10,10 +13,20 @@ export class AsteroidsGameControllerListenerService {
   public touchOn : boolean;
   public thrusterEngaged : boolean;
   public lastTouchPadTheta : number;
+  public utils: UtilsService;
   // @Output() shipMove: EventEmitter<any> = new EventEmitter();
 
-  constructor(asteroidsGame: AsteroidsGame, base: BaseService) {
+  constructor(
+    asteroidsGame: AsteroidsGame, 
+    base: BaseService,
+    utils: UtilsService
+  ) {
     let angParentComponent = this;
+    //Note: apprently 'this' is not fully defined until the ctor completes.  And the aframe
+    // component defintion, uses the 'this' as it exists at the time of its defintion (in this ctor).
+    // Thus, we have to build up 'angParentComponent' manually, and we have to add to it without
+    // specifying 'this' e.g 'utils' not 'this.utils'
+    angParentComponent.utils = utils;
     // let touchOn : boolean;
     // let thrusterEngaged: boolean;
 
@@ -22,6 +35,8 @@ export class AsteroidsGameControllerListenerService {
         shipRotFactor: {type : 'number', default: 1},
         fireSoundStartCount: {type: 'number', default: 0},
         fireSoundStopCount: {type: 'number', default: 0},
+        spaceRumble: {type: 'audio'},
+        bgSound: {type: 'audio'}
       },
       init: function () {
         console.log(`AsteroidsGameControllerListenerService.AFRAME.init: entered..`);
@@ -46,28 +61,88 @@ export class AsteroidsGameControllerListenerService {
         // debugger;
         // this.el.addEventListener('shoot', ()=> {console.log('hi from shoot')});
         // this.el.addEventListener('shoot');
+        // debugger;
         this.data.fireSoundStartCount = 0;
         this.data.fireSoundStopCount = 0;
         this.el.setAttribute('sound', {
           // src: 'url(assets/sounds/gun.ogg)',
           // src: 'url(assets/sounds/asteroids/gun.ogg)',
           // src: 'url(assets/sounds/asteroids/asteroids-ship-fire.ogg)',
+          src: 'url(assets/sounds/asteroids/asteroids-ship-fire.wav)',
           // src: 'url(assets/sounds/asteroids/fire_orig.wav)',
           // src: 'url(assets/sounds/asteroids/thrust_orig.wav)',
           // src: 'url(assets/sounds/space-rumble.wav)',
-          src: 'url(assets/sounds/asteroids/space-rumble.ogg)',
+          // works
+          // src: 'url(assets/sounds/asteroids/space-rumble.ogg)',
+          // src: document.getElementById('space-rumble'),
           // src: 'url(../../../../assets/sounds/gun.ogg)',
           // src: 'url(../../../../assets/sounds/asteroids-ship-fire.ogg)',
-          on: 'thrust-start',
-          volume: 0.5,
+          on: 'fire-bullet',
+          volume: 0.25,
           poolSize: 20
         });
+        // debugger;
+        // let d= $('#dolly');
+        // console.log(`dolly.position.z=${d.attr('position')}`);
+        // console.log(`dolly.before=${d.before}`);
+        // let e = $(el)
+        this.data.spaceRumble = document.getElementById('space-rumble');
+        this.data.spaceRumble.volume = 0.1;
+        this.data.bgSound = document.getElementById('bg-sound');
+        this.data.bgSound.volume = 0.02;
+        this.data.bgSound.play();
+        // debugger;
+        // console.log(`e.before=${e.before}`);
+        // e.animate({volume: 0.9}, 100);
+        // try to do a fade in
+        // el.animate([{volume : 1.0}], [{duration: 100}]);
+        el.addEventListener('thrust-start', ()=> {
+          // this.data.spaceRumble.animate([{volume : 1.0}], [{duration: 1000}]);
+          let sound = this.data.spaceRumble;
+          // sound.volume = 1.0;
+          sound.currentTime = 0.0;
+          // sound.play();
+          angParentComponent.utils.fadeIn(sound, 250, 0.20, 25);
+        });
+
+        el.addEventListener('thrust-stop', () => {
+          // this.utils.fadeOut(this.data.spaceRumble, 1000, 0, 50);
+          // this.utils.fadeOut(this.data.spaceRumble);
+          // debugger;
+          // angParentComponent.utils.fadeOut(this.data.spaceRumble);
+          angParentComponent.utils.fadeOut(this.data.spaceRumble, 1000, 0.0, 25);
+          // this.data.spaceRumble.pause();
+
+        })
+        /*
         el.addEventListener('thrust-stop', ()=> {
           // var entity = document.querySelector('[sound]');
           // entity.components.sound.stopSound();
-          this.el.components.sound.stopSound();
+          // this.el.components.sound.stopSound();
+          // this.data.spaceRumble.pause();
           // this.el.components.sound.pauseSound();
+          // let e = $(el)
+          // e.animate({volume: 0.0}, 500);
+          let sound = this.data.spaceRumble;
+          // Set the point in playback that fadeout begins. This is for a 2 second fade out.
+          // var fadePoint = sound.duration - 2;
+          var fadePoint = sound.currentTime;
+
+          var fadeAudio = setInterval(function () {
+
+            // Only fade if past the fade out point or not at zero already
+            if ((sound.currentTime >= fadePoint) && (sound.volume != 0.0)) {
+              // sound.volume -= 0.2;
+              sound.volume = Math.max(0.0, sound.volume - 0.25);
+            }
+            // When volume at zero stop all the intervalling
+            // if (sound.volume === 0.0) {
+            if (sound.volume <= 0.0) {
+              clearInterval(fadeAudio);
+            }
+          }, 100);
         });
+        */
         el.addEventListener('sound-ended', ()=> {
           console.log('sound ended'); 
           this.data.fireSoundStopCount++;

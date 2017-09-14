@@ -65,7 +65,7 @@ export class AsteroidsGame implements InnerGame {
     this.base.projectionBoundary = this.base.projectionBoundary;
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base);
+    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base, this._utils);
 
     this.initScene();
 
