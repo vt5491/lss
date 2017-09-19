@@ -14,6 +14,8 @@ export class AsteroidsGameControllerListenerService {
   public thrusterEngaged : boolean;
   public lastTouchPadTheta : number;
   public utils: UtilsService;
+  private afc : Object;
+  private spaceRumble : HTMLElement;
   // @Output() shipMove: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -30,7 +32,8 @@ export class AsteroidsGameControllerListenerService {
     // let touchOn : boolean;
     // let thrusterEngaged: boolean;
 
-    AFRAME.registerComponent('asteroids-game-controller-listener', {
+    angParentComponent.afc = AFRAME.registerComponent('asteroids-game-controller-listener', 
+    {
       schema : { 
         shipRotFactor: {type : 'number', default: 1},
         fireSoundStartCount: {type: 'number', default: 0},
@@ -44,7 +47,7 @@ export class AsteroidsGameControllerListenerService {
         //vt add
         // debugger;
         // let sky = document.getElementById('sky');
-        let cylEl = (document.getElementById('aframe-cyl') as any).object3D.el;
+        // let cylEl = (document.getElementById('aframe-cyl') as any).object3D.el;
         // cylEl.setAttribute('sound', {
         //   src: 'url(src/assets/sounds/asteroids/asteroids-ship-fire.ogg',
         //   on: 'fire-bullet',
@@ -86,8 +89,10 @@ export class AsteroidsGameControllerListenerService {
         // console.log(`dolly.position.z=${d.attr('position')}`);
         // console.log(`dolly.before=${d.before}`);
         // let e = $(el)
+        base.docLSS['ship-thrust-reset'] = false;
         this.data.spaceRumble = document.getElementById('space-rumble');
         this.data.spaceRumble.volume = 0.1;
+        angParentComponent.spaceRumble = this.data.spaceRumble;
         this.data.bgSound = document.getElementById('bg-sound');
         this.data.bgSound.volume = 0.02;
         this.data.bgSound.play();
@@ -96,16 +101,31 @@ export class AsteroidsGameControllerListenerService {
         // e.animate({volume: 0.9}, 100);
         // try to do a fade in
         // el.animate([{volume : 1.0}], [{duration: 100}]);
+        // this.data.spaceRumble.onabort = () => {
+        //   console.log('AsteroidsGameControllerListenerService: spaceRumble aborted');
+        // }
+        this.data.spaceRumble.addEventListener('ship-thrust-reset', () => {
+          console.log('AsteroidsGameControllerListenerService: ship thrust reset');
+          // set a global variable so others can know.
+          (document as any).LSS['ship-thrust-reset'] = true;
+        });
         el.addEventListener('thrust-start', ()=> {
           // this.data.spaceRumble.animate([{volume : 1.0}], [{duration: 1000}]);
           let sound = this.data.spaceRumble;
           // sound.volume = 1.0;
           sound.currentTime = 0.0;
+          console.log(`thrust-stop: emitting ship-thrust-reset event`);
+          let rumbleEl = angParentComponent.spaceRumble; 
+          // angParentComponent.afc.data
+          let thrustResetEvt = document.createEvent('Event');
+          thrustResetEvt.initEvent('ship-thrust-reset', true, true);
+          rumbleEl.dispatchEvent(thrustResetEvt);
           // sound.play();
           angParentComponent.utils.fadeIn(sound, 250, 0.20, 25);
         });
 
         el.addEventListener('thrust-stop', () => {
+        // el.addEventListener('thrust-stop', function() {
           // this.utils.fadeOut(this.data.spaceRumble, 1000, 0, 50);
           // this.utils.fadeOut(this.data.spaceRumble);
           // debugger;

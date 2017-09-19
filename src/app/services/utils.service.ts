@@ -331,7 +331,7 @@ export class UtilsService {
     let latitude = (pos.y / lssScene.base.projectionBoundary) * Math.PI + 0 * Math.PI /2;
     latitude /= 2.0;
     // let radius = 5.0
-    let radius = lssScene.dollyRadius; 
+    let radius = lssScene.dollyRadius;
     // Note: as I understand it X (horizontal) is associated with longitude and y (vertical)
     // is associated with latitude.   However, in the relative rotations, we have to use
     // the opposite.  I don't know why this is: it just is.
@@ -387,7 +387,7 @@ export class UtilsService {
 
   // Note how we only rotate about the x-axis and don't move up and down in the y.
   // This is because we want to minimize the amount of acceleration experienced by the user.
-  // It might useful in the future to add a "full" track, but I'm leaving it for now with 
+  // It might useful in the future to add a "full" track, but I'm leaving it for now with
   // a minimalist scroll because I think it works pretty good.
   trackDollyCylinder (pos : THREE.Vector3, lssScene : any ) {
     let boundVal = lssScene.base.projectionBoundary;
@@ -418,62 +418,6 @@ export class UtilsService {
 
   // The following obtained from:
   // https://github.com/miohtama/Krusovice/blob/master/src/tools/fade.js
-  /**
-   * Stop audio playing with fade out period.
-   *
-   * Equals to audio.pause() but with smooth volume out.
-   *
-   * @param {Object} audio HTML5 audio element
-   * @param {Number} (optional) rampTime How long is the fade in ms
-   * @param {Number} targetVolume Min volume. 0 = default = HTML5 audio min.
-   * @param {Number} tick Timer period in ms
-   *
-   */
-    fadeOut (audio, rampTime?, targetVolume?, tick?) {
-      var orignalVolume = audio.volume;
-      //
-      if (!targetVolume) {
-        targetVolume = 0;
-      }
-
-      // By default, ramp up in one second
-      if (!rampTime) {
-        rampTime = 1000;
-      }
-
-      // How often adjust audio volume (ms)
-      if (!tick) {
-        tick = 50;
-      }
-
-      var volumeStep = (audio.volume - targetVolume) / (rampTime / tick);
-
-      if (!volumeStep) {
-        // Volume already at 0
-        return;
-      }
-
-      function ramp() {
-        var vol = Math.max(0, audio.volume - volumeStep);
-
-        audio.volume = vol;
-
-        // Have we reached target volume level yet?
-        if (audio.volume > targetVolume) {
-          // Keep up going until 11
-          setTimeout(ramp, tick);
-        } 
-        else {
-          audio.pause();
-
-          // Reset audio volume so audio can be played again
-          audio.volume = orignalVolume;
-        }
-      }
-
-      ramp();
-    };
-  
     /**
      * Start audio playing with fade in period.
      *
@@ -489,7 +433,8 @@ export class UtilsService {
      *
      */
     fadeIn(audio, rampTime?, targetVolume?, tick?) {
-      //
+      // (document as any).LSS['ship-thrust-reset'] = false;
+
       if (!targetVolume) {
         targetVolume = 1;
       }
@@ -539,6 +484,62 @@ export class UtilsService {
 
       audio.play();
     };
+  /**
+   * Stop audio playing with fade out period.
+   *
+   * Equals to audio.pause() but with smooth volume out.
+   *
+   * @param {Object} audio HTML5 audio element
+   * @param {Number} (optional) rampTime How long is the fade in ms
+   * @param {Number} targetVolume Min volume. 0 = default = HTML5 audio min.
+   * @param {Number} tick Timer period in ms
+   *
+   */
+    fadeOut (audio, rampTime?, targetVolume?, tick?) {
+      var orignalVolume = audio.volume;
+      //
+      if (!targetVolume) {
+        targetVolume = 0;
+      }
+
+      // By default, ramp up in one second
+      if (!rampTime) {
+        rampTime = 1000;
+      }
+
+      // How often adjust audio volume (ms)
+      if (!tick) {
+        tick = 50;
+      }
+
+      var volumeStep = (audio.volume - targetVolume) / (rampTime / tick);
+
+      if (!volumeStep) {
+        // Volume already at 0
+        return;
+      }
+
+      function ramp() {
+        var vol = Math.max(0, audio.volume - volumeStep);
+
+        audio.volume = vol;
+
+        // Have we reached target volume level yet?
+        if (audio.volume > targetVolume && !(document as any).LSS['ship-thrust-reset']) {
+          // Keep up going until 11
+          setTimeout(ramp, tick);
+        }
+        else {
+          audio.pause();
+          (document as any).LSS['ship-thrust-reset'] = false;
+          // Reset audio volume so audio can be played again
+          audio.volume = orignalVolume;
+        }
+      }
+
+      ramp();
+    };
+
 
   // };
 

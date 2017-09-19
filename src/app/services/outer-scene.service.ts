@@ -37,6 +37,9 @@ export class OuterSceneService {
     let axisHelper = new THREE.AxisHelper(1);
     this.projScene.add(axisHelper);
     this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
+    // (document as any).LSS = new Object();
+    // This is a global stash for transferring state among disparate components.
+    (document as any).LSS = {};
   }
 
   onInnerSceneTick( e: Event)  {

@@ -11,6 +11,7 @@ export class BaseService {
   private _boundVal : number;
   CAMERA_MOVE_DELTA : number = 1.2;
   CAMERA_ROT_DELTA : number = 5;
+  // docLSS : Object;
 
   constructor() {
     this.init();
@@ -40,4 +41,11 @@ export class BaseService {
     this._boundVal = v;
   }
 
+  public get docLSS() : Object {
+    if (!(document as any).LSS) {
+      (document as any).LSS = {};
+    }
+
+    return (document as any).LSS;
+  }
 }
