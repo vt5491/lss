@@ -15,12 +15,11 @@ export class OuterSceneService {
   projObj : THREE.Object3D;
   projScene : THREE.Object3D;
   discreteInnerSceneScroll : Boolean;
-  // discreteInnerSceneScrollQuanta: Number;
   trackDolly : Boolean;
 
   constructor() { 
     this.discreteInnerSceneScroll = false;
-    this.trackDolly = true;
+    this.trackDolly = false;
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities
@@ -28,7 +27,6 @@ export class OuterSceneService {
   init() {
     let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
     this.dolly = dollyEl.object3D;
-    console.log("OuterGameService.init: this.dolly=${this.dolly}");
     let projObjEl = document.querySelector('.proj-obj') as AFrame.Entity;
     this.projObj = projObjEl.object3D;
     let projSceneEl = document.querySelector('.proj-scene') as AFrame.Entity;
@@ -37,17 +35,12 @@ export class OuterSceneService {
     let axisHelper = new THREE.AxisHelper(1);
     this.projScene.add(axisHelper);
     this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
-    // (document as any).LSS = new Object();
     // This is a global stash for transferring state among disparate components.
     (document as any).LSS = {};
   }
 
   onInnerSceneTick( e: Event)  {
-    console.log('OuterGameService.onInnerSceneTick: hello');
   }
 
-  // trackDolly (pos : THREE.Vector3 ) {
-
-  // }
 }
 

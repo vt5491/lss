@@ -1,25 +1,21 @@
-<div id='header'>
+<!-- <div id='header'>
   <p></p>
   <button name="vt-button" id='vt-button'>Click me</button>
-</div>
+</div> -->
 <a-scene  id="luxor-scene"
   luxor-scene-aframe-component
   inner-scene-renderer
 >
-  <!-- asteroids-game-controller-listener -->
   <a-assets>
-    <!-- <a-asset-item id="inner-scene-obj" src="../../components/aframe/innerSceneCube.js"></a-asset-item> -->
-    <!-- <a-asset-item id="inner-scene-obj" src="src/app/loopy-surface-surfers/components/aframe/innerSceneCube.js"></a-asset-item>
-    <a-asset-item id="old-inner-scene" src="src/assets/lib/innerScene.js"></a-asset-item> -->
+    <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
+    <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
   </a-assets>
-  <!--<a-entity id="luxor-scene" luxor-scene-aframe-componet></a-entity> -->
   <a-entity id="luxor-scene" ></a-entity>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
     <a-entity hand-controls="right" position="0 0 -1"
     asteroids-game-controller-listener
     ></a-entity>
-    <!--<a-entity hand-controls="left" position="0 0 -1" grab></a-entity>-->
   <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   </a-entity>
   <a-entity id="luxor-model"
@@ -28,7 +24,6 @@
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
     >
-    <!-- asteroids-inner-scene-aframe-component -->
   </a-entity>
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

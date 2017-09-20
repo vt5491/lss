@@ -3,6 +3,7 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { AsteroidsGameControllerListenerService } from '../../../inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
+import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
 
 @Injectable()
@@ -19,10 +20,9 @@ export class LuxorSceneComponent implements OnInit {
   constructor(
     public innerGame: AsteroidsGame, 
     private base : BaseService,
-    // private asteroidsGameEvtHandler : AsteroidsGameControllerListenerService
+    public outerSceneSvc: OuterSceneService,
   ) {
     let luxorSceneComponent = this;
-    console.log(`LuxorSceneComponent.ctor: entered`);
     // Note: the client that invokes this needs an updateScene method 
     // and an 'innerGame' instance variable (they will be called back and referred to)
     this.innerSceneRenderer = new InnerSceneRendererService(this);
@@ -42,6 +42,7 @@ export class LuxorSceneComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.outerSceneSvc.init();
   }
 
   doIt(){
@@ -57,9 +58,7 @@ export class LuxorSceneComponent implements OnInit {
 
     var fontLoader = new THREE.FontLoader();
 
-    console.log(`LuxorSceneComponent.initScene: entered -lss version`);
     let img = document.querySelector('#vegas-vic-full');
-    console.log(`initScene.img=${img}`);
     let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/vegas_vic_full_no_wc.png" );
     vegasVicTexture.flipY = false;
     let vicHeadTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_head_texture.jpg" );
@@ -140,6 +139,11 @@ export class LuxorSceneComponent implements OnInit {
   getBaseTexture() : THREE.Texture {
     // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
     return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+  }
+
+  trackDolly (pos : THREE.Vector3 ) {
+    this.outerSceneSvc.dolly.position.x = pos.x;
+    this.outerSceneSvc.dolly.position.y = pos.y;
   }
 
 }

@@ -11,13 +11,11 @@ import { BaseService } from '../../../services/base.service';
 })
 export class PlaneSceneComponent implements OnInit {
   private innerSceneRenderer: InnerSceneRendererService;
-  // private outerGameService : OuterGameService;
 
   constructor(public innerGame: AsteroidsGame, 
     public outerSceneSvc: OuterSceneService,
     private base : BaseService,
   ) { 
-    // this.outerGameService = new OuterGameService();
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
     // more accurately, the component that instantiates InnerSceneRender 
@@ -25,13 +23,10 @@ export class PlaneSceneComponent implements OnInit {
     // an innerScene object, and that innerScene object must have an 'updateScene'
     // method (unless it's a static scene, in which case it doesn't need 'updatScene')
     this.innerSceneRenderer = new InnerSceneRendererService(this);
-
   }
 
   ngOnInit() {
-    console.log('PlaneSceneComponent: now in ngOnInit');
     this.outerSceneSvc.init();
-    
   }
 
   getProjectionMesh() : THREE.Mesh {
@@ -48,16 +43,13 @@ export class PlaneSceneComponent implements OnInit {
   // which the inner game will also be projected.
   getBaseTexture() : THREE.Texture {
     // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
-    return new THREE.TextureLoader().load("../../../../assets/img/coke-label.jpg");  
+    // return new THREE.TextureLoader().load("../../../../assets/img/coke-label.jpg");  
+    // return new THREE.TextureLoader().load("../../../../assets/img/notebook-paper.png");  
+    return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper.png");  
   }
 
   trackDolly (pos : THREE.Vector3 ) {
     this.outerSceneSvc.dolly.position.x = pos.x;
     this.outerSceneSvc.dolly.position.y = pos.y;
   }
-
-  // onInnerSceneTick( e: Event)  {
-  //   console.log('PlaneSceneComponent.onInnerSceneTick: hello');
-  // }
-
 }

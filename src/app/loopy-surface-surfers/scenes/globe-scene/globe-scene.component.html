@@ -1,4 +1,8 @@
 <a-scene id="globe-scene" inner-scene-renderer class="proj-scene">
+  <a-assets>
+    <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
+    <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
+  </a-assets>
   <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
     <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>

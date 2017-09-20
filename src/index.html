@@ -63,6 +63,9 @@ void main(void)
   vec4 Cb = texture2D(t2, vUv);
   // c = Ca.rgb * Ca.a + Cb.rgb * Cb.a * (1.0 - Ca.a);
   c = Ca.rgb + Cb.rgb;
+  float bgWeight;
+  bgWeight = 0.6;
+  // c = Ca.rgb * bgWeight + Cb.rgb * (1.0 - bgWeight);
   gl_FragColor= vec4(c, 1.0);
 }
 </script>
