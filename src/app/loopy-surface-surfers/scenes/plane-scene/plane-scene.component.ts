@@ -25,8 +25,20 @@ export class PlaneSceneComponent implements OnInit {
     this.innerSceneRenderer = new InnerSceneRendererService(this);
   }
 
+  doSomething() {
+    return 7;
+  }
+
   ngOnInit() {
     this.outerSceneSvc.init();
+    // console.log('PlaneSceneComponent: about to auto-enter vr');
+    // debugger;
+    // (document.querySelector('a-scene') as any).enterVR()
+    // let sceneEl = document.querySelector('a-scene');
+    // sceneEl.addEventListener('renderstart', () => {
+    //   console.log('rendering started');
+    //   setTimeout(function(){ (document.querySelector('a-scene') as any).enterVR() }, 3000);
+    // })
   }
 
   getProjectionMesh() : THREE.Mesh {

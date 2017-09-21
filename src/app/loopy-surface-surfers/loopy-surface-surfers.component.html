@@ -5,9 +5,14 @@
     <ng-template appGameScene></ng-template>
   </p>
 </div>
-<div>
-  <a-scene lss-aframe-component tats id="intro-scene">
+<div #parent>
+  <a-scene lss-aframe-component tats #introScene>
     <!-- <ng-template appGameScene></ng-template> -->
+    <a-assets>
+      <img id="cokeThumbnail" src="assets/img/coke-label.jpg">
+    </a-assets>
+    <a-link href="index.html" title="coke thumbnail"
+      image="#cokeThumbnail" position="-2 0 -1"></a-link>
     <a-entity id="dolly" position="0 0.5 3">
       <!-- <a-camera near="0.1" user-height="0" position="0 0.5 3" id="camera" vt-vr-state="off"></a-camera> -->
       <!-- <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" vt-vr-state="off"></a-camera> -->
