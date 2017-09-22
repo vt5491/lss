@@ -3,26 +3,31 @@ import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
+import { UtilsService } from '../../../services/utils.service';
+import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
 
 @Component({
   selector: 'app-plane-scene',
   templateUrl: './plane-scene.component.html',
   styleUrls: ['./plane-scene.component.css']
 })
-export class PlaneSceneComponent implements OnInit {
-  private innerSceneRenderer: InnerSceneRendererService;
+export class PlaneSceneComponent extends LssScene implements OnInit {
+  // private innerSceneRenderer: InnerSceneRendererService;
 
-  constructor(public innerGame: AsteroidsGame, 
+  constructor(
+    public innerGame: AsteroidsGame, 
     public outerSceneSvc: OuterSceneService,
     private base : BaseService,
-  ) { 
+    private utils: UtilsService
+  ) {
+    super(base, utils); 
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
     // more accurately, the component that instantiates InnerSceneRender 
     // e.g this module (plane-scene.component in this case) must have
     // an innerScene object, and that innerScene object must have an 'updateScene'
     // method (unless it's a static scene, in which case it doesn't need 'updatScene')
-    this.innerSceneRenderer = new InnerSceneRendererService(this);
+    // this.innerSceneRenderer = new InnerSceneRendererService(this);
   }
 
   doSomething() {

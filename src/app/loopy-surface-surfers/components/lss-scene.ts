@@ -3,6 +3,8 @@ import { AsteroidsGame } from '../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../services/outer-scene.service';
 import { BaseService } from '../../services/base.service';
+import { UtilsService } from '../../services/utils.service';
+import { AutoEnterVrService } from '../../services/aframe/auto-enter-vr.service';
 
 export class LssScene {
   protected innerSceneRenderer: InnerSceneRendererService;  
@@ -22,8 +24,11 @@ export class LssScene {
     // Angular doesn't allow dependecy injection on common parms in base and child classes.
     // innerGame: AsteroidsGame, 
     // outerSceneSvc: OuterSceneService,
-    base : BaseService
+    base : BaseService,
+    utils : UtilsService
   ) {
+    console.log('LssScene.ctor: entered');
+    
     this.innerSceneRenderer = new InnerSceneRendererService(this);
     this.innerSceneScrollQuanta = base.ONE_DEG * 30.0;
     this.lastPhi = 0.0;
@@ -36,6 +41,9 @@ export class LssScene {
     this.dollyTranslation = new THREE.Matrix4();
     this.dollyTransform = new THREE.Matrix4();
     this.dollyRadius = 10.0;
+
+    // initialize the AutoEnterVr component so we can tag <scene> with this attribute
+    let autoEnterVr =  new AutoEnterVrService(utils);
   }
 
   init() {};

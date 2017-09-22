@@ -3,7 +3,9 @@ import { AsteroidsGame } from '../../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
+import { UtilsService } from '../../../services/utils.service';
 import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
+// import { AutoEnterVrService } from '../../../services/aframe/auto-enter-vr.service';
 
 @Injectable()
 @Component({
@@ -29,10 +31,12 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
     // thus we have to do it here.
     private innerGame: AsteroidsGame, 
     private outerSceneSvc: OuterSceneService,
-    private base : BaseService
+    private base : BaseService,
+    private utils: UtilsService
+    // private autoEnterVr : AutoEnterVrService
   ) { 
     // super(innerGame, outerSceneSvc, base);
-    super( base);
+    super(base, utils);
     this.dollyRadius = 5.0;
     // super(innerGame, outerSceneSvc);
 

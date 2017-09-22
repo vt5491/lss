@@ -22,7 +22,7 @@ export class GlobeSceneComponent extends LssScene implements OnInit {
     private base : BaseService,
     private utils : UtilsService
   ) { 
-    super(base);
+    super(base, utils);
     // super(innerGame, outerSceneSvc, base);
     this.dollyRadius = 10.0
     // this.innerSceneRenderer = new InnerSceneRendererService(this);

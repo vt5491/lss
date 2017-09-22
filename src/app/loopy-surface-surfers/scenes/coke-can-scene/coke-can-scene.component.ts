@@ -20,7 +20,7 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
     private base : BaseService,
     private utils : UtilsService
   ) { 
-    super(base);
+    super(base, utils);
   }
 
   ngOnInit() {

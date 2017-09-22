@@ -75,10 +75,11 @@ import { CokeCanSceneComponent } from './loopy-surface-surfers/scenes/coke-can-s
     },
     {
       provide: PlaneSceneComponent,
-      useFactory:(asteroidsGame, baseService, outerSceneService) => {
-        return new PlaneSceneComponent(asteroidsGame, baseService, outerSceneService);
+      useFactory:(asteroidsGame, outerSceneService, baseService, utilsService) => {
+        return new PlaneSceneComponent(asteroidsGame, outerSceneService, 
+          baseService, utilsService);
       },
-      deps: [AsteroidsGame, BaseService, OuterSceneService]
+      deps: [AsteroidsGame, OuterSceneService, BaseService, UtilsService]
     },
     // {
     //   provide: LuxorSceneComponent,

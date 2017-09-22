@@ -25,6 +25,7 @@ export class UtilsService {
   // datGUI : dat.GUI;
   // stats : Stats;
   parms : any;
+  public log : any;
 
   constructor(
     private injector: Injector,
@@ -38,6 +39,10 @@ export class UtilsService {
     // console.log(`UtilsService.cotr: datGUI=${this.datGUI}}`);
 
     this.parms = {};
+
+    // Do not log in production.
+    var debug = window.location.protocol !== 'https:';
+    this.log = debug ? console.log.bind(console) : function () {};
   }
 
   addControls(controlObject) {
@@ -424,11 +429,8 @@ export class UtilsService {
      * Equals to audio.play() but with smooth volume in.
      *
      * @param {Object} audio HTML5 audio element
-     *
      * @param {Number} (optional) rampTime How long is the fade in ms
-     *
      * @param {Number} targetVolume Max volume. 1 = default = HTML5 audio max.
-     *
      * @param {Number} tick Timer period in ms
      *
      */
@@ -539,6 +541,10 @@ export class UtilsService {
 
       ramp();
     };
+
+    // get log() : any {
+    //   return this._log;
+    // }
 
 
   // };

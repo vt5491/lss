@@ -19,7 +19,7 @@ export class OuterSceneService {
 
   constructor() { 
     this.discreteInnerSceneScroll = false;
-    this.trackDolly = false;
+    this.trackDolly = true;
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities

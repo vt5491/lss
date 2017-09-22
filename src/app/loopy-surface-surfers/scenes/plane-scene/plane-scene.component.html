@@ -4,11 +4,15 @@
 </div>
 <a-scene plane-scene-aframe-component id="plane-scene"
  inner-scene-renderer
+ buto-enter-vr
  >
   <a-assets>
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
+    <img id="homeThumbnail" src="assets/img/dog_poker_1.jpg">
   </a-assets>
+  <a-link href="" title="home thumbnail"
+    image="#homeThumbnail" position="0 -6 0"></a-link>
   <a-entity id="dolly" position="0 0 8" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
     <a-entity hand-controls="right" position="2.0 0 0"

@@ -360,6 +360,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
       case /pool-hall/.test(evt.target.id):
         console.log(`calling pool hall scene`);
+        debugger;
         (document.querySelector('a-link') as any).navigate('//192.168.50.68:4200/poolHallScene');
         break;
     }
