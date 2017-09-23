@@ -59,6 +59,11 @@ export class AsteroidsGameControllerListenerService {
           // set a global variable so others can know.
           (document as any).LSS['ship-thrust-reset'] = true;
         });
+        el.addEventListener('thrust-start', () => {
+          // debugger;
+          console.log(`AGCLS: caught thrust-start`);
+        })
+        /*vt-x
         el.addEventListener('thrust-start', ()=> {
           let sound = this.data.spaceRumble;
           sound.currentTime = 0.0;
@@ -73,6 +78,7 @@ export class AsteroidsGameControllerListenerService {
         el.addEventListener('thrust-stop', () => {
           angParentComponent.utils.fadeOut(this.data.spaceRumble, 1000, 0.0, 25);
         })
+        */
         el.addEventListener('sound-ended', ()=> {
           this.data.fireSoundStopCount++;
           // console.log(`fireSoundStartCount=${this.data.fireSoundStartCount}, fireSoundStopCount=${this.data.fireSoundStopCount}`);
@@ -120,11 +126,14 @@ export class AsteroidsGameControllerListenerService {
           }
         });
         el.addEventListener('triggerdown', function (e) {
+          console.log(`AGCLS: now emitting thrust-start`);
           angParentComponent.thrusterEngaged = true;
           el.emit('thrust-start');
         });
         el.addEventListener('triggerup', (e) => { //Vive
           angParentComponent.thrusterEngaged = false;
+          console.log(`AGCLS: now emitting thrust-stop`);
+          
           el.emit('thrust-stop');
         });
       },

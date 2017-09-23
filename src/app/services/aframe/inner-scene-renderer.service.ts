@@ -80,7 +80,8 @@ export class InnerSceneRendererService {
           uniforms: uniforms,
           defines: defines,
           vertexShader: this.vertShader,
-          fragmentShader: this.fragShader
+          fragmentShader: this.fragShader,
+          side: THREE.DoubleSide
         });
 
         this.innerGame.offscreenImageBuf.needsUpdate = true; //need this

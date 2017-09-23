@@ -53,6 +53,7 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
       projectionMesh = (document.querySelector('#test-plane') as any).object3D.children[0];
     }
 
+    // debugger;
     return projectionMesh;
   }
 

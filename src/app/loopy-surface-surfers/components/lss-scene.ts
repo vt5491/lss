@@ -4,7 +4,8 @@ import { InnerSceneRendererService } from '../../services/aframe/inner-scene-ren
 import { OuterSceneService } from '../../services/outer-scene.service';
 import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
-import { AutoEnterVrService } from '../../services/aframe/auto-enter-vr.service';
+// import { AutoEnterVrService } from '../../services/aframe/auto-enter-vr.service';
+import { ShipThrustSoundService } from '../../services/aframe/ship-thrust-sound.service';
 
 export class LssScene {
   protected innerSceneRenderer: InnerSceneRendererService;  
@@ -43,7 +44,8 @@ export class LssScene {
     this.dollyRadius = 10.0;
 
     // initialize the AutoEnterVr component so we can tag <scene> with this attribute
-    let autoEnterVr =  new AutoEnterVrService(utils);
+    // let autoEnterVr =  new AutoEnterVrService(utils);
+    let shipThrustSound =  new ShipThrustSoundService();
   }
 
   init() {};

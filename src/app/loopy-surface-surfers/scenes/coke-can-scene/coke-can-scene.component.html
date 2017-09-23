@@ -20,13 +20,11 @@ console.log('hi....');
   </a-assets>
   <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio> -->
   <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
+  <!-- <a-entity #dolly position="0 0 15" wasd-plus-controls> -->
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera">
       <!-- <a-cursor color="#ffba70" position="0 0 -1"></a-cursor> -->
     </a-camera>
-    <a-entity hand-controls="left" position="-0.1 -0.2 0"
-      grab
-      cullet-fire
-    ></a-entity>
+    <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
     <a-entity hand-controls="right" position="0.1 -0.2 0"
       asteroids-game-controller-listener="shipRotFactor: -1"
       cullet-fire

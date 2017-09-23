@@ -135,12 +135,12 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     // let axisHelper = new THREE.AxisHelper(1);
     // sceneObj.add(axisHelper);
 
-    let billBoardEl = document.querySelector('#bill-board') as AFrame.Entity;
-    let billBoardObj = billBoardEl.object3D;
+    // let billBoardEl = document.querySelector('#bill-board') as AFrame.Entity;
+    // let billBoardObj = billBoardEl.object3D;
 
-    billBoardObj.position.x += this.billBoard['xOrigin'];
-    billBoardObj.position.y += this.billBoard['yOrigin'];
-    billBoardObj.position.z += this.billBoard['zOrigin'];
+    // billBoardObj.position.x += this.billBoard['xOrigin'];
+    // billBoardObj.position.y += this.billBoard['yOrigin'];
+    // billBoardObj.position.z += this.billBoard['zOrigin'];
 
     // document.querySelector('#plane-scene').on('click', this.planeSceneClick);
     let list = document.querySelectorAll('.scene-select');

@@ -15,11 +15,17 @@
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
   </a-entity>
   <a-entity hand-controls="right" position="0 0 -1"
-    asteroids-game-controller-listener="shipRotFactor: -1"></a-entity> >
+    asteroids-game-controller-listener="shipRotFactor: -1" thip-thrust-sound>
+      <a-entity ship-thrust-sound
+        sound="src: url(assets/sounds/asteroids/space-rumble.ogg)"
+        position="0 -7.5 0">
+      </a-entity>
+        <!-- sound="src: url(assets/sounds/asteroids/space-rumble.ogg); on: thrust-start" -->
+  </a-entity> >
   <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   <a-entity id="pool-hall-model"
     class="proj-scene"
-    gltf-model="url(assets/models/pool-hall/pool-hall.gltf)"
+    gltf-model="url(assets/models/pool-hall/gltf2/pool-hall.gltf)"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
     position="0 -7.5 0"

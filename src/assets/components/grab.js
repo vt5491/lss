@@ -19,6 +19,10 @@ AFRAME.registerComponent('grab', {
     //vt add
     this.onGripDown = this.onGripDown.bind(this);
     this.onGripUp = this.onGripUp.bind(this);
+    this.previousPosition = {};
+    // this.previousPosition.x = this.el.getAttribute('position').x;
+    // this.previousPosition.y = this.el.getAttribute('position').y;
+    // this.previousPosition.z = this.el.getAttribute('position').z;
     //vt end
   },
 
@@ -64,7 +68,8 @@ AFRAME.registerComponent('grab', {
     //vt add
     this.gripping = false;
     //vt end
-    delete this.previousPosition;
+    // delete this.previousPosition;
+    this.previousPosition = {};
   },
 
   onGripOpen: function (evt) {
@@ -79,7 +84,8 @@ AFRAME.registerComponent('grab', {
   onTriggerDown: function (evt) {
     // console.log(`now in onTriggerDown`);
     this.triggering = true;
-    delete this.previousPosition;
+    // delete this.previousPosition;
+    this.previousPosition = {};
   },
 
   onTriggerUp: function (evt) {
@@ -90,7 +96,8 @@ AFRAME.registerComponent('grab', {
   onGripDown: function (evt) {
     // console.log(`now in onGripDown`);
     this.gripping = true;
-    delete this.previousRotation;
+    // delete this.previousRotation;
+    this.previousRotation = {};
   },
 
   onGripUp: function (evt) {
@@ -123,7 +130,7 @@ AFRAME.registerComponent('grab', {
   // },
   tick: function () {
     // console.log(`tick: triggering=${this.triggering}`);
-    // console.log(`tick: gripping=${this.gripping}`);
+    // console.log(`grab.js.tick: gripping=${this.gripping}, grabbing=${this.grabbing}`);
     let dollyEl = document.querySelector('#dolly');
     if (this.gripping && !this.grabbing) {
       let cameraEl = document.querySelector('#camera');
@@ -153,23 +160,49 @@ AFRAME.registerComponent('grab', {
       let pullLeverage = 30.0;
       // let dollyObj = dollyEl.object3D;
       position = dollyEl.getAttribute('position');
+      // console.log(`grab.js.tick: pos.x old=${position.x}`);
       dollyEl.setAttribute('position', {
         x: position.x - this.deltaPosition.x * pullLeverage,
         y: position.y - this.deltaPosition.y * pullLeverage,
         z: position.z - this.deltaPosition.z * pullLeverage
       });
+      // console.log(`grab.js.tick: pos.x new=${dollyEl.getAttribute('position').x}`);
     }
   },
 
   updateDelta: function () {
+    // debugger;
+    // console.log(`grab.js.updateDelta: this.previousPosition=${this.previousPosition}`);
+    // if (this.previousPosition) {
+    //   console.log(`grab.js.updateDelta: this.previousPosition.x=${this.previousPosition.x}`);
+    // }
     var currentPosition = this.el.getAttribute('position');
-    var previousPosition = this.previousPosition || currentPosition;
+    // console.log(`grab.js.updateDelta: currentPosition.x=${currentPosition.x}`);
+    // var previousPosition = this.previousPosition || currentPosition;
+    // var previousPosition = {};
+    if (Object.keys(this.previousPosition).length === 0) {
+      // need to do a deep copy
+      this.previousPosition = Object.assign({}, currentPosition);
+    }
+    // else{
+    //   console.log(`previousPosition not set...setting`);
+    //   // previousPosition = currentPosition;
+    //   this.previousPosition['x'] = currentPosition.x;
+    //   this.previousPosition['y'] = currentPosition.y;
+    //   this.previousPosition['z'] = currentPosition.z;
+    // }
     var deltaPosition = {
-      x: currentPosition.x - previousPosition.x,
-      y: currentPosition.y - previousPosition.y,
-      z: currentPosition.z - previousPosition.z
+      x: currentPosition.x - this.previousPosition.x,
+      y: currentPosition.y - this.previousPosition.y,
+      z: currentPosition.z - this.previousPosition.z
     };
-    this.previousPosition = currentPosition;
+    // console.log(`grab.js.updateDelta: deltaPosition.x=${deltaPosition.x}`);
+    // this.previousPosition = currentPosition;
+    // this.previousPosition['x'] = currentPosition.x;
+    // this.previousPosition['y'] = currentPosition.y;
+    // this.previousPosition['z'] = currentPosition.z;
+    this.previousPosition = Object.assign({}, currentPosition);
+
     this.deltaPosition = deltaPosition;
   },
 
