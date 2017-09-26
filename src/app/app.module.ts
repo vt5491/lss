@@ -32,6 +32,7 @@ import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/
 import { OuterSceneService} from './services/outer-scene.service';
 import { GlobeSceneComponent } from './loopy-surface-surfers/scenes/globe-scene/globe-scene.component';
 import { CokeCanSceneComponent } from './loopy-surface-surfers/scenes/coke-can-scene/coke-can-scene.component';
+import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,13 @@ import { CokeCanSceneComponent } from './loopy-surface-surfers/scenes/coke-can-s
       },
       deps: [AsteroidsGame, OuterSceneService, BaseService, UtilsService]
     },
+    // {
+    //   provide: ShipThrustSoundService,
+    //   useFactory: (utilsService) => {
+    //     return new ShipThrustSoundService(utilsService)
+    //   },
+    //   deps: [UtilsService],
+    // },
     // {
     //   provide: LuxorSceneComponent,
     //   useFactory:(asteroidsGame, asteroidsGameControllerListenerService)  => {

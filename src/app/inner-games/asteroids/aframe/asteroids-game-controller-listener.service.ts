@@ -48,6 +48,7 @@ export class AsteroidsGameControllerListenerService {
           poolSize: 20
         });
 
+        //TODO next line is redundant
         base.docLSS['ship-thrust-reset'] = false;
         this.data.spaceRumble = document.getElementById('space-rumble');
         this.data.spaceRumble.volume = 0.1;

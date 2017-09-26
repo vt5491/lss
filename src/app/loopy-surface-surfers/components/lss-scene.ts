@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Injector } from '@angular/core';
 import { AsteroidsGame } from '../../inner-games/asteroids/asteroids-game';
 import { InnerSceneRendererService } from '../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../services/outer-scene.service';
@@ -19,6 +19,7 @@ export class LssScene {
   protected dollyTranslation : THREE.Matrix4;
   protected dollyTransform : THREE.Matrix4;
   protected dollyRadius: number;
+  private injector: Injector;
 
   constructor(
     // Note: Do not include scope qualifers on these ("public", "private" et al.)
@@ -26,7 +27,8 @@ export class LssScene {
     // innerGame: AsteroidsGame, 
     // outerSceneSvc: OuterSceneService,
     base : BaseService,
-    utils : UtilsService
+    utils : UtilsService,
+    // private injector: Injector
   ) {
     console.log('LssScene.ctor: entered');
     
@@ -45,7 +47,8 @@ export class LssScene {
 
     // initialize the AutoEnterVr component so we can tag <scene> with this attribute
     // let autoEnterVr =  new AutoEnterVrService(utils);
-    let shipThrustSound =  new ShipThrustSoundService();
+    // let abc = new Injector();
+    let shipThrustSound =  new ShipThrustSoundService(utils, base);
   }
 
   init() {};
