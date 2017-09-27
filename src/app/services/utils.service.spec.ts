@@ -54,7 +54,7 @@ describe('Service: Utils', () => {
   it('should ctor works', inject([UtilsService], (service: UtilsService) => {
     expect(service).toBeTruthy();
     expect(service.addControls).toBeTruthy();
-    expect(service.datGUI).toBeTruthy();
+    // expect(service.datGUI).toBeTruthy();
     expect(service.parms).toBeTruthy();
     expect(service.updatePos).toBeTruthy();
   }));
@@ -100,7 +100,7 @@ describe('Service: Utils', () => {
   it('should load a three.json model properly', inject([UtilsService],
     (utils: UtilsService) => {
       console.log(`ut: entered`);
-      
+
       // spyOn(THREE.ObjectLoader.prototype, "load").call(fakeJsonLoad);
       let scene = new THREE.Scene();
       let sspSurface = new THREE.Mesh();
@@ -127,7 +127,7 @@ describe('Service: Utils', () => {
         // debugger;
         expect(status).toEqual("loaded");
         expect(scene.children.length).toEqual(2);
-        expect(sspSurface.name).toEqual('cube'); 
+        expect(sspSurface.name).toEqual('cube');
         expect(sspMaterial).toBeTruthy();
 
         // restore original saveLoader
@@ -138,7 +138,7 @@ describe('Service: Utils', () => {
   fit('should load a three.js texture properly', inject([UtilsService],
     (utils: UtilsService) => {
       console.log(`now in ut`);
-      
+
       let saveTextureLoader = THREE.TextureLoader.prototype.load;
       let tmpFn : any = THREE.TextureLoader.prototype.load as any;
       // debugger;
@@ -158,5 +158,5 @@ describe('Service: Utils', () => {
       })
 
   }));
-  
+
 });

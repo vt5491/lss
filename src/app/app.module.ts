@@ -26,7 +26,7 @@ import { Asteroid  } from './inner-games/asteroids/asteroid';
 import { ThreeJsSceneProvider, UtilsService,
  ThreeJsWebGLRendererProvider,
 } from './services/utils.service';
-import { GameSceneDirective } from './directives/game-scene.directive';
+// import { GameSceneDirective } from './directives/game-scene.directive';
 import { InnerSceneRendererService  } from './services/aframe/inner-scene-renderer.service';
 import { AsteroidsGameControllerListenerService } from './inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
 import { OuterSceneService} from './services/outer-scene.service';
@@ -40,7 +40,7 @@ import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.servi
     LoopySurfaceSurfersComponent,
     PlaneSceneComponent,
     LuxorSceneComponent,
-    GameSceneDirective,
+    // GameSceneDirective,
     PoolHallSceneComponent,
     GlobeSceneComponent,
     CokeCanSceneComponent

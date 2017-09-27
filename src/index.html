@@ -17,7 +17,17 @@
   <!-- Note: mozilla firefox has a tendancy to work better with later version of aframe -->
   <!-- and chrome with older version -->
   <!-- chrome work with this -->
+  <!-- Note2: another reason for add into .angular-cli.json is that .angular-cli.json is -->
+  <!-- read by the karma tests as well to load it's libraries.  So your tests may not find -->
+  <!-- things if they are in here (?) -->
+  <!-- Note3: However, it aframe needs to be defined in the head tag, thus it needs to go here -->
+  <!-- not in .angular-cli.json -->
+  <!-- Note4: we need to have three.js definined in .angular-cli.json for the uts -->
+  <!-- this shouldn't be a problem since this aframe comes after and it overrides the -->
+  <!-- one in .angular-cli.json(?) -->
+  <!-- <script src="../node_modules/three/build/three.js"></script> -->
   <script src="../node_modules/aframe/dist/aframe-master.js"></script>
+  <script src="../node_modules/aframe-controller-cursor-component/dist/aframe-controller-cursor-component.js"></script>
   <!-- <script src="assets/lib/three.js"></script> -->
   <!-- <script src="../lib/aframe-master.js"></script> -->
   <!-- <script src="../lib/aframe-v0.6.1.js"></script> -->

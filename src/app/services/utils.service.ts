@@ -503,7 +503,7 @@ export class UtilsService {
    */
     fadeOut (audio, rampTime?, targetVolume?, tick?) {
       // debugger;
-      var orignalVolume = audio.data.volume;
+      var orignalVolume = audio.volume;
       //
       if (!targetVolume) {
         targetVolume = 0;
@@ -519,7 +519,7 @@ export class UtilsService {
         tick = 50;
       }
 
-      var volumeStep = (audio.data.volume - targetVolume) / (rampTime / tick);
+      var volumeStep = (audio.volume - targetVolume) / (rampTime / tick);
 
       if (!volumeStep) {
         // Volume already at 0
@@ -527,12 +527,12 @@ export class UtilsService {
       }
 
       function ramp() {
-        var vol = Math.max(0, audio.data.volume - volumeStep);
+        var vol = Math.max(0, audio.volume - volumeStep);
 
-        audio.data.volume = vol;
+        audio.volume = vol;
 
         // Have we reached target volume level yet?
-        if (audio.data.volume > targetVolume && !(document as any).LSS['ship-thrust-reset']) {
+        if (audio.volume > targetVolume && !(document as any).LSS['ship-thrust-reset']) {
           // Keep up going until 11
           setTimeout(ramp, tick);
         }
@@ -540,7 +540,7 @@ export class UtilsService {
           audio.pause();
           (document as any).LSS['ship-thrust-reset'] = false;
           // Reset audio volume so audio can be played again
-          audio.data.volume = orignalVolume;
+          audio.volume = orignalVolume;
         }
       }
 

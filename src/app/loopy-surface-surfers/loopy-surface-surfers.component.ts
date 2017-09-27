@@ -6,7 +6,7 @@ import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
 import { PlaneSceneComponent} from './scenes/plane-scene/plane-scene.component';
 import { Router } from '@angular/router';
-import { GameSceneDirective } from '../directives/game-scene.directive';
+// import { GameSceneDirective } from '../directives/game-scene.directive';
 
 
 @Component({

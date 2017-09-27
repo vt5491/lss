@@ -64,22 +64,23 @@ export class AsteroidsGameControllerListenerService {
           // debugger;
           console.log(`AGCLS: caught thrust-start`);
         })
-        /*vt-x
-        el.addEventListener('thrust-start', ()=> {
-          let sound = this.data.spaceRumble;
-          sound.currentTime = 0.0;
-          // console.log(`thrust-stop: emitting ship-thrust-reset event`);
-          let rumbleEl = angParentComponent.spaceRumble; 
-          let thrustResetEvt = document.createEvent('Event');
-          thrustResetEvt.initEvent('ship-thrust-reset', true, true);
-          rumbleEl.dispatchEvent(thrustResetEvt);
-          angParentComponent.utils.fadeIn(sound, 250, 0.20, 25);
-        });
 
-        el.addEventListener('thrust-stop', () => {
-          angParentComponent.utils.fadeOut(this.data.spaceRumble, 1000, 0.0, 25);
-        })
-        */
+        // thust-start and thrust-stop now handled by ship-thrust-sound-service
+        // el.addEventListener('thrust-start', ()=> {
+        //   let sound = this.data.spaceRumble;
+        //   sound.currentTime = 0.0;
+        //   // console.log(`thrust-stop: emitting ship-thrust-reset event`);
+        //   let rumbleEl = angParentComponent.spaceRumble; 
+        //   let thrustResetEvt = document.createEvent('Event');
+        //   thrustResetEvt.initEvent('ship-thrust-reset', true, true);
+        //   rumbleEl.dispatchEvent(thrustResetEvt);
+        //   angParentComponent.utils.fadeIn(sound, 250, 0.20, 25);
+        // });
+
+        // el.addEventListener('thrust-stop', () => {
+        //   angParentComponent.utils.fadeOut(this.data.spaceRumble, 1000, 0.0, 25);
+        // })
+
         el.addEventListener('sound-ended', ()=> {
           this.data.fireSoundStopCount++;
           // console.log(`fireSoundStartCount=${this.data.fireSoundStartCount}, fireSoundStopCount=${this.data.fireSoundStopCount}`);

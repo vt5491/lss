@@ -12,11 +12,24 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
     ],
+    //vt add
+    customContextFile: './src/environments/context_aframe_ut.html',
+    //vt end
     client:{
+      //vt add
+      // this doesn't work, but it should:
+      // https://github.com/karma-runner/karma/pull/1360
+      //customContextFile: '/context_aframe_ut.html' 
+      //contextFile: '/context_aframe_ut.html',
+      //vt end
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
-      { pattern: './src/test.ts', watched: false }
+      { pattern: './src/test.ts', watched: false },
+      //vt add
+      { pattern: 'node_modules/aframe/dist/aframe-master.js', included: false, served: true },
+      { pattern: 'node_modules/three/build/three.js', included: false, served: true }
+      //vt end
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']

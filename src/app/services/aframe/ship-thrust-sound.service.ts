@@ -32,13 +32,14 @@ export class ShipThrustSoundService{
         console.log(`ShipThrustSoundService.aframe.init: entered`);
         angContext.base.docLSS['ship-thrust-reset'] = false;
 
+        //TODO make this the parent element not the 'asteroids-game-controller-listener' specific element
         let asteroidsController : any = document.querySelector('[asteroids-game-controller-listener]');
         // this.el.addEventListener('thrust-stop', () => {
         asteroidsController.addEventListener('thrust-stop', () => {
           console.log(`ShipThrustSoundService.thrust-stop: about to stop sound`);
           
-          // this.el.components.sound.stopSound();
-          angContext.utils.fadeOut(this.el.components.sound, 1000, 0.0, 25);
+          this.el.components.sound.stopSound();
+          // angContext.utils.fadeOut(this.el.components.sound, 1000, 0.0, 25);
         })
 
         // this.el.addEventListener('thrust-start', () => {
@@ -48,7 +49,8 @@ export class ShipThrustSoundService{
           this.el.components.sound.playSound();
           console.log(`ShipThrustSound.addEventListener: angContext.utils.doNothing=${angContext.utils.doNothing()}`);
         })
-      }
+      },
+      fadeOutWithStopOverride: function () {}
     })
   }
 
