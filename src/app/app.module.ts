@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -101,5 +101,6 @@ import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.servi
   entryComponents: [AppComponent, PlaneSceneComponent],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  // schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 ///<reference path="../../../typings/index.d.ts" />
 
 import { Component, OnInit, Injector, ViewChild, 
-  ComponentFactoryResolver, ViewContainerRef, ElementRef } from '@angular/core';
+  ComponentFactoryResolver, ViewContainerRef, ElementRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
 import { PlaneSceneComponent} from './scenes/plane-scene/plane-scene.component';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   selector: 'app-loopy-surface-surfers',
   templateUrl: './loopy-surface-surfers.component.html',
   styleUrls: ['./loopy-surface-surfers.component.css'],
+  // schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 // @View({
 //     // template: `<div #content></div>`,
