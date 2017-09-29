@@ -8,7 +8,7 @@ import { Ship } from '../inner-games/asteroids/ship';
 import { BaseService } from '../services/base.service';
 import { UtilsService } from '../services/utils.service';
 
-fdescribe('LoopySurfaceSurfersComponent', () => {
+describe('LoopySurfaceSurfersComponent', () => {
   let component: LoopySurfaceSurfersComponent;
   let fixture: ComponentFixture<LoopySurfaceSurfersComponent>;
 

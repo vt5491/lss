@@ -7,12 +7,15 @@ import { BaseService } from '../../services/base.service';
 // export class ShipThrustSoundService implements OnInit{
 export class ShipThrustSoundService{
 
+  aframeComp : any;
+
   constructor(
     private utils: UtilsService,
     private base: BaseService
   ) {
     console.log(`ShipThrustSoundService.ctor: entered`);
     this.registerAFrameComponent();
+    // debugger;
    }
 
   // ngOnInit() {
@@ -26,13 +29,17 @@ export class ShipThrustSoundService{
     console.log(`ShipThrustSound.registerAframeComponent: utils.doNothing=${this.utils.doNothing()}`);
     
 
-    AFRAME.registerComponent('ship-thrust-sound', {
+    this.aframeComp= AFRAME.registerComponent('ship-thrust-sound', {
+      schema: {
+        vtsize: {type: 'int', default: 5}
+      },
       init: function () {
         // debugger;
         console.log(`ShipThrustSoundService.aframe.init: entered`);
         angContext.base.docLSS['ship-thrust-reset'] = false;
 
         //TODO make this the parent element not the 'asteroids-game-controller-listener' specific element
+        // debugger;
         let asteroidsController : any = document.querySelector('[asteroids-game-controller-listener]');
         // this.el.addEventListener('thrust-stop', () => {
         asteroidsController.addEventListener('thrust-stop', () => {
@@ -50,8 +57,12 @@ export class ShipThrustSoundService{
           console.log(`ShipThrustSound.addEventListener: angContext.utils.doNothing=${angContext.utils.doNothing()}`);
         })
       },
-      fadeOutWithStopOverride: function () {}
+      fadeOutWithStopOverride: function () {
+        console.log(`fadeOutWithStopOverride: entered, vtsize=${this.data.vtsize}`);
+        
+      }
     })
+    // debugger;
   }
 
 }
