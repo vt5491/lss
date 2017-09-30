@@ -31,7 +31,9 @@ export class ShipThrustSoundService{
 
     this.aframeComp= AFRAME.registerComponent('ship-thrust-sound', {
       schema: {
-        vtsize: {type: 'int', default: 5}
+        rampTime: {type: 'int', default: 1000},
+        targetVolume: {type: 'number', default: 0},
+        tickInterval: {type: 'int', default: 50}
       },
       init: function () {
         // debugger;
@@ -57,9 +59,9 @@ export class ShipThrustSoundService{
           console.log(`ShipThrustSound.addEventListener: angContext.utils.doNothing=${angContext.utils.doNothing()}`);
         })
       },
-      fadeOutWithStopOverride: function () {
-        console.log(`fadeOutWithStopOverride: entered, vtsize=${this.data.vtsize}`);
-        
+      fadeOut: function () {
+        console.log(`fadeOut: entered, rampTime=${this.data.rampTime}`);
+        console.log(`fadeOut: entered, tickInterval=${this.data.tickInterval}`);
       }
     })
     // debugger;

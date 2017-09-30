@@ -135,7 +135,7 @@ describe('Service: Utils', () => {
       })
     }));
 
-  fit('should load a three.js texture properly', inject([UtilsService],
+  it('should load a three.js texture properly', inject([UtilsService],
     (utils: UtilsService) => {
       console.log(`now in ut`);
 
