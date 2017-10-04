@@ -1,4 +1,7 @@
-// <reference path="../../../../typings/index.d.ts" />
+// Note: atom editor can't find the index.d.ts when started from anything other
+// than the root dir (e.g. the one at the package.json level), thus we still need
+// to rely on a reference path in the case that we start atom from a sub-folder.
+/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
 // import {} from 'jasmine';
 import { TestBed, inject } from '@angular/core/testing';
 // import { ValueProvider, FactoryProvider, ExistingProvider} from '@angular/core';
@@ -39,7 +42,7 @@ var entityFactory = require('../../../assets/components/helpers').entityFactory;
     // this.fixture.abc = 7;
     // this.abc =7;
 
-describe('ShipThrustSoundService', () => {
+fdescribe('ShipThrustSoundService', () => {
   // const provider: ValueProvider = {provide: 'someToken', useValue: 'someValue'};
   // const ElProvider: ValueProvider = {provide: 'el', useValue: 'hi'};
   beforeEach(() => {
@@ -68,25 +71,25 @@ describe('ShipThrustSoundService', () => {
 
   });
 
-  it('should ...', inject([ShipThrustSoundService, UtilsService, BaseService,
+  it('should ...',(done) => inject([ShipThrustSoundService, UtilsService, BaseService,
     // AsteroidsGameControllerListenerService, AsteroidsGame
   ],
      (service: ShipThrustSoundService, utils: UtilsService, base: BaseService,
       //  agcl: AsteroidsGameControllerListenerService, asteroidsGame: AsteroidsGame
-      done: DoneFn
+      // done: DoneFn
      ) => {
        expect(service).toBeTruthy();
 
-      //  it('should fuck', (done) => {
-        //  this.el.addEventListener('sound-loaded', (e) => {
-        //    console.log(`sound is loaded`);
-        //    this.el.setAttribute('ship-thrust-sound', {
-        //      'tickInterval': 25,
-        //    });
-        //    expect(this.el.getAttribute('ship-thrust-sound').tickInterval).toEqual(25);
-        //    done();
-        //  });
-      //  })
+       it('should fuck', (done) => {
+         this.el.addEventListener('sound-loaded', (e) => {
+           console.log(`sound is loaded`);
+           this.el.setAttribute('ship-thrust-sound', {
+             'tickInterval': 25,
+           });
+           expect(this.el.getAttribute('ship-thrust-sound').tickInterval).toEqual(25);
+           done();
+         });
+       })
      }).bind(this)
   );
 

@@ -60,10 +60,33 @@ export class AsteroidsGameControllerListenerService {
           // set a global variable so others can know.
           (document as any).LSS['ship-thrust-reset'] = true;
         });
+        // el.addEventListener('thrust-start', () => {
+        //   // debugger;
+        //   console.log(`AGCLS: caught thrust-start`);
+        // })
         el.addEventListener('thrust-start', () => {
+          let el = this.el;
+
+          console.log(`agcls.thrust-start listener: dispatching thrustComp.playSound`);
+          
+          let thrustComp = el.components.sound__thrust;
+          // stop any prior fade outs
+          // thrustComp.stopSound();
           // debugger;
-          console.log(`AGCLS: caught thrust-start`);
-        })
+          if (thrustComp.isPlaying) {
+            thrustComp.stopSound();
+          }
+          // and restart it anew.
+          thrustComp.playSound();
+        });
+        el.addEventListener('thrust-stop', () => {
+          let el = this.el;
+
+          console.log(`agcls.thrust-stop listener: dispatching thrustComp.stopSound`);
+          let thrustComp = el.components.sound__thrust;
+          // thrustComp.stopSound(); //note: generates distinctive "pop"
+          thrustComp.fadeOut();
+        });
 
         // thust-start and thrust-stop now handled by ship-thrust-sound-service
         // el.addEventListener('thrust-start', ()=> {
