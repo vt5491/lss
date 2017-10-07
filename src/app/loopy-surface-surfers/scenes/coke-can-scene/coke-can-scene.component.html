@@ -2,45 +2,32 @@
   <audio controls id='audio-ctrl'>
     <source src="assets/sounds/horse.ogg" id="horse" type="audio/ogg">
   </audio>
-    <!-- <source src="../../../../assets/sounds/horse.ogg" id="horse" type="audio/ogg"> -->
 </div>
 <a-scene id="coke-can-scene" inner-scene-renderer class="proj-scene">
-<!-- <script>
-console.log('hi....');
-</script> -->
   <a-assets>
-    <!-- <audio id="gunFire" src="url(../../../../assets/sounds/horse.ogg)" crossorigin="anonymous" preload="auto" type="audio/ogg"></audio> -->
-    <!-- <audio id="gunFire" src="url(assets/sounds/horse.ogg)" crossorigin="anonymous" preload="auto" type="audio/ogg"></audio> -->
-    <audio id="gunFire" src="assets/sounds/horse.ogg" type="audio/ogg"></audio>
+    <!-- <audio id="gunFire" src="assets/sounds/horse.ogg" type="audio/ogg"></audio> -->
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
-    <!-- <audio id="space-rumble" src="assets/sounds/asteroids/rocket-thrust.mp3" type="audio/mp3"></audio> -->
-    <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.wav" type="audio/wav"></audio> -->
-    <!-- <audio id="space-rumble" src="assets/sounds/horse.ogg" type="audio/ogg"></audio> -->
+    <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
   </a-assets>
-  <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio> -->
   <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
-  <!-- <a-entity #dolly position="0 0 15" wasd-plus-controls> -->
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera">
-      <!-- <a-cursor color="#ffba70" position="0 0 -1"></a-cursor> -->
     </a-camera>
     <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
     <a-entity hand-controls="right" position="0.1 -0.2 0"
-      asteroids-game-controller-listener="shipRotFactor: -1"
-      cullet-fire
-      sound__thrust="src: url(assets/sounds/asteroids/space-rumble.ogg); fadeOutTime: 750"
-    >
+      asteroids-game-controller-listener="shipRotFactor: -1" >
     </a-entity>
+  </a-entity>
+  <a-entity id='proj-entity'
+    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20"
+    sound__thrust="src: #space-rumble; volume: 1.0"
+    position="0 0 0" >
   </a-entity>
   <a-cylinder id="aframe-cyl" class="proj-obj"
     height="10" radius="3" position="0 0 0"
     onclick="console.log('hi')"
-    sound="src: #gunFire; on: shoot; poolSize = 10"
     ></a-cylinder>
-    <!-- sound="src: assets/sounds/horse.ogg; on: click" -->
-    <!-- sound="src: url(../../../../assets/sounds/hosre.ogg); on: click" -->
   <a-sky color="#8080EC" id="sky"
    onclick="console.log('hi from click')"
   ></a-sky>
-    <!-- sound="src: #gunFire; on: click; autoplay: true" -->
 </a-scene>

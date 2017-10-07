@@ -3,35 +3,30 @@
   <button name="vt-button" id='vt-button'>Click me</button>
 </div>
 <a-scene id="pool-hall-scene" inner-scene-renderer >
-<!-- <a-scene id="pool-hall-scene"  > -->
   <a-assets>
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
+    <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
   </a-assets>
-  <!-- <a-entity id="dolly" position="0 6.5 13" wasd-plus-controls> -->
-  <!-- this is wrt to the proj-obj. The code will base any relative positions here -->
-  <!-- and offset by the pos of the proj-obj.                                      -->
   <a-entity id="dolly" position="10 0 0" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
+    <a-entity hand-controls="right" position="-0.1 -0.2 0"
+      asteroids-game-controller-listener="shipRotFactor: -1" >
+    </a-entity>
+    <a-entity hand-controls="left" position="0.1 -0.2 0" grab ></a-entity>
   </a-entity>
-  <a-entity hand-controls="right" position="0 0 -1"
-    asteroids-game-controller-listener="shipRotFactor: -1" thip-thrust-sound>
-      <a-entity ship-thrust-sound
-        sound="src: url(assets/sounds/asteroids/space-rumble.ogg)"
-        position="0 -7.5 0">
-      </a-entity>
-        <!-- sound="src: url(assets/sounds/asteroids/space-rumble.ogg); on: thrust-start" -->
-  </a-entity> >
-  <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
+  <a-entity id='proj-entity'
+    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20"
+    sound__thrust="src: #space-rumble; volume: 1.0"
+    position="0 0 0" >
+  </a-entity>
   <a-entity id="pool-hall-model"
     class="proj-scene"
     gltf-model="url(assets/models/pool-hall/gltf2/pool-hall.gltf)"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
-    position="0 -7.5 0"
-  >
+    position="0 -7.5 0" >
   </a-entity>
-  <!-- <a-sphere id="aframe-sphere" class="proj-obj" radius="5" position="-7 10.5 0"></a-sphere> -->
   <a-sphere id="aframe-sphere" class="proj-obj" radius="2" position="0 0 0"></a-sphere>
   <a-sky color="#8080EC"></a-sky>
 </a-scene>

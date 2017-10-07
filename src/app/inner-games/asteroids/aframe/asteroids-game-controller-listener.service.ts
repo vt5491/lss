@@ -39,14 +39,15 @@ export class AsteroidsGameControllerListenerService {
       },
       init: function () {
         var el = this.el;
+        this.projEl = document.querySelector('#proj-entity') as AFrame.Entity;
         this.data.fireSoundStartCount = 0;
         this.data.fireSoundStopCount = 0;
-        this.el.setAttribute('sound', {
-          src: 'url(assets/sounds/asteroids/asteroids-ship-fire.wav)',
-          on: 'fire-bullet',
-          volume: 0.25,
-          poolSize: 20
-        });
+        // this.projEl.setAttribute('sound', {
+        //   src: 'url(assets/sounds/asteroids/asteroids-ship-fire.wav)',
+        //   on: 'fire-bullet',
+        //   volume: 0.25,
+        //   poolSize: 20
+        // });
 
         //TODO next line is redundant
         base.docLSS['ship-thrust-reset'] = false;
@@ -55,6 +56,9 @@ export class AsteroidsGameControllerListenerService {
         angParentComponent.spaceRumble = this.data.spaceRumble;
         this.data.bgSound = document.getElementById('bg-sound');
         this.data.bgSound.volume = 0.02;
+        // this.thrustSound = this.el.components.sound__thrust;
+        // this.projEl : AFrame.Entity
+        this.thrustSound = this.projEl.components.sound__thrust;
         this.data.bgSound.play();
         this.data.spaceRumble.addEventListener('ship-thrust-reset', () => {
           // set a global variable so others can know.
@@ -64,29 +68,65 @@ export class AsteroidsGameControllerListenerService {
         //   // debugger;
         //   console.log(`AGCLS: caught thrust-start`);
         // })
+        //tween compatible thrust handlers
         el.addEventListener('thrust-start', () => {
-          let el = this.el;
-
-          console.log(`agcls.thrust-start listener: dispatching thrustComp.playSound`);
-          
-          let thrustComp = el.components.sound__thrust;
-          // stop any prior fade outs
-          // thrustComp.stopSound();
-          // debugger;
-          if (thrustComp.isPlaying) {
-            thrustComp.stopSound();
+          this.thrustSound.stopSound();
+          // this.sound.pool.children[0].setVolume(1.0);
+          // factory.volume = {vol: 1.0}; //need to do this every time
+          let initVol = this.thrustSound.data.volume;
+          this.volume = {vol: initVol}; //need to do this every time
+          this.thrustSound.pool.children[0].setVolume(initVol);
+          console.log(`onClick: volume=${this.thrustSound.pool.children[0].getVolume()}`);
+          this.thrustSound.currentTime = 0.0;
+          if( this.tween) {
+            this.tween.stop();
           }
-          // and restart it anew.
-          thrustComp.playSound();
+          this.thrustSound.playSound();
         });
         el.addEventListener('thrust-stop', () => {
-          let el = this.el;
+          let sound = this.thrustSound;
 
-          console.log(`agcls.thrust-stop listener: dispatching thrustComp.stopSound`);
-          let thrustComp = el.components.sound__thrust;
-          // thrustComp.stopSound(); //note: generates distinctive "pop"
-          thrustComp.fadeOut();
+          this.tween = new TWEEN.Tween(this.volume);
+          // this.tween.easing(TWEEN.Easing.Sinusoidal.In);
+          this.tween.to(
+            { vol: 0.0 }
+            , 500);
+          this.tween.onUpdate(function (obj) {
+            // console.log(`onUpdate: this.vol=${this.vol}`);
+            sound.pool.children[0].setVolume(this.vol);
+            // console.log(`onUpdate: pool.children[0].getVolume=${sound.pool.children[0].getVolume()}`);
+          });
+          this.tween.onComplete(function () {
+            sound.stopSound();
+            console.log(`tween is done`);
+          });
+
+          this.tween.start();
         });
+        // el.addEventListener('thrust-start', () => {
+        //   let el = this.el;
+
+        //   console.log(`agcls.thrust-start listener: dispatching thrustComp.playSound`);
+          
+        //   let thrustComp = el.components.sound__thrust;
+        //   // stop any prior fade outs
+        //   // thrustComp.stopSound();
+        //   // debugger;
+        //   if (thrustComp.isPlaying) {
+        //     thrustComp.stopSound();
+        //   }
+        //   // and restart it anew.
+        //   thrustComp.playSound();
+        // });
+        //non-tween thrust-stop
+        // el.addEventListener('thrust-stop', () => {
+        //   let el = this.el;
+
+        //   console.log(`agcls.thrust-stop listener: dispatching thrustComp.stopSound`);
+        //   let thrustComp = el.components.sound__thrust;
+        //   thrustComp.stopSound(); //note: generates distinctive "pop"
+        //   // thrustComp.fadeOut();
+        // });
 
         // thust-start and thrust-stop now handled by ship-thrust-sound-service
         // el.addEventListener('thrust-start', ()=> {
@@ -119,7 +159,8 @@ export class AsteroidsGameControllerListenerService {
         });
         // el.addEventListener('gripdown', function (e) { //Vive
         el.addEventListener('gripdown', (e) => { 
-          el.emit('fire-bullet');
+          // el.emit('fire-bullet');
+          this.projEl.emit('fire-bullet');
           this.data.fireSoundStartCount++;
           asteroidsGame.shipFiredBullet();
         });
@@ -172,6 +213,7 @@ export class AsteroidsGameControllerListenerService {
           // and emit an event for any observers who may need to respond to this
           // this.shipMove.emit(null);
         }
+        TWEEN.update();
       }
     })
   }
