@@ -75,8 +75,10 @@ export class AsteroidsGameControllerListenerService {
           // factory.volume = {vol: 1.0}; //need to do this every time
           let initVol = this.thrustSound.data.volume;
           this.volume = {vol: initVol}; //need to do this every time
-          this.thrustSound.pool.children[0].setVolume(initVol);
-          console.log(`onClick: volume=${this.thrustSound.pool.children[0].getVolume()}`);
+          if (this.thrustSound.pool.children[0]) {
+            this.thrustSound.pool.children[0].setVolume(initVol);
+            // console.log(`onClick: volume=${this.thrustSound.pool.children[0].getVolume()}`);
+          }
           this.thrustSound.currentTime = 0.0;
           if( this.tween) {
             this.tween.stop();
@@ -93,12 +95,14 @@ export class AsteroidsGameControllerListenerService {
             , 500);
           this.tween.onUpdate(function (obj) {
             // console.log(`onUpdate: this.vol=${this.vol}`);
+            if (sound.pool.children[0]) {
             sound.pool.children[0].setVolume(this.vol);
+            }
             // console.log(`onUpdate: pool.children[0].getVolume=${sound.pool.children[0].getVolume()}`);
           });
           this.tween.onComplete(function () {
             sound.stopSound();
-            console.log(`tween is done`);
+            // console.log(`tween is done`);
           });
 
           this.tween.start();
@@ -192,16 +196,49 @@ export class AsteroidsGameControllerListenerService {
           }
         });
         el.addEventListener('triggerdown', function (e) {
-          console.log(`AGCLS: now emitting thrust-start`);
+          // console.log(`AGCLS: now emitting thrust-start`);
           angParentComponent.thrusterEngaged = true;
           el.emit('thrust-start');
         });
         el.addEventListener('triggerup', (e) => { //Vive
           angParentComponent.thrusterEngaged = false;
-          console.log(`AGCLS: now emitting thrust-stop`);
+          // console.log(`AGCLS: now emitting thrust-stop`);
           
           el.emit('thrust-stop');
         });
+        el.addEventListener('bbuttondown', (e) => {
+          console.log(`abuttondown event`);
+          let homeEl : any = document.querySelector('#homeLink');
+          console.log(`abuttondown.style.visibility=${homeEl.style.visibility}`);
+          
+          
+          // toggle visiblity
+          // if (homeEl.style.visibility !== 'visible') {
+          if (homeEl.getAttribute('visible')) {
+            // homeEl.style.visibility = 'visible';
+            homeEl.setAttribute('visible', false);
+            (document.querySelector('.proj-scene') as AFrame.Entity).emit('unPauseGame');
+          }
+          else {
+            // homeEl.style.visibility = 'hidden';
+            // pause the game
+            (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
+
+            let dollyEl: any = document.querySelector('#dolly');
+            let dollyPos = dollyEl.getAttribute('position');
+            // deep copy it so we don't affect the dolly
+            let linkPos = JSON.parse(JSON.stringify(dollyPos));
+            linkPos.z -= 5;
+            console.log(`dolly.pos.x=${dollyPos.x},dolly.pos.y=${dollyPos.y}`);
+            homeEl.setAttribute('position', linkPos);
+            homeEl.setAttribute('visible', true);
+
+            let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
+            let rhcPos = rhcEntity.getAttribute('position');
+            console.log(`rhc.pos.x=${rhcPos.x}`);
+            
+          }
+        })
       },
       tick: () => {
         if (angParentComponent.thrusterEngaged) {

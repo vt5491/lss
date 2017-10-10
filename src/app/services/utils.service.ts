@@ -553,6 +553,17 @@ export class UtilsService {
 
 
   // };
+  getHandControlEntity(pos: String) {
+    // return all entites with a hand-controllers components
+    let controlEntities : any = document.querySelectorAll("[hand-controls]");
+
+    for( let i=0; i < controlEntities.length; i++) {
+      if (controlEntities[i].components['hand-controls'].attrValue === pos) {
+
+        return controlEntities[i];
+      }
+    }
+  }
 
 } // end UtilsService class def
 

@@ -24,6 +24,11 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   ngOnInit() {
+    // refer to the 'inner-scene-component' attribute (component) so the inner-scene-renderer
+    // has access to itself, since most of the inner-scene-renderer component is bound to
+    // e.g 'coke-can-scene.component.ts'
+    this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
+
     this.outerSceneSvc.init();
     this.initScene();    
   }

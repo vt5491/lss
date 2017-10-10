@@ -13,6 +13,9 @@ export class InnerSceneRendererService {
 
   constructor(embeddedContext: any) {
     AFRAME.registerComponent('inner-scene-renderer', {
+      schema : { 
+        gamePaused: {type : 'boolean', default: false},
+      },
       init: function() {
         this.init_ang(this.generateDataTexture_af);
       },
@@ -38,8 +41,25 @@ export class InnerSceneRendererService {
         this.poolBallTexture = this.getBaseTexture(); 
         this.vertShader = document.getElementById('simple-vertex-shader').innerHTML;
         this.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
+
+        this.projSceneComp.el.addEventListener('togglePauseGame', () => {
+          console.log(`InnerSceneRender: toggle pauseGame event detected`);
+          this.projSceneComp.data.gamePaused = !this.projSceneComp.data.gamePaused;
+        });
+        this.projSceneComp.el.addEventListener('pauseGame', () => {
+          console.log(`InnerSceneRender: pauseGame event detected`);
+          this.projSceneComp.data.gamePaused = true;
+        });
+        this.projSceneComp.el.addEventListener('unPauseGame', () => {
+          console.log(`InnerSceneRender: unPauseGame event detected`);
+          this.projSceneComp.data.gamePaused = false;
+        })
+
      }.bind(embeddedContext),
       tick: function(t, dt) {
+        if (this.projSceneComp.data.gamePaused) {
+          return;
+        }
         let a = 1;
         
         // the parent context needs to have an updateScene method.

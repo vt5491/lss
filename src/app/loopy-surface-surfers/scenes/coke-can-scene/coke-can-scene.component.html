@@ -9,7 +9,11 @@
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
+    <img id="sky" src="assets/img/skies/CGSkies_0284_free.jpg">
+    <img id="planeThumbnail" src="assets/img/yellow-notebook-paper.png">
   </a-assets>
+  <a-link href="planeScene" title="plane thumbnail" id="homeLink"
+  image="#planeThumbnail" position="-4 0 -1" visible="false"></a-link>
   <a-entity id="dolly" position="0 0 15" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera">
     </a-camera>
@@ -19,15 +23,14 @@
     </a-entity>
   </a-entity>
   <a-entity id='proj-entity'
-    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20"
-    sound__thrust="src: #space-rumble; volume: 1.0"
+    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20; refDistance: 2"
+    sound__thrust="src: #space-rumble; volume: 1.0;refDistance:2"
     position="0 0 0" >
   </a-entity>
   <a-cylinder id="aframe-cyl" class="proj-obj"
     height="10" radius="3" position="0 0 0"
     onclick="console.log('hi')"
     ></a-cylinder>
-  <a-sky color="#8080EC" id="sky"
-   onclick="console.log('hi from click')"
-  ></a-sky>
+  <!-- <a-sky color="#8080EC" id="sky" ></a-sky> -->
+  <a-sky src="#sky" theta-length=360 id="sky" ></a-sky>
 </a-scene>

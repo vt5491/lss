@@ -19,6 +19,7 @@ export class LssScene {
   protected dollyTranslation : THREE.Matrix4;
   protected dollyTransform : THREE.Matrix4;
   protected dollyRadius: number;
+  protected projSceneComp: AFrame.Component;
   private injector: Injector;
 
   constructor(

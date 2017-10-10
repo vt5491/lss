@@ -69,7 +69,7 @@ import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.servi
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame, baseService, outerSceneService)  => {
+      useFactory:(asteroidsGame, baseService, outerSceneService) => {
         return new LuxorSceneComponent(asteroidsGame, baseService, outerSceneService);
       },
       deps: [AsteroidsGame, BaseService, OuterSceneService]
