@@ -2,12 +2,18 @@
   <p></p>
   <button name="vt-button" id='vt-button' onclick="console.log('hi');document.querySelector('a-scene').enterVR()">Click me</button>
 </div>
-<a-scene plane-scene-aframe-component id="plane-scene"
+<div>
+  <audio controls id='audio-ctrl'>
+    <source src="assets/sounds/horse.ogg" id="horse" type="audio/ogg">
+  </audio>
+</div>
+<a-scene plane-scene-aframe-component id="plane-scene" class="proj-scene"
  inner-scene-renderer
  buto-enter-vr
  >
   <a-assets>
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
+    <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
     <img id="homeThumbnail" src="assets/img/dog_poker_1.jpg">
   </a-assets>
@@ -21,7 +27,12 @@
     <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   </a-entity>
   <!-- a dummy scene until/if we decided to add a proper bg scene -->
-  <a-entity class="proj-scene"></a-entity>
+  <!-- <a-entity class="proj-entity"></a-entity> -->
+  <a-entity id='proj-entity'
+    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20; refDistance: 2"
+    sound__thrust="src: #space-rumble; volume: 1.0;refDistance:2"
+    position="0 0 0" >
+  </a-entity>
   <a-plane id="test-plane" class="proj-obj" position="0 0 0" color="#CC1" height="8" width="8"
     material="side: double;"
     asteroids-inner-scene-aframe-component

@@ -409,8 +409,13 @@ export class UtilsService {
     lssScene.dollyTranslation.makeTranslation(0, 0, radius);
     lssScene.dollyTransform = lssScene.dollyRotY.multiply(lssScene.dollyTranslation);
 
-    lssScene.outerSceneSvc.dolly.matrix.identity();
-    lssScene.outerSceneSvc.dolly.applyMatrix(lssScene.dollyTransform );
+    let outerScene = lssScene.outerSceneSvc;
+    outerScene.dolly.matrix.identity();
+    outerScene.dolly.applyMatrix(lssScene.dollyTransform );
+
+    // sync the entity level position
+    // outerScene.dollyEl.setAttribute("position", outerScene.dolly.position);
+
     // lssScene.dollyRotX.makeRotationX(-lati)
 
     // let theta = (Math.PI / boundVal) * pos.x;
@@ -423,6 +428,13 @@ export class UtilsService {
 
     // result.rotQuat = new THREE.Quaternion();
     // result.rotQuat.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
+  }
+
+  // sync the position at the entity level to that of the underlying object3d, in
+  // cases where we maniuplate the object3d, but may want to have other elements
+  // still be able to refer to the position via dom attributes.
+  syncEntityPos(el: AFrame.Entity, obj: THREE.Object3D) {
+    el.setAttribute("position", obj.position);
   }
 
   // The following obtained from:

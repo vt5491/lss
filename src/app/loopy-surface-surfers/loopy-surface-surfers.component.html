@@ -13,26 +13,18 @@
       <img id="cokeThumbnail" src="assets/img/coke-label.jpg">
       <img id="poolHallThumbnail" src="assets/img/world_satellite_2.png">
     </a-assets>
-    <a-link href="planeScene" title="plane thumbnail"
-      image="#planeThumbnail" position="-4 0 -1"></a-link>
-    <a-link href="cokeCanScene" title="coke thumbnail"
-      image="#cokeThumbnail" position="-2 0 -1"></a-link>
-    <a-link href="poolHallScene" title="poolHall thumbnail"
-      image="#poolHallThumbnail" position="0 0 -1"></a-link>
+    <a-link href="planeScene" title="Plane"
+      image="#planeThumbnail" position="-2 0 -1"></a-link>
+    <a-link href="cokeCanScene" title="Coke Can"
+      image="#cokeThumbnail" position="0 0 -1"></a-link>
+    <a-link href="poolHallScene" title="Pool Hall"
+      image="#poolHallThumbnail" position="2 0 -1"></a-link>
     <a-entity id="dolly" position="0 0.5 3">
       <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" wasd-controls look-controls></a-camera>
       <a-entity hand-controls="right" position="0.1 0 -1" controller-cursor></a-entity>
       <a-entity hand-controls="left" position="-0.1 0 -1" grab></a-entity>
     </a-entity>
     <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
-    <!-- <a-entity id="bill-board" position="0 0.5 0"
-      (click)="sceneSelectClick($event)"
-      (mouseenter)="sceneSelectMouseEnter($event)"
-      (mouseleave)="sceneSelectMouseLeave($event)" >
-        <a-plane *ngFor="let scene of asterhedraScenes; let i=index" id="{{scene.id}}" [attr.position]="'0 ' + i * -1 + ' 0'"
-          color="#CCC" height="0.5" width="1.5" > </a-plane>
-        <a-text *ngFor="let scene of asterhedraScenes; let i=index" [attr.value]="scene.title" color="#806040" [attr.position]="'0 ' + i * -1 + ' 0'"></a-text>
-    </a-entity> -->
     <a-sky color="#8080EC"></a-sky>
   </a-scene>
 </div>

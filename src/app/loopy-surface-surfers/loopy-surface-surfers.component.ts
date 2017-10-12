@@ -89,25 +89,6 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
   ngOnInit() {
     console.log(`LoopySurfaceSurfers.ngOnInit: entered`);
-    // let compFactory = this.cfr.resolveComponentFactory(PlaneSceneComponent);
-    // let childComponent = this.viewContainerRef.createComponent(compFactory);
-    // this.parent.createComponent(childComponent as any);
-    // var sceneEl = document.querySelector('a-scene') as AFrame.Entity;
-    // if (sceneEl.hasLoaded) {
-    //   // run(aFrameHiWorld);
-    //   initSceneAng();
-    // } else {
-    //   sceneEl.addEventListener('loaded', initSceneAng);
-    // }
-    // function run (aFrameHiWorld) {
-    //   aFrameHiWorld.init();
-    //   aFrameHiWorld.animation();
-    //   // aFrameHiWorld.update();
-    //   // var entity = scene.querySelector('a-entity');
-    //   // entity.setAttribute('material', 'color', 'red');
-    // }
-    //
-    // this.initSceneAng();
   }
 
   // init the parts of the scene than cannot be done via a-frame html
@@ -133,20 +114,8 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     // let sceneObj : THREE.Object3D = (sceneEl as AFrame.Entity).object3D();
     let sceneObj  = (sceneEl as AFrame.Entity).object3D;
 
-    // let axisHelper = new THREE.AxisHelper(1);
-    // sceneObj.add(axisHelper);
-
-    // let billBoardEl = document.querySelector('#bill-board') as AFrame.Entity;
-    // let billBoardObj = billBoardEl.object3D;
-
-    // billBoardObj.position.x += this.billBoard['xOrigin'];
-    // billBoardObj.position.y += this.billBoard['yOrigin'];
-    // billBoardObj.position.z += this.billBoard['zOrigin'];
-
-    // document.querySelector('#plane-scene').on('click', this.planeSceneClick);
     let list = document.querySelectorAll('.scene-select');
 
-    // for (var item of list) {
     Array.prototype.forEach.call(list, (item) => {
       // item.addEventListener('mouseenter', this.sceneSelectMouseEnter, false);
       // item.addEventListener('mouseleave', this.sceneSelectMouseLeave, false);
@@ -215,19 +184,6 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     });
   }
 
-  // loadComponent() {
-  //   // this.currentAddIndex = (this.currentAddIndex + 1) % this.ads.length;
-  //   // let adItem = this.ads[this.currentAddIndex];
-
-  //   let componentFactory = this._componentFactoryResolver.resolveComponentFactory(LuxorSceneComponent);
-
-  //   let viewContainerRef = this.appGameScene.viewContainerRef;
-  //   viewContainerRef.clear();
-
-  //   let componentRef = viewContainerRef.createComponent(componentFactory);
-  //   // (<AdComponent>componentRef.instance).data = appGameScene.data;
-  // }
-
   moveCameraByGrip(el : Element) {
     console.log(`LoopySurfaceSurfersComponent.moveCameraByGrip: entered`);
     // let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
@@ -285,16 +241,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
     switch(true) {
       case /plane/.test(evt.target.id):
-        // evt.target.removeEventListener(evt.type, arguments.callee);
         console.log(`calling plane scene`);
-        // let pc = new PlaneSceneComponent();
-        // let pc = this.injector.get(PlaneSceneComponent);
-        // console.log(`pc.doSomething=${pc.doSomething()}`);
-
-        // let compFactory = this.cfr.resolveComponentFactory(PlaneSceneComponent);
-        // let childComponent = this.viewContainerRef.createComponent(compFactory);
-        // this.parent.createComponent(childComponent as any);
-        // let component=this.widgetComponentService.getComponent(this.tile.componentName);
         let componentFactory = this._componentFactoryResolver.resolveComponentFactory(PlaneSceneComponent);
         // let viewContainerRef = this.widgetHost.viewContainerRef;
         let componentRef = this.viewContainerRef.createComponent(componentFactory);

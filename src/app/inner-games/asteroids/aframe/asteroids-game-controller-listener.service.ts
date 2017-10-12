@@ -207,17 +207,20 @@ export class AsteroidsGameControllerListenerService {
           el.emit('thrust-stop');
         });
         el.addEventListener('bbuttondown', (e) => {
-          console.log(`abuttondown event`);
+          // console.log(`abuttondown event`);
           let homeEl : any = document.querySelector('#homeLink');
-          console.log(`abuttondown.style.visibility=${homeEl.style.visibility}`);
+          // console.log(`abuttondown.style.visibility=${homeEl.style.visibility}`);
           
-          
+          let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
           // toggle visiblity
           // if (homeEl.style.visibility !== 'visible') {
           if (homeEl.getAttribute('visible')) {
             // homeEl.style.visibility = 'visible';
             homeEl.setAttribute('visible', false);
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('unPauseGame');
+
+            // remove laser pointer
+            rhcEntity.removeAttribute('controller-cursor');
           }
           else {
             // homeEl.style.visibility = 'hidden';
@@ -225,18 +228,39 @@ export class AsteroidsGameControllerListenerService {
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
 
             let dollyEl: any = document.querySelector('#dolly');
+            let projEl : any = document.querySelector('.proj-obj');
+            let projElPos = projEl.getAttribute('position');
+            // sync
+            // debugger;
+            dollyEl.setAttribute("position", dollyEl.object3D.position);
+
             let dollyPos = dollyEl.getAttribute('position');
+            let theta = Math.atan(dollyPos.x / dollyPos.z);
+            if (dollyPos.z < 0) {
+              theta -= Math.PI;
+            }
+            console.log(`theta=${theta * 180.0 / Math.PI}`);
+            
+            console.log(`dolly.x=${dollyPos.x},dolly.y=${dollyPos.y},dolly.z=${dollyPos.z}`);
+            console.log(`proj-obj.x=${projElPos.x},proj-obj.y=${projElPos.y},proj-obj.z=${projElPos.z}`);
+            
             // deep copy it so we don't affect the dolly
             let linkPos = JSON.parse(JSON.stringify(dollyPos));
-            linkPos.z -= 5;
-            console.log(`dolly.pos.x=${dollyPos.x},dolly.pos.y=${dollyPos.y}`);
+            // linkPos.z -= 5;
+            linkPos.x -= 5 * Math.cos(Math.PI / 2.0 - theta);
+            linkPos.z -= 5 * Math.sin(Math.PI / 2.0 - theta);
+            // console.log(`dolly.pos.x=${dollyPos.x},dolly.pos.y=${dollyPos.y}`);
             homeEl.setAttribute('position', linkPos);
             homeEl.setAttribute('visible', true);
 
-            let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
-            let rhcPos = rhcEntity.getAttribute('position');
-            console.log(`rhc.pos.x=${rhcPos.x}`);
+            // let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
+            // let rhcPos = rhcEntity.getAttribute('position');
+            // console.log(`rhc.pos.x=${rhcPos.x}`);
             
+            // add a "laser pointer" to the right hand controller.
+            let ctrlCursorAttr = document.createAttribute("controller-cursor");
+            // ctrlCursorAttr.value = "democlass";
+            rhcEntity.setAttributeNode(ctrlCursorAttr);
           }
         })
       },

@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class OuterSceneService {
+  dollyEl : AFrame.Entity;
   dolly : THREE.Object3D; 
   projObj : THREE.Object3D;
   projScene : THREE.Object3D;
@@ -25,8 +26,9 @@ export class OuterSceneService {
   // init is for things that are not available when the ctor runs e.g certain dom entities
   // that need to be driven by clients of this service on 'ngOnInit' events.
   init() {
-    let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
-    this.dolly = dollyEl.object3D;
+    // let dollyEl = document.querySelector('#dolly') as AFrame.Entity;
+    this.dollyEl = document.querySelector('#dolly') as AFrame.Entity;
+    this.dolly = this.dollyEl.object3D;
     let projObjEl = document.querySelector('.proj-obj') as AFrame.Entity;
     this.projObj = projObjEl.object3D;
     let projSceneEl = document.querySelector('.proj-scene') as AFrame.Entity;
