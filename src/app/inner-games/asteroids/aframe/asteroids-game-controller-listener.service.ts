@@ -40,6 +40,18 @@ export class AsteroidsGameControllerListenerService {
       init: function () {
         var el = this.el;
         this.projEl = document.querySelector('#proj-entity') as AFrame.Entity;
+        //homeEl is an expected link that can be used to return to main menu
+
+        // this.homeEl = document.querySelector('#home-link');
+        // // this.homeEl.components.link.textEl.getAttribute('text').side = 'double';
+        // let textEl = this.homeEl.components.link.textEl;
+        // if( !textEl.side) {
+        //   // textEl.createAttribute('side');
+        //   textEl.side = '';
+        // }
+        // // make the homeEl text double-sided
+        // textEl.side = 'double';
+
         this.data.fireSoundStartCount = 0;
         this.data.fireSoundStopCount = 0;
         // this.projEl.setAttribute('sound', {
@@ -208,7 +220,7 @@ export class AsteroidsGameControllerListenerService {
         });
         el.addEventListener('bbuttondown', (e) => {
           // console.log(`abuttondown event`);
-          let homeEl : any = document.querySelector('#homeLink');
+          let homeEl : any = document.querySelector('#home-link');
           // console.log(`abuttondown.style.visibility=${homeEl.style.visibility}`);
           
           let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
@@ -221,19 +233,25 @@ export class AsteroidsGameControllerListenerService {
 
             // remove laser pointer
             rhcEntity.removeAttribute('controller-cursor');
+
+            // and restor background sound
+            this.data.bgSound.play();
           }
           else {
             // homeEl.style.visibility = 'hidden';
             // pause the game
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
+            // document.getElementById('bg-sound');
+            this.data.bgSound.pause();
 
             let dollyEl: any = document.querySelector('#dolly');
             let projEl : any = document.querySelector('.proj-obj');
             let projElPos = projEl.getAttribute('position');
-            // sync
+            // sync object3D state to wrapper attribute state
             // debugger;
             dollyEl.setAttribute("position", dollyEl.object3D.position);
 
+            /*
             let dollyPos = dollyEl.getAttribute('position');
             let theta = Math.atan(dollyPos.x / dollyPos.z);
             if (dollyPos.z < 0) {
@@ -241,8 +259,8 @@ export class AsteroidsGameControllerListenerService {
             }
             console.log(`theta=${theta * 180.0 / Math.PI}`);
             
-            console.log(`dolly.x=${dollyPos.x},dolly.y=${dollyPos.y},dolly.z=${dollyPos.z}`);
-            console.log(`proj-obj.x=${projElPos.x},proj-obj.y=${projElPos.y},proj-obj.z=${projElPos.z}`);
+            // console.log(`dolly.x=${dollyPos.x},dolly.y=${dollyPos.y},dolly.z=${dollyPos.z}`);
+            // console.log(`proj-obj.x=${projElPos.x},proj-obj.y=${projElPos.y},proj-obj.z=${projElPos.z}`);
             
             // deep copy it so we don't affect the dolly
             let linkPos = JSON.parse(JSON.stringify(dollyPos));
@@ -250,13 +268,21 @@ export class AsteroidsGameControllerListenerService {
             linkPos.x -= 5 * Math.cos(Math.PI / 2.0 - theta);
             linkPos.z -= 5 * Math.sin(Math.PI / 2.0 - theta);
             // console.log(`dolly.pos.x=${dollyPos.x},dolly.pos.y=${dollyPos.y}`);
-            homeEl.setAttribute('position', linkPos);
+            // homeEl.setAttribute('position', linkPos);
+            // homeEl.setAttribute('rotation', new THREE.Vector3(0, theta * 180 / Math.PI, 0));
+            */
+            // getHUDPlacement alt
+            let hudRot = angParentComponent.utils.getHUDPlacement();
+            let hudPos = hudRot.clone();
+            hudPos.multiplyScalar(7);
+
+            homeEl.setAttribute('rotation', hudRot);
+            homeEl.setAttribute('position', hudPos);
+            homeEl.object3D.lookAt(hudRot);
+            // homeEl.object3D.lookAt(hudPos);
+            // end getHUDPlacement
             homeEl.setAttribute('visible', true);
 
-            // let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
-            // let rhcPos = rhcEntity.getAttribute('position');
-            // console.log(`rhc.pos.x=${rhcPos.x}`);
-            
             // add a "laser pointer" to the right hand controller.
             let ctrlCursorAttr = document.createAttribute("controller-cursor");
             // ctrlCursorAttr.value = "democlass";

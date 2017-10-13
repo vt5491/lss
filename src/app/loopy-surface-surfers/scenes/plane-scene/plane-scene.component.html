@@ -1,31 +1,40 @@
-<div id='header'>
+<!-- <div id='header'>
   <p></p>
   <button name="vt-button" id='vt-button' onclick="console.log('hi');document.querySelector('a-scene').enterVR()">Click me</button>
-</div>
+</div> -->
 <div>
   <audio controls id='audio-ctrl'>
     <source src="assets/sounds/horse.ogg" id="horse" type="audio/ogg">
   </audio>
 </div>
 <a-scene plane-scene-aframe-component id="plane-scene" class="proj-scene"
- inner-scene-renderer
- buto-enter-vr
+ inner-scene-renderer="subtractiveOverlay: true"
  >
-  <a-assets>
+  <!-- <a-assets>
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
     <img id="homeThumbnail" src="assets/img/dog_poker_1.jpg">
+  </a-assets> -->
+  <a-assets>
+    <app-af-assets></app-af-assets>
+    <img id="sky" src="assets/img/skies/CGSkies_0284_free.jpg">
   </a-assets>
-  <a-link href="" title="home thumbnail"
-    image="#homeThumbnail" position="0 -6 0"></a-link>
+
+  <!-- <a-link href="" title="home thumbnail"
+    image="#homeThumbnail" position="0 -6 0"></a-link> -->
+  <a-link href="" title="Home" id="home-link"
+    image="#homeThumbnail"  visible="false">
+  </a-link>
+
   <a-entity id="dolly" position="0 0 8" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
-    <a-entity hand-controls="right" position="2.0 0 0"
+    <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
+    <a-entity hand-controls="right" position="0.1 -0.2 0"
     asteroids-game-controller-listener="shipRotFactor: -1;"
     ></a-entity>
-    <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   </a-entity>
+
   <!-- a dummy scene until/if we decided to add a proper bg scene -->
   <!-- <a-entity class="proj-entity"></a-entity> -->
   <a-entity id='proj-entity'
@@ -33,9 +42,10 @@
     sound__thrust="src: #space-rumble; volume: 1.0;refDistance:2"
     position="0 0 0" >
   </a-entity>
+
   <a-plane id="test-plane" class="proj-obj" position="0 0 0" color="#CC1" height="8" width="8"
     material="side: double;"
-    asteroids-inner-scene-aframe-component
+    bsteroids-inner-scene-aframe-component
     >
   </a-plane>
   <a-sky color="#8080EC"></a-sky>

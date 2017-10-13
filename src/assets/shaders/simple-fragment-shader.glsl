@@ -1,3 +1,4 @@
+simpleFragmentShaderSrc = `
 #ifdef GL_ES
 #precision highp float;
 precision mediump float;
@@ -17,3 +18,4 @@ void main(void)
   c = Ca.rgb + Cb.rgb;
   gl_FragColor= vec4(c, 1.0);
 }
+`

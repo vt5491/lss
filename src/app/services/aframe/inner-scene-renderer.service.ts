@@ -15,8 +15,10 @@ export class InnerSceneRendererService {
     AFRAME.registerComponent('inner-scene-renderer', {
       schema : { 
         gamePaused: {type : 'boolean', default: false},
+        subtractiveOverlay: {type : 'boolean', default: false},
       },
       init: function() {
+        console.log(`InnerSceneRender: subtractiveOverlay=${this.data.subtractiveOverlay}`);
         this.init_ang(this.generateDataTexture_af);
       },
       init_ang: function (generateDataTextureFn) {
@@ -40,7 +42,18 @@ export class InnerSceneRendererService {
         // this.innerGame.innerSceneCamera.position.z = 1.319;
         this.poolBallTexture = this.getBaseTexture(); 
         this.vertShader = document.getElementById('simple-vertex-shader').innerHTML;
-        this.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
+        if(this.projSceneComp.data.subtractiveOverlay) {
+          this.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
+        }
+        else {
+          this.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
+        }
+        // let gl = this.innerGame.innerWebGLRenderer.context;
+        // let fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+        // gl.shaderSource(fragShader, (document as any).LSS.simpleFragmentShaderSrc);
+        // gl.compileShader(fragShader);
+        
+        // gl.attachShader(this, fragShader);
 
         this.projSceneComp.el.addEventListener('togglePauseGame', () => {
           console.log(`InnerSceneRender: toggle pauseGame event detected`);

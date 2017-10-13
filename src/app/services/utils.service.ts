@@ -577,6 +577,39 @@ export class UtilsService {
     }
   }
 
+  // return the context necessary to position the HUD given the camera's
+  // current position and the position of the main 'proj-obj'.  Predominantly,
+  // this will be a position and rotation relative to the position of the 'proj-obj'.
+  // getHUDPlacement(lssScene: any) {
+  getHUDPlacement() {
+    let hudPos : THREE.Vector3 = new THREE.Vector3();
+    let hudRot : THREE.Vector3 = new THREE.Vector3();
+    let hudVec : THREE.Vector3 = new THREE.Vector3();
+
+    let projObj = (document.querySelector(".proj-obj") as any).object3D;
+    let dolly = (document.querySelector('#dolly') as any).object3D;
+
+    let hudRadius = 7;
+
+    // hudRot.x = dolly.rotation.x - projObj.rotation.x;
+    // hudRot.y = dolly.rotation.y - projObj.rotation.y;
+    // hudRot.z = dolly.rotation.z - projObj.rotation.z;
+    //
+    // hudPos.x = dolly.position.x - projObj.position.x;
+    // hudPos.y = dolly.position.y - projObj.position.y;
+    // hudPos.z = dolly.position.z - projObj.position.z;
+
+    hudVec.x = dolly.position.x - projObj.position.x;
+    hudVec.y = dolly.position.y - projObj.position.y;
+    hudVec.z = dolly.position.z - projObj.position.z;
+
+    hudVec.normalize();
+
+    hudRot = hudVec;
+
+    return hudRot;
+  }
+
 } // end UtilsService class def
 
 

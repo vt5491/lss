@@ -33,6 +33,7 @@ import { OuterSceneService} from './services/outer-scene.service';
 import { GlobeSceneComponent } from './loopy-surface-surfers/scenes/globe-scene/globe-scene.component';
 import { CokeCanSceneComponent } from './loopy-surface-surfers/scenes/coke-can-scene/coke-can-scene.component';
 import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.service';
+import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.servi
     // GameSceneDirective,
     PoolHallSceneComponent,
     GlobeSceneComponent,
-    CokeCanSceneComponent
+    CokeCanSceneComponent,
+    AfAssetsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,7 @@ import { ShipThrustSoundService} from './services/aframe/ship-thrust-sound.servi
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame, baseService, outerSceneService)  => {
+      useFactory:(asteroidsGame, baseService, outerSceneService) => {
         return new LuxorSceneComponent(asteroidsGame, baseService, outerSceneService);
       },
       deps: [AsteroidsGame, BaseService, OuterSceneService]

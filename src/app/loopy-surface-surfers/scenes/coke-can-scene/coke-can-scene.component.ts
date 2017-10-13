@@ -5,12 +5,16 @@ import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
 import { UtilsService } from '../../../services/utils.service';
 import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
+// import { AfAssetsComponent} from "../../../inner-games/asteroids/af-assets/af-assets.component";
 
 @Injectable()
 @Component({
   selector: 'app-coke-can-scene',
   templateUrl: './coke-can-scene.component.html',
-  styleUrls: ['./coke-can-scene.component.css']
+  styleUrls: ['./coke-can-scene.component.css'],
+  // viewProviders: [
+  //   AfAssetsComponent,
+  // ],
 })
 export class CokeCanSceneComponent extends LssScene implements OnInit {
 
@@ -24,11 +28,7 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   ngOnInit() {
-    // refer to the 'inner-scene-component' attribute (component) so the inner-scene-renderer
-    // has access to itself, since most of the inner-scene-renderer component is bound to
-    // e.g 'coke-can-scene.component.ts'
-    this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
-
+    super.init();
     this.outerSceneSvc.init();
     this.initScene();    
   }

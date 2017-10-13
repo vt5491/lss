@@ -30,6 +30,7 @@ export class GlobeSceneComponent extends LssScene implements OnInit {
   }
 
   ngOnInit() {
+    super.init();
     this.outerSceneSvc.init();
   }
 
