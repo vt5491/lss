@@ -25,8 +25,16 @@ export class BaseService {
     // this.projectionBoundary = 1.0;
     // this.projectionBoundary = 0.5;
     // console.log(`BaseService.init: projectionBoundary=${this.projectionBoundary}`);
-    this.innerImgDim = 1400;
+    // this was the default for a long time
+    // this.innerImgDim = 1400;
+    // 2048 really bogs out over 1400: chrome (60fps->45), ff(90fps -> 60)
+    // this.innerImgDim = 2048;
+    // 1024 zips up over 1400 on chrome, but not as big a diff on ff.
+    this.innerImgDim = 1024;
     // this.innerImgDim = 2000;
+    // 512..not much improvment over 1024, and the jaggies are really bad.  still
+    // playable, so could go to in a pinch.
+    // this.innerImgDim = 512;
   };
 
   //getters and setters

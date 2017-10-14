@@ -70,7 +70,7 @@ export class UtilsService {
     //   insertPointElem.childNodes[insertPointElem.childNodes.length - 1] );
   }
 
-  updatePos(moveableGameObject: IMoveableGameObject, boundVal: number) {
+  updatePos(moveableGameObject: IMoveableGameObject, boundVal: number, dt?: number) {
     // console.log(`Utils.UpdatePos: entered`);
 
     let meshX = moveableGameObject.mesh.position.x;
@@ -79,8 +79,17 @@ export class UtilsService {
     //   console.log(`Utils.updatePos: meshX=${meshX}, meshY=${meshY}`);
     // }
 
-    meshX += moveableGameObject.vx;
-    meshY += moveableGameObject.vy;
+    // let moveFactor = 1;
+    // if (dt) {
+    //   // moveFactor is relative to 17ms or approx 60 hz
+    //   moveFactor = dt / 17;
+    // }
+    // if( moveFactor !== 1) {
+    //   console.log(`moveFactor=${moveFactor}`);
+    // }
+    let moveFactor = this.getMoveFactor(dt);
+    meshX += moveableGameObject.vx * moveFactor;
+    meshY += moveableGameObject.vy * moveFactor;
 
     if (meshX > boundVal) {
       meshX = -boundVal;
@@ -100,6 +109,17 @@ export class UtilsService {
 
     moveableGameObject.mesh.position.x = meshX;
     moveableGameObject.mesh.position.y = meshY;
+  }
+
+  getMoveFactor(dt? : number) {
+    // moveFactor is relative to 17ms or approx 60 hz
+    let moveFactor = 1;
+    if (dt) {
+      // moveFactor = dt / 17;
+      moveFactor = dt / 12;
+    }
+
+    return moveFactor;
   }
 
   getGamepad() {

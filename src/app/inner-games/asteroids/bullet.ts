@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Injectable()
 export class Bullet {
@@ -18,7 +19,7 @@ export class Bullet {
   gamePlaneLifeRatio : number;
   ttl : number;
 
-  constructor( private base : BaseService) {
+  constructor( private base : BaseService, private utils: UtilsService) {
     this.init();
   }
 
@@ -45,11 +46,12 @@ export class Bullet {
   }
 
   // update the bullet's position, and keep track of life cycle events
-  update() {
+  update(dt? : number) {
+    let moveFactor = this.utils.getMoveFactor();
     // add the vx and vy to the mesh's position
     // The need to add 90 deg is an empirically determined hack and a mystery
-    this.mesh.position.x += this.vScalar * Math.cos(this.vTheta + Math.PI / 2.0);
-    this.mesh.position.y += this.vScalar * Math.sin(this.vTheta + Math.PI / 2.0);
+    this.mesh.position.x += this.vScalar * Math.cos(this.vTheta + Math.PI / 2.0) * moveFactor;
+    this.mesh.position.y += this.vScalar * Math.sin(this.vTheta + Math.PI / 2.0) * moveFactor;
 
     let boundVal = this.base.projectionBoundary;
 
@@ -71,9 +73,6 @@ export class Bullet {
 
     // lifecycle management
     --this.ttl;
-    // if (--this.ttl === 0) {
-
-    // }
   }
 
   collisionHandler() : boolean {

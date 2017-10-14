@@ -92,6 +92,7 @@ export class Ship implements IMoveableGameObject {
   }
 
   rotate() {
+  // rotate(dt?: number) {
     this.mesh.rotateZ(this.theta - this.thetaLast);
 
     this.thetaLast = this.theta;
@@ -118,8 +119,9 @@ export class Ship implements IMoveableGameObject {
     }
   };
 
-  updatePos() {
-    this.utils.updatePos(this, this.base.projectionBoundary);
+  updatePos(dt? : number) {
+    // this.utils.updatePos(this, this.base.projectionBoundary);
+    this.utils.updatePos(this, this.base.projectionBoundary, dt);
   }
 
   collisionHandler() {

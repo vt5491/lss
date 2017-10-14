@@ -57,8 +57,8 @@ export class Asteroid implements IMoveableGameObject {
     this.lifeCycleStage = 0;
   };
 
-  updatePos() {
-    this.utils.updatePos(this, this.base.projectionBoundary);
+  updatePos(dt? : number) {
+    this.utils.updatePos(this, this.base.projectionBoundary, dt);
   };
 
   // returns true or false depending if the point is inside the asteroid's bounding box.

@@ -141,7 +141,7 @@ export class AsteroidsGame implements InnerGame {
     return b == 1.0;
   }
 
-  updateScene() {
+  updateScene(dt? : number) {
     // 3.7 is a little short. 3.8 is a little long
     let boundVal = this.BOUND_VAL;
 
@@ -149,15 +149,18 @@ export class AsteroidsGame implements InnerGame {
     for (let i = 0; i < this.asteroids.length; i++) {
       let asteroid = this.asteroids[i];
 
-      asteroid.updatePos();
+      asteroid.updatePos(dt);
     }
     // update bullets
-    this.updateBullets();
+    this.updateBullets(dt);
 
     // translate ship
-    this.ship.updatePos();
+    this.ship.updatePos(dt);
 
     // rotate ship
+    // ship's rotate theta is under the control of 'asteroids-game-controller-listener'
+    // and is event driven on a different tick, therefore we can't do a SimpleLayer
+    // dt movement on it.
     this.ship.rotate();
 
     // check for bullet collisions
@@ -192,13 +195,13 @@ export class AsteroidsGame implements InnerGame {
     }
   };
 
-  updateBullets() {
+  updateBullets(dt) {
     // we have to work our way through the bullets array in reverse order because
     // the splicing can affect 'downstream' array maniuplation
     for (let i = this.bullets.length -1 ; i >=0; i--) {
       let bullet = this.bullets[i];
 
-      bullet.update();
+      bullet.update(dt);
 
       if (bullet.ttl <= 0) {
         this.removeBullet(i, bullet);
@@ -222,7 +225,7 @@ export class AsteroidsGame implements InnerGame {
   shipFiredBullet() {
     // create a bullet with same direction as the ship is pointing to
     // note: we do not use injected Bullets because we don't want singletons
-    let bullet = new Bullet(this.base);
+    let bullet = new Bullet(this.base, this.utils);
     bullet.vTheta = this.ship.theta;
 
     let tmpVec = new THREE.Vector3();

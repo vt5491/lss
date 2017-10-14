@@ -17,6 +17,7 @@ import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
   // ],
 })
 export class CokeCanSceneComponent extends LssScene implements OnInit {
+  private baseTexture : THREE.Texture;
 
   constructor(
     private innerGame : AsteroidsGame,
@@ -25,6 +26,7 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
     private utils : UtilsService
   ) { 
     super(base, utils);
+    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/coke-label-binary.jpg" );  
   }
 
   ngOnInit() {
@@ -49,7 +51,10 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   getBaseTexture() : THREE.Texture {
-    return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label-binary.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label_2-binary.jpg" );  
+    return this.baseTexture;
   }
 
   trackDolly (pos : THREE.Vector3){

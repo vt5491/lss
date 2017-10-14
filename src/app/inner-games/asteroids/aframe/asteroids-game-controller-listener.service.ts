@@ -40,6 +40,12 @@ export class AsteroidsGameControllerListenerService {
       init: function () {
         var el = this.el;
         this.projEl = document.querySelector('#proj-entity') as AFrame.Entity;
+        // throttle down the tick rate to increase performance, as the stuff
+        // on our tick does not need to be called *every* frame.
+        let tickInterval = 100;
+        this.tick = (AFRAME.utils as any).throttleTick(this.tick, tickInterval, this);
+        // scale up ship movement to over a default tickRate of 60hz = 16 ms.
+        this.shipDeltaFactor = tickInterval / 16.0
         //homeEl is an expected link that can be used to return to main menu
 
         // this.homeEl = document.querySelector('#home-link');
@@ -173,7 +179,6 @@ export class AsteroidsGameControllerListenerService {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
           asteroidsGame.shipFiredBullet();
         });
-        // el.addEventListener('gripdown', function (e) { //Vive
         el.addEventListener('gripdown', (e) => { 
           // el.emit('fire-bullet');
           this.projEl.emit('fire-bullet');
@@ -225,7 +230,6 @@ export class AsteroidsGameControllerListenerService {
           
           let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
           // toggle visiblity
-          // if (homeEl.style.visibility !== 'visible') {
           if (homeEl.getAttribute('visible')) {
             // homeEl.style.visibility = 'visible';
             homeEl.setAttribute('visible', false);
@@ -290,12 +294,13 @@ export class AsteroidsGameControllerListenerService {
           }
         })
       },
-      tick: () => {
+      // tick: () => {
+      tick: function () {
         if (angParentComponent.thrusterEngaged) {
           // I don't know why I have to add 90 deg, but I do as empirically determined
-          asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2;
+          asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
 
-          asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2;
+          asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
 
           // and emit an event for any observers who may need to respond to this
           // this.shipMove.emit(null);

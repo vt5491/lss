@@ -64,7 +64,8 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
     // return new THREE.TextureLoader().load("../../../../assets/img/coke-label.jpg");  
     // return new THREE.TextureLoader().load("../../../../assets/img/notebook-paper.png");  
-    return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper.png");  
+    // return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper.png");  
+    return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");  
   }
 
   trackDolly (pos : THREE.Vector3 ) {
