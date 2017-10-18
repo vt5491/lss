@@ -5,6 +5,9 @@
     <!-- <ng-template appGameScene></ng-template> -->
   </p>
 </div>
+<!-- <div style="visibility: inline; width: 100%; height: 100%; position: fixed; left: 0; top: 0; z-index: -1; overflow: hidden">
+  <div id="htmlElement" style="background: #F8F8F8; color: #333; font-size: 48px">Hello, HTML!</div>
+</div> -->
 <div #parent>
   <a-scene lss-aframe-component tats #introScene>
     <!-- <ng-template appGameScene></ng-template> -->
@@ -13,6 +16,18 @@
       <img id="cokeThumbnail" src="assets/img/coke-label.jpg">
       <img id="poolHallThumbnail" src="assets/img/world_satellite_2.png">
     </a-assets>
+    <!-- <a-entity geometry="primitive: plane"
+      material="opacity: 0.5; side: double"
+      text="value: hello; width: 10"
+      >
+    </a-entity> -->
+    <a-entity id="customizeBtn" ui-button rotation="90 0 0"
+      position="0 -1 0">
+      <a-entity text='value: Customize; width: 10; align: center'
+        rotation='-90 0 0'
+      > </a-entity>
+    </a-entity>
+      <!-- material="shader: html; target: #htmlElement; opacity: 0.5; side: double"> -->
     <a-link href="planeScene" title="Plane"
       image="#planeThumbnail" position="-2 0 -1"></a-link>
     <a-link href="cokeCanScene" title="Coke Can"
@@ -24,7 +39,10 @@
       <a-entity hand-controls="right" position="0.1 0 -1" controller-cursor></a-entity>
       <a-entity hand-controls="left" position="-0.1 0 -1" grab></a-entity>
     </a-entity>
-    <a-text value="Loopy Surface Surfers" position="-1 2.5 -3" color="#806040" side="double"></a-text>
+    <!-- <div id="titleDiv"> -->
+      <a-text value="Loopy Surface Surfers" position="-1 2.5 -3"
+      color="#806040" side="double" id='titleText'></a-text>
+    <!-- </div> -->
     <a-sky color="#8080EC"></a-sky>
   </a-scene>
 </div>

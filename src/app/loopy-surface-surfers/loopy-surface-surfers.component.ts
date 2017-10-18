@@ -55,17 +55,58 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     private viewContainerRef: ViewContainerRef,
     private cfr: ComponentFactoryResolver
   ) {
+    let angParentComponent = this;
     console.log(`LoopySurfaceSurfers.ctor: innerGame.buttonPressed=${this.innerGame.buttonPressed(0)}`);
     
     this.yOffset = 2.5;
     this.billBoard['xOrigin'] = 0;
     this.billBoard['yOrigin'] = 1;
     this.billBoard['zOrigin'] = 0;
-    AFRAME.registerComponent('lss-aframe-component', {
-      init: () => {
-        setTimeout( () => {
-          this.initSceneAng();
-        }, 0);
+    let afComp = AFRAME.registerComponent('lss-aframe-component', {
+      // init: () => {
+      init: function() {
+        // setTimeout( () => {
+        angParentComponent.initSceneAng();
+
+        // }, 0);
+        var customizeBtn = document.querySelector('#customizeBtn');
+        // var customizeBtn = document.querySelector('#titleDiv');
+        (customizeBtn as any).addEventListener('pressed', function (e) {
+          console.log(`customizeBtn pressed`);
+          // debugger;
+          let custDialogEl = document.querySelector('#custDialog');
+          if (!custDialogEl) {
+            var dialogEl = document.createElement('a-entity');
+            dialogEl.setAttribute('geometry', 'primitive: plane');
+            dialogEl.setAttribute('material', 'opacity: 0.5; side: double');
+            dialogEl.setAttribute('id', 'custDialog');
+            // document.querySelector('a-scene').appendChild(el);
+            e.target.appendChild(dialogEl);
+          }
+          else {
+            e.target.removeChild(custDialogEl);
+          }
+          
+          // let titleEl : any = document.querySelector('#titleText')
+          // if (titleEl.style.visibility === 'hidden') {
+          //   titleEl.style.visibility = 'inline';
+          // }
+          // else {
+          //   titleEl.style.visibility = 'hidden';
+          // }
+        });
+        // var el = this.el;
+        // this.el.setAttribute('bmfont-text', {
+        //   fntImage: 'assets/fonts/mozillavr.png',
+        //   fnt: 'assets/fonts/mozillavr.fnt',
+        //   scale: 0.0015,
+        //   baseline: 'top',
+        //   lineHeight: 90,
+        //   // text: buildText(this.system.scores),
+        //   text: 'hello cleveland',
+        //   // text: ['abc', 'def'],
+        //   color: '#24caff'
+        // });
       },
       tick:  (time, timeDelta) => {
         // console.log(`LoopySurfaceSurfers.lss-aframe-component.tick: entered`);
@@ -74,18 +115,24 @@ export class LoopySurfaceSurfersComponent implements OnInit {
         // console.log(`LoopySurfaceSurfers.tick: oc-posData.x=${posData.x}, y=${posData.y}, z=${posData.z}`);
       },
       pause: function () {
-      // pause: () => {
         console.log(`LoopySurfaceSurfers.lss-aframe-component.pause: entered`);
         
         // this.removeEventListeners()
       },
       play: function () {
-      // play: () => {
         console.log(`LoopySurfaceSurfers.lss-aframe-component.play: entered`);
         // this.addEventListeners()
       }
     });
   }
+
+  // aframeInit() {
+  //   AFRAME.registerComponent('lss-aframe-component', {
+  //     init: () => {
+  //       var el = (this as any).el;
+  //     }
+  //   });
+  // }
 
   ngOnInit() {
     console.log(`LoopySurfaceSurfers.ngOnInit: entered`);
@@ -199,18 +246,6 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     dollyObj.position.y = controllerObj.position.y;
     dollyObj.position.z = controllerObj.position.z;
   }
-
-  // planeSceneMouseEnter(evt) {
-  //   evt.currentTarget.setAttribute('color', 'blue');
-  // }
-  //
-  // planeSceneMouseLeave(evt) {
-  //   evt.currentTarget.setAttribute('color', '#CCC');
-  // }
-  //
-  // planeSceneClick() {
-  //   console.log(`you clicked on plane scene`);
-  // }
 
   sceneSelectMouseEnter(evt) {
     // evt.currentTarget.setAttribute('color', 'blue');

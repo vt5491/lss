@@ -139,4 +139,23 @@ export class Asteroid implements IMoveableGameObject {
   set width(w : number) {
     this._width = w;
   };
+
+  // return the number of "hit points" for hitting this asteroid
+  get hitValue() : number {
+    let hitValue = 0;
+
+    switch (this.lifeCycleStage) {
+      case 0 :
+        hitValue = 10;
+      break;
+      case 1 :
+        hitValue = 20;
+      break;
+      case 2 :
+        hitValue = 40;
+      break;
+    }
+
+    return hitValue;
+  }
 }

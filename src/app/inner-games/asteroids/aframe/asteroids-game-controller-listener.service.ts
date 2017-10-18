@@ -13,6 +13,7 @@ export class AsteroidsGameControllerListenerService {
   public thrusterEngaged : boolean;
   public lastTouchPadTheta : number;
   public utils: UtilsService;
+  public asteroidsGame: AsteroidsGame;
   private afc : Object;
   private spaceRumble : HTMLElement;
 
@@ -27,6 +28,7 @@ export class AsteroidsGameControllerListenerService {
     // Thus, we have to build up 'angParentComponent' manually, and we have to add to it without
     // specifying 'this' e.g 'utils' not 'this.utils'
     angParentComponent.utils = utils;
+    angParentComponent.asteroidsGame = asteroidsGame;
 
     angParentComponent.afc = AFRAME.registerComponent('asteroids-game-controller-listener', 
     {
@@ -73,7 +75,10 @@ export class AsteroidsGameControllerListenerService {
         this.data.spaceRumble.volume = 0.1;
         angParentComponent.spaceRumble = this.data.spaceRumble;
         this.data.bgSound = document.getElementById('bg-sound');
-        this.data.bgSound.volume = 0.02;
+        // this.data.bgSound = document.getElementById('bg-sound-2');
+        // this.data.bgSound.volume = 0.02;
+        this.data.bgSound.volume = 0.04;
+        this.data.bgSound.loop = true;
         // this.thrustSound = this.el.components.sound__thrust;
         // this.projEl : AFrame.Entity
         this.thrustSound = this.projEl.components.sound__thrust;
@@ -223,6 +228,42 @@ export class AsteroidsGameControllerListenerService {
           
           el.emit('thrust-stop');
         });
+
+        el.addEventListener('scoreChange', (e, obj) => {
+          console.log(`AGCLS: now in scoreChange handler, score=${e.detail.score}`);
+          
+          // debugger;
+          let rhInfoPane = document.querySelector('#right-hand-info-pane') as AFrame.Entity;
+
+          if( rhInfoPane) {
+//             let text = 
+// `score: ${e.detail.score}
+// remaining: ${e.detail.asteroidsRemaining}`;
+            // rhInfoPane.setAttribute('text', `value: ${text}; width: 0.5; align: left`);
+            rhInfoPane.setAttribute('text', this.formatInfoText(e.detail));
+          }
+        });
+
+        el.addEventListener('abuttondown', (e) => {
+          let rhInfoPane = document.querySelector('#right-hand-info-pane');
+
+          if(!rhInfoPane) {
+            let infoPane = document.createElement('a-plane');
+            infoPane.setAttribute('width', '0.25');
+            infoPane.setAttribute('height', '0.15');
+            infoPane.setAttribute('position', '-0.15 -0.05 -0.1');
+            infoPane.setAttribute('material', 'side: double; opacity: 0.6');
+            infoPane.setAttribute('rotation', '0 0 90');
+            infoPane.setAttribute('text', this.formatInfoText(angParentComponent.asteroidsGame.gameState)); 
+              // `value: score: ${angParentComponent.asteroidsGame.score}; width : 1; align: center`);
+            infoPane.setAttribute('id', 'right-hand-info-pane');
+            e.target.appendChild(infoPane);
+          }
+          else {
+            // debugger;
+            e.target.removeChild(rhInfoPane);
+          }
+        });
         el.addEventListener('bbuttondown', (e) => {
           // console.log(`abuttondown event`);
           let homeEl : any = document.querySelector('#home-link');
@@ -293,6 +334,15 @@ export class AsteroidsGameControllerListenerService {
             rhcEntity.setAttributeNode(ctrlCursorAttr);
           }
         })
+      },
+      formatInfoText: function (gameState) {
+        let text = 
+`value: score: ${gameState.score}
+remaining: ${gameState.asteroidsRemaining}`;
+
+        text += '; width: 0.5; align: center';
+
+        return text;
       },
       // tick: () => {
       tick: function () {

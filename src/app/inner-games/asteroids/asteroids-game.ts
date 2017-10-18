@@ -33,7 +33,6 @@ export class AsteroidsGame implements InnerGame {
   private _gpad : any;
   private gpadFirstPressUsedUp : boolean = false;
   private _lastGpadTimestamp : number = 0;
-  //vt add
   // inner scene vars
   private innerWebGLRenderer : THREE.WebGLRenderer;
   private gl_innerWebGLRenderer: WebGLRenderingContext;
@@ -47,7 +46,8 @@ export class AsteroidsGame implements InnerGame {
   private innerSceneRenderer: InnerSceneRendererService;
   private asteroidsGameControllerListener: AsteroidsGameControllerListenerService;
   public shipRotFactor : number = 4.0;
-  //vt end
+  public score : number = 0;
+  private rightHandController : any;
 
   constructor(
     private _ship : Ship,
@@ -66,6 +66,7 @@ export class AsteroidsGame implements InnerGame {
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
     this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base, this._utils);
+    // this.rightHandController = this.utils.getHandControlEntity('right');
 
     this.initScene();
 
@@ -168,30 +169,36 @@ export class AsteroidsGame implements InnerGame {
     //
     // do beenHit action on each hitObject
     for (let i = 0; i < hitObjects.length; i++) {
-        // let hitObj = hitObjects[0];
-        let hitObj = hitObjects[i]['obj'];
-        let hitIdx = hitObjects[i]['idx'];
+      // let hitObj = hitObjects[0];
+      let hitObj = hitObjects[i]['obj'];
+      let hitIdx = hitObjects[i]['idx'];
 
-        hitObj.collisionHandler();
+      hitObj.collisionHandler();
 
-        switch(hitObj.tag) {
-          case 'asteroid':
-            let splitAsts : Asteroid[];
-            splitAsts = (<Asteroid>hitObj).collisionHandler();
+      switch(hitObj.tag) {
+        case 'asteroid':
+          let splitAsts : Asteroid[];
+          splitAsts = (<Asteroid>hitObj).collisionHandler();
 
-            var selectedObject = this.scene.getObjectById((<Asteroid>hitObj).three_id);
-            this.scene.remove( selectedObject );
-            this.removeAsteroid(hitIdx, hitObj);
+          var selectedObject = this.scene.getObjectById((<Asteroid>hitObj).three_id);
+          this.score += hitObj.hitValue;
+          console.log(`AsteroidsGame: score=${this.score}`);
+          // (document.querySelector('a-scene') as AFrame.Entity).emit('scoreChange', {a: 6});
+          // (document.querySelector('.proj-scene') as AFrame.Entity).emit('scoreChange');
+          // let rhc = this.rightHandController || this.utils.getHandControlEntity('right');
+          let rhc = this.rightHandController ? this.rightHandController : (this.rightHandController = this.utils.getHandControlEntity('right'));
+          // rhc.emit('scoreChange', {newScore: this.score});
+          rhc.emit('scoreChange', this.gameState);
+          this.scene.remove( selectedObject );
 
-            for( let k=0; k < splitAsts.length; k++) {
-              this.asteroids.push(splitAsts[k]);
-              this.scene.add(splitAsts[k].mesh);
-            }
+          this.removeAsteroid(hitIdx, hitObj);
 
-            // console.log(`AsteroidsGame.updateScene: asteroid count=${this.asteroids.length}`);
-
-          break;
-        }
+          for( let k=0; k < splitAsts.length; k++) {
+            this.asteroids.push(splitAsts[k]);
+            this.scene.add(splitAsts[k].mesh);
+          }
+        break;
+      }
     }
   };
 
@@ -369,4 +376,13 @@ export class AsteroidsGame implements InnerGame {
   set lastGpadTimestamp(gp : number) {
     this._lastGpadTimestamp = gp;
   };
+
+  get gameState() : Object {
+    let gameState = {};
+
+    gameState['score'] = this.score;
+    gameState['asteroidsRemaining'] = this.asteroids.length;
+
+    return gameState;
+  }
 }
