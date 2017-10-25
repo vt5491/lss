@@ -47,6 +47,7 @@ export class AsteroidsGame implements InnerGame {
   private asteroidsGameControllerListener: AsteroidsGameControllerListenerService;
   public shipRotFactor : number = 4.0;
   public score : number = 0;
+  public gamePaused: boolean = false;
   private rightHandController : any;
 
   constructor(
@@ -380,6 +381,7 @@ export class AsteroidsGame implements InnerGame {
   get gameState() : Object {
     let gameState = {};
 
+    gameState['gamePaused'] = this.gamePaused;
     gameState['score'] = this.score;
     gameState['asteroidsRemaining'] = this.asteroids.length;
 

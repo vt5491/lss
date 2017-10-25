@@ -37,7 +37,8 @@ export class AsteroidsGameControllerListenerService {
         fireSoundStartCount: {type: 'number', default: 0},
         fireSoundStopCount: {type: 'number', default: 0},
         spaceRumble: {type: 'audio'},
-        bgSound: {type: 'audio'}
+        bgSound: {type: 'audio'},
+        thrustSound: {type: 'audio'}
       },
       init: function () {
         var el = this.el;
@@ -48,26 +49,9 @@ export class AsteroidsGameControllerListenerService {
         this.tick = (AFRAME.utils as any).throttleTick(this.tick, tickInterval, this);
         // scale up ship movement to over a default tickRate of 60hz = 16 ms.
         this.shipDeltaFactor = tickInterval / 16.0
-        //homeEl is an expected link that can be used to return to main menu
-
-        // this.homeEl = document.querySelector('#home-link');
-        // // this.homeEl.components.link.textEl.getAttribute('text').side = 'double';
-        // let textEl = this.homeEl.components.link.textEl;
-        // if( !textEl.side) {
-        //   // textEl.createAttribute('side');
-        //   textEl.side = '';
-        // }
-        // // make the homeEl text double-sided
-        // textEl.side = 'double';
 
         this.data.fireSoundStartCount = 0;
         this.data.fireSoundStopCount = 0;
-        // this.projEl.setAttribute('sound', {
-        //   src: 'url(assets/sounds/asteroids/asteroids-ship-fire.wav)',
-        //   on: 'fire-bullet',
-        //   volume: 0.25,
-        //   poolSize: 20
-        // });
 
         //TODO next line is redundant
         base.docLSS['ship-thrust-reset'] = false;
@@ -79,9 +63,9 @@ export class AsteroidsGameControllerListenerService {
         // this.data.bgSound.volume = 0.02;
         this.data.bgSound.volume = 0.04;
         this.data.bgSound.loop = true;
-        // this.thrustSound = this.el.components.sound__thrust;
+        // this.data.thrustSound = this.el.components.sound__thrust;
         // this.projEl : AFrame.Entity
-        this.thrustSound = this.projEl.components.sound__thrust;
+        this.data.thrustSound = this.projEl.components.sound__thrust;
         this.data.bgSound.play();
         this.data.spaceRumble.addEventListener('ship-thrust-reset', () => {
           // set a global variable so others can know.
@@ -91,25 +75,67 @@ export class AsteroidsGameControllerListenerService {
         //   // debugger;
         //   console.log(`AGCLS: caught thrust-start`);
         // })
-        //tween compatible thrust handlers
-        el.addEventListener('thrust-start', () => {
-          this.thrustSound.stopSound();
+      // let formatInfoText = function (gameState) {
+        // we can't define these functions at the a-frame component level because
+        // then they're not accessible from event handler.  Thus we define locally to
+        // init and them reference them via closures in the event handlers.
+        let formatInfoText = (gameState) => {
+          let gamePaused = angParentComponent.asteroidsGame.gamePaused;
+          let text = 'value: ';
+
+          if (gamePaused) {
+            text += 'Paused\n';
+          }
+          else {
+            text += '\n';
+          }
+
+          text +=
+            `Score: ${gameState.score}
+Active Asteroids: ${gameState.asteroidsRemaining}`;
+
+          text += '; width: 0.5; align: center; color: black';
+
+          return text;
+        };
+        // let thrustStartHandler = function () {
+        let thrustStartHandler = () => {
+          let thrustSound = this.data.thrustSound;
+          thrustSound.stopSound();
           // this.sound.pool.children[0].setVolume(1.0);
           // factory.volume = {vol: 1.0}; //need to do this every time
-          let initVol = this.thrustSound.data.volume;
-          this.volume = {vol: initVol}; //need to do this every time
-          if (this.thrustSound.pool.children[0]) {
-            this.thrustSound.pool.children[0].setVolume(initVol);
+          let initVol = thrustSound.data.volume;
+          this.volume = { vol: initVol }; //need to do this every time
+          if (thrustSound.pool.children[0]) {
+            thrustSound.pool.children[0].setVolume(initVol);
             // console.log(`onClick: volume=${this.thrustSound.pool.children[0].getVolume()}`);
           }
-          this.thrustSound.currentTime = 0.0;
-          if( this.tween) {
+          thrustSound.currentTime = 0.0;
+          if (this.tween) {
             this.tween.stop();
           }
-          this.thrustSound.playSound();
-        });
+          thrustSound.playSound();
+        };
+        //tween compatible thrust handlers
+        el.addEventListener('thrust-start', thrustStartHandler); 
+        // el.addEventListener('thrust-start', () => {
+        //   this.thrustSound.stopSound();
+        //   // this.sound.pool.children[0].setVolume(1.0);
+        //   // factory.volume = {vol: 1.0}; //need to do this every time
+        //   let initVol = this.thrustSound.data.volume;
+        //   this.volume = {vol: initVol}; //need to do this every time
+        //   if (this.thrustSound.pool.children[0]) {
+        //     this.thrustSound.pool.children[0].setVolume(initVol);
+        //     // console.log(`onClick: volume=${this.thrustSound.pool.children[0].getVolume()}`);
+        //   }
+        //   this.thrustSound.currentTime = 0.0;
+        //   if( this.tween) {
+        //     this.tween.stop();
+        //   }
+        //   this.thrustSound.playSound();
+        // });
         el.addEventListener('thrust-stop', () => {
-          let sound = this.thrustSound;
+          let sound = this.data.thrustSound;
 
           this.tween = new TWEEN.Tween(this.volume);
           // this.tween.easing(TWEEN.Easing.Sinusoidal.In);
@@ -125,52 +151,10 @@ export class AsteroidsGameControllerListenerService {
           });
           this.tween.onComplete(function () {
             sound.stopSound();
-            // console.log(`tween is done`);
           });
 
           this.tween.start();
         });
-        // el.addEventListener('thrust-start', () => {
-        //   let el = this.el;
-
-        //   console.log(`agcls.thrust-start listener: dispatching thrustComp.playSound`);
-          
-        //   let thrustComp = el.components.sound__thrust;
-        //   // stop any prior fade outs
-        //   // thrustComp.stopSound();
-        //   // debugger;
-        //   if (thrustComp.isPlaying) {
-        //     thrustComp.stopSound();
-        //   }
-        //   // and restart it anew.
-        //   thrustComp.playSound();
-        // });
-        //non-tween thrust-stop
-        // el.addEventListener('thrust-stop', () => {
-        //   let el = this.el;
-
-        //   console.log(`agcls.thrust-stop listener: dispatching thrustComp.stopSound`);
-        //   let thrustComp = el.components.sound__thrust;
-        //   thrustComp.stopSound(); //note: generates distinctive "pop"
-        //   // thrustComp.fadeOut();
-        // });
-
-        // thust-start and thrust-stop now handled by ship-thrust-sound-service
-        // el.addEventListener('thrust-start', ()=> {
-        //   let sound = this.data.spaceRumble;
-        //   sound.currentTime = 0.0;
-        //   // console.log(`thrust-stop: emitting ship-thrust-reset event`);
-        //   let rumbleEl = angParentComponent.spaceRumble; 
-        //   let thrustResetEvt = document.createEvent('Event');
-        //   thrustResetEvt.initEvent('ship-thrust-reset', true, true);
-        //   rumbleEl.dispatchEvent(thrustResetEvt);
-        //   angParentComponent.utils.fadeIn(sound, 250, 0.20, 25);
-        // });
-
-        // el.addEventListener('thrust-stop', () => {
-        //   angParentComponent.utils.fadeOut(this.data.spaceRumble, 1000, 0.0, 25);
-        // })
-
         el.addEventListener('sound-ended', ()=> {
           this.data.fireSoundStopCount++;
           // console.log(`fireSoundStartCount=${this.data.fireSoundStartCount}, fireSoundStopCount=${this.data.fireSoundStopCount}`);
@@ -230,7 +214,7 @@ export class AsteroidsGameControllerListenerService {
         });
 
         el.addEventListener('scoreChange', (e, obj) => {
-          console.log(`AGCLS: now in scoreChange handler, score=${e.detail.score}`);
+          // console.log(`AGCLS: now in scoreChange handler, score=${e.detail.score}`);
           
           // debugger;
           let rhInfoPane = document.querySelector('#right-hand-info-pane') as AFrame.Entity;
@@ -240,7 +224,8 @@ export class AsteroidsGameControllerListenerService {
 // `score: ${e.detail.score}
 // remaining: ${e.detail.asteroidsRemaining}`;
             // rhInfoPane.setAttribute('text', `value: ${text}; width: 0.5; align: left`);
-            rhInfoPane.setAttribute('text', this.formatInfoText(e.detail));
+            // rhInfoPane.setAttribute('text', this.formatInfoText(e.detail));
+            rhInfoPane.setAttribute('text', formatInfoText(e.detail));
           }
         });
 
@@ -254,7 +239,8 @@ export class AsteroidsGameControllerListenerService {
             infoPane.setAttribute('position', '-0.15 -0.05 -0.1');
             infoPane.setAttribute('material', 'side: double; opacity: 0.6');
             infoPane.setAttribute('rotation', '0 0 90');
-            infoPane.setAttribute('text', this.formatInfoText(angParentComponent.asteroidsGame.gameState)); 
+            // infoPane.setAttribute('text', this.formatInfoText(angParentComponent.asteroidsGame.gameState)); 
+            infoPane.setAttribute('text', formatInfoText(angParentComponent.asteroidsGame.gameState)); 
               // `value: score: ${angParentComponent.asteroidsGame.score}; width : 1; align: center`);
             infoPane.setAttribute('id', 'right-hand-info-pane');
             e.target.appendChild(infoPane);
@@ -272,50 +258,33 @@ export class AsteroidsGameControllerListenerService {
           let rhcEntity = angParentComponent.utils.getHandControlEntity('right');
           // toggle visiblity
           if (homeEl.getAttribute('visible')) {
-            // homeEl.style.visibility = 'visible';
             homeEl.setAttribute('visible', false);
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('unPauseGame');
+            asteroidsGame.gamePaused = false;
 
             // remove laser pointer
             rhcEntity.removeAttribute('controller-cursor');
 
-            // and restor background sound
+            // and restore background sound
             this.data.bgSound.play();
+            // and thrust listener
+            el.addEventListener('thrust-start', thrustStartHandler); 
           }
           else {
-            // homeEl.style.visibility = 'hidden';
             // pause the game
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
-            // document.getElementById('bg-sound');
+            asteroidsGame.gamePaused = true;
             this.data.bgSound.pause();
+            // temporarily turn of thrust-start, so when they select an object with the
+            // cursor we don't get a thruster blast.
+            el.removeEventListener('thrust-start', thrustStartHandler);
 
             let dollyEl: any = document.querySelector('#dolly');
             let projEl : any = document.querySelector('.proj-obj');
             let projElPos = projEl.getAttribute('position');
             // sync object3D state to wrapper attribute state
-            // debugger;
             dollyEl.setAttribute("position", dollyEl.object3D.position);
 
-            /*
-            let dollyPos = dollyEl.getAttribute('position');
-            let theta = Math.atan(dollyPos.x / dollyPos.z);
-            if (dollyPos.z < 0) {
-              theta -= Math.PI;
-            }
-            console.log(`theta=${theta * 180.0 / Math.PI}`);
-            
-            // console.log(`dolly.x=${dollyPos.x},dolly.y=${dollyPos.y},dolly.z=${dollyPos.z}`);
-            // console.log(`proj-obj.x=${projElPos.x},proj-obj.y=${projElPos.y},proj-obj.z=${projElPos.z}`);
-            
-            // deep copy it so we don't affect the dolly
-            let linkPos = JSON.parse(JSON.stringify(dollyPos));
-            // linkPos.z -= 5;
-            linkPos.x -= 5 * Math.cos(Math.PI / 2.0 - theta);
-            linkPos.z -= 5 * Math.sin(Math.PI / 2.0 - theta);
-            // console.log(`dolly.pos.x=${dollyPos.x},dolly.pos.y=${dollyPos.y}`);
-            // homeEl.setAttribute('position', linkPos);
-            // homeEl.setAttribute('rotation', new THREE.Vector3(0, theta * 180 / Math.PI, 0));
-            */
             // getHUDPlacement alt
             let hudRot = angParentComponent.utils.getHUDPlacement();
             let hudPos = hudRot.clone();
@@ -324,7 +293,6 @@ export class AsteroidsGameControllerListenerService {
             homeEl.setAttribute('rotation', hudRot);
             homeEl.setAttribute('position', hudPos);
             homeEl.object3D.lookAt(hudRot);
-            // homeEl.object3D.lookAt(hudPos);
             // end getHUDPlacement
             homeEl.setAttribute('visible', true);
 
@@ -333,17 +301,32 @@ export class AsteroidsGameControllerListenerService {
             // ctrlCursorAttr.value = "democlass";
             rhcEntity.setAttributeNode(ctrlCursorAttr);
           }
+          // and finally update the info pane if active
+          let rhInfoPane = document.querySelector('#right-hand-info-pane') as AFrame.Entity;
+          if (rhInfoPane) {
+            rhInfoPane.setAttribute('text', formatInfoText(asteroidsGame.gameState));
+          }
         })
       },
-      formatInfoText: function (gameState) {
-        let text = 
-`value: score: ${gameState.score}
-remaining: ${gameState.asteroidsRemaining}`;
+//       formatInfoText: function (gameState) {
+//         let gamePaused = angParentComponent.asteroidsGame.gamePaused;
+//         let text = 'value: ';
 
-        text += '; width: 0.5; align: center';
+//         if (gamePaused) {
+//           text += 'Paused\n';
+//         }
+//         else {
+//           text += '\n';
+//         }
 
-        return text;
-      },
+//         text += 
+// `Score: ${gameState.score}
+// Active Asteroids: ${gameState.asteroidsRemaining}`;
+
+//         text += '; width: 0.5; align: center; color: black';
+
+//         return text;
+//       },
       // tick: () => {
       tick: function () {
         if (angParentComponent.thrusterEngaged) {

@@ -5,6 +5,8 @@
 // other angular components, but it's really an aframe component at heart.
 // It refers back to the outer scene.  The outer scene object must have an
 // 'udateScene' method, and an 'innerGame' object.
+// The a-frame component embedded here basically corresponds to 'projSceneComp'
+// in other modules (e.g lss-scene.ts).
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { BaseService } from '../base.service';
 
