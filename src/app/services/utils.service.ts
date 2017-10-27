@@ -630,6 +630,26 @@ export class UtilsService {
     return hudRot;
   }
 
+  // get inner-game independent state, such as resolution, camera tracking etc.
+  getOuterState(key) {
+    key = "lss_" + key;
+    if (localStorage.getItem(key)) {
+      return JSON.parse(localStorage.getItem(key));
+    }
+    else {
+      return null;
+    }
+  }
+
+  setOuterState(key, val) {
+    key = "lss_" + key
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, '');
+    }
+
+    localStorage.setItem(key, val)
+  }
+
 } // end UtilsService class def
 
 

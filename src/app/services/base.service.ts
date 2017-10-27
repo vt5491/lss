@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 export class BaseService {
 
   static ONE_DEG = Math.PI / 180.0;
+  static DOLLY_TRACK_DEFAULT: boolean = true;
+  // dollyTrackDefault : boolean = true;
   //TODO: projectionBoundary and _boundVal are the same idea.  Decide which
   // one to go with and get rid of the other (probably keep projectionBoundary)
   projectionBoundary : number;
@@ -47,6 +49,13 @@ export class BaseService {
   }
   public set boundVal(v : number) {
     this._boundVal = v;
+  }
+
+  get dollyTrackDefault(): boolean {
+    return BaseService.DOLLY_TRACK_DEFAULT;
+  }
+  set dollyTrackDefault(b : boolean) {
+    BaseService.DOLLY_TRACK_DEFAULT = b;
   }
 
   public get docLSS() : Object {

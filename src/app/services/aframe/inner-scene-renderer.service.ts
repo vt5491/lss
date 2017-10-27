@@ -37,7 +37,12 @@ export class InnerSceneRendererService {
         // attempt to change the inner game logical size of 3.79
         // this.innerGame.innerWebGLRenderer.setSize(1024,1024);
         // let tmp = this.innerGame.innerWebGLRenderer.getSize();
+        let innerImgDim = this.utils.getOuterState('innerImgDim') || this.base.innerImgDim;
+        this.base.innerImgDim = innerImgDim;
+        console.log(`InnerSceneRendererService.ctor: base.innerImgDim=${this.base.innerImgDim}`);
+        
         this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(this.base.innerImgDim, this.base.innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
+        // this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(innerImgDim, innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
         this.innerGame.innerGameWidth = this.base.innerImgDim;
         this.innerGame.innerGameHeight = this.base.innerImgDim;
         this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameHeight, this.innerGame.innerGameHeight, new THREE.Color(0x000000));

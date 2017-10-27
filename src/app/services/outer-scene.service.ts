@@ -6,6 +6,8 @@
 // all the scene independent state and methods, so you don't have to define things
 // multiple time for each scene.  The best example of a scene independent object
 // is the dolly/cammera.
+import { BaseService } from '../services/base.service';
+import { UtilsService } from '../services/utils.service';
 
 import { Injectable } from '@angular/core';
 
@@ -17,10 +19,32 @@ export class OuterSceneService {
   projScene : THREE.Object3D;
   discreteInnerSceneScroll : Boolean;
   trackDolly : Boolean;
+  // trackDollyDefault : Boolean;
 
-  constructor() { 
+  constructor(
+    private base: BaseService,
+    private utils: UtilsService
+  ) { 
     this.discreteInnerSceneScroll = false;
-    this.trackDolly = true;
+    // console.log(`OuterSceneService.ctor: trackDollyDefault=${this.base.dollyTrackDefault}`);
+    
+    // this.trackDolly = this.base.dollyTrackDefault;
+    // if (localStorage.getItem('LSS_DOLLY_TRACK')) {
+    // if (this.utils.getOuterState('dollyTrack')) {
+    //   // this.trackDolly = JSON.parse(localStorage.getItem('LSS_DOLLY_TRACK') as any);
+    //   this.trackDolly = this.utils.getOuterState('dollyTrack');
+    // }
+    // else {
+    //   this.trackDolly = true;
+    // }
+    this.trackDolly = this.utils.getOuterState('dollyTrack');
+    if (this.trackDolly == null) {
+      this.trackDolly = true;
+    }
+    console.log(`OuterSceneService.ctor: trackDolly=${this.trackDolly}`);
+
+    // if (localStorage.getItem('lss_innerImgDim')) {
+    // }
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities
@@ -35,8 +59,8 @@ export class OuterSceneService {
     this.projScene = projSceneEl.object3D;
 
     let axisHelper = new THREE.AxisHelper(1);
-    this.projScene.add(axisHelper);
-    this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
+    // this.projScene.add(axisHelper);
+    // this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
     // This is a global stash for transferring state among disparate components.
     (document as any).LSS = {};
   }

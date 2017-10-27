@@ -21,6 +21,7 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     private utils: UtilsService
   ) {
     super(base, utils); 
+    // console.log(`PlaneSceneComponent.ctor: base.dollyTrackDefault=${base.dollyTrackDefault}`);
     // Note: the client that invokes this needs
     // an 'innerGame' instance variable with an updateScene method (they will be called back and referred to)
     // more accurately, the component that instantiates InnerSceneRender 

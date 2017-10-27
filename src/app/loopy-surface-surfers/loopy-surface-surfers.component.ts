@@ -6,6 +6,9 @@ import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
 import { PlaneSceneComponent} from './scenes/plane-scene/plane-scene.component';
 import { Router } from '@angular/router';
+import { OuterSceneService } from '../services/outer-scene.service';
+import { BaseService } from '../services/base.service';
+import { UtilsService } from '../services/utils.service';
 // import * as dat from 'datGUIVR';
 // import * as datGUIVR from 'datGUIVR';
 declare var dat: any;
@@ -14,6 +17,7 @@ declare var dat: any;
   selector: 'app-loopy-surface-surfers',
   templateUrl: './loopy-surface-surfers.component.html',
   styleUrls: ['./loopy-surface-surfers.component.css'],
+  // providers: [BaseService]
 })
 // @View({
 //     // template: `<div #content></div>`,
@@ -51,7 +55,10 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     private router: Router,
     private _componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private cfr: ComponentFactoryResolver
+    private cfr: ComponentFactoryResolver,
+    private outerSceneSvc : OuterSceneService,
+    private base: BaseService,
+    private utils: UtilsService
   ) {
     let angParentComponent = this;
     
@@ -63,20 +70,20 @@ export class LoopySurfaceSurfersComponent implements OnInit {
       init: function() {
         angParentComponent.initSceneAng();
 
-        var customizeBtn = document.querySelector('#customizeBtn');
-        (customizeBtn as any).addEventListener('pressed', function (e) {
-          let custDialogEl = document.querySelector('#custDialog');
-          if (!custDialogEl) {
-            var dialogEl = document.createElement('a-entity');
-            dialogEl.setAttribute('geometry', 'primitive: plane');
-            dialogEl.setAttribute('material', 'opacity: 0.5; side: double');
-            dialogEl.setAttribute('id', 'custDialog');
-            e.target.appendChild(dialogEl);
-          }
-          else {
-            e.target.removeChild(custDialogEl);
-          }
-        });
+        // var customizeBtn = document.querySelector('#customizeBtn');
+        // (customizeBtn as any).addEventListener('pressed', function (e) {
+        //   let custDialogEl = document.querySelector('#custDialog');
+        //   if (!custDialogEl) {
+        //     var dialogEl = document.createElement('a-entity');
+        //     dialogEl.setAttribute('geometry', 'primitive: plane');
+        //     dialogEl.setAttribute('material', 'opacity: 0.5; side: double');
+        //     dialogEl.setAttribute('id', 'custDialog');
+        //     e.target.appendChild(dialogEl);
+        //   }
+        //   else {
+        //     e.target.removeChild(custDialogEl);
+        //   }
+        // });
       },
       tick:  (time, timeDelta) => {
       },
@@ -105,39 +112,140 @@ export class LoopySurfaceSurfersComponent implements OnInit {
       (cameraEl as any).setAttribute('wasd-controls','inVrState','false')
     });
 
-    let sceneObj  = (sceneEl as AFrame.Entity).object3D;
 
     let list = document.querySelectorAll('.scene-select');
 
     Array.prototype.forEach.call(list, (item) => {
-    }) ;
+    });
+
+    this.initCustPanel();
 
     // var boxEl = document.querySelector('#box');
     // var boxObj = document.querySelector('#box').object3D;
     // let boxObjParms = boxObj.children[0].geometry.metadata.parameters;
     // var gui = dat.GUIVR.create( 'boxObjParms' );
-    let gui = dat.GUIVR.create();
-    gui.position.set(0, 0, 0);
-    let btnCtrl = gui.addButton( () => {console.log(`button pressed`);} );
-    // planeEl.object3D.add( gui );
+    // let gui = dat.GUIVR.create('customize');
+    // gui.position.set(-1.4, -2.5, 0);
+    // gui.scale.set(3, 3, 3);
+    // // debugger;
+    // // this.base.d
+    // let that = this;
+    // let cameraTrackChk = gui.addCheckbox( () => {
+    // let cameraTrackChk = gui.addButton( () => {
+    // let cameraTrackChk = gui.addButton( function() {
+    // let cameraTrackChk = gui.addCheckbox( function() {
+    //   console.log(`button pressed`);
+    //   // this.outerSceneSvc.trackDollyDefault = !this.outerSceneSvc.trackDollyDefault;
+    //   // BaseService.DOLLY_TRACK_DEFAULT = !BaseService.DOLLY_TRACK_DEFAULT;
+    //   // this.base.doll = !BaseService.DOLLY_TRACK_DEFAULT;
+    //   // that.base.dollyTrackDefault = !that.base.dollyTrackDefault;
+    //   // localStorage.setItem('LSS_DOLLY_TRACK', !that.base.dollyTrackDefault as any);
+    //   let lssDollyTrack = localStorage.getItem('LSS_DOLLY_TRACK');
+    //   if (lssDollyTrack) {
+    //     lssDollyTrack === 'true' ? localStorage.setItem('LSS_DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+    //   }
+    //   else {
+    //     localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+    //   }
+    //   // debugger;
+    // }, 'Damera Track');
+    // let gui = window.dat.GUIVR.create();
+    // debugger;
+  }
+
+  initCustPanel () {
+    let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
+    let sceneObj  = (sceneEl as AFrame.Entity).object3D;
+    let gui = dat.GUIVR.create('Customization Panel');
+    gui.position.set(-1.4, -2.5, 0);
+    gui.scale.set(3, 3, 3);
     sceneObj.add( gui );
+
+    let that = this;
+
+    let dollyTrackState = this.utils.getOuterState('dollyTrack');
+    let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
+    // let cameraTrackChk = gui.addCheckbox({dollyTrack: dollyTrackState}, 'dollyTrack');
+    cameraTrackChk.name('Dolly Tracking');
+    cameraTrackChk.onChange( (val) => {
+      // let lssDollyTrack = localStorage.getItem('DOLLY_TRACK');
+      let lssDollyTrack = that.utils.getOuterState('dollyTrack');
+      // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
+      if (lssDollyTrack) {
+        // lssDollyTrack === 'true' ? localStorage.setItem('DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+        lssDollyTrack ? that.utils.setOuterState('dollyTrack', 'false') : that.utils.setOuterState('dollyTrack', 'true');
+      }
+      else {
+        // localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+        that.utils.setOuterState('dollyTrack', 'true');
+      }
+    });
+    // let cbCtrl = gui.add( {flag: true}, 'flag' );
+    // cbCtrl.onChange( (val) => {
+    //   console.log(`cbCtrl.onChange: entered. val=${val}`);
+    // })
+
+    // planeEl.object3D.add( gui );
+    let innerImgDimState = this.utils.getOuterState('innerImgDim');
+    // let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
+    // cameraTrackChk.name('Dolly Tracking');
+    // cameraTrackChk.onChange( (val) => {
+    //   let lssDollyTrack = localStorage.getItem('LSS_DOLLY_TRACK');
+    //   // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
+    //   if (lssDollyTrack) {
+    //     lssDollyTrack === 'true' ? localStorage.setItem('LSS_DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+    //   }
+    //   else {
+    //     localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+    //   }
+    // });
+
+    // const state = {        
+    //   colors: ['0xff0000', '0x00ff00', '0x0000ff']
+    // };
+    
+    // let tmpState = { def: "8", abc: "7" };
+    // create the dropdown with the current resolution as the first
+    let resolutions = ["512", "1024", "1400", "2048"];
+    let currentInnerGameRes = String(this.utils.getOuterState('innerImgDim'));
+
+    let resState = [];
+    if (currentInnerGameRes) {
+      resState.push(currentInnerGameRes);
+    }
+
+    for(var i=0; i< resolutions.length; i++) {
+      if (resolutions[i] !== currentInnerGameRes) {
+        resState.push(resolutions[i]);
+      }
+    }
+    // let dropdown = gui.addDropdown( state, 'colors' );
+    // let innerImgDimSelect = gui.addDropdown( ["512", "1024"] );
+    // let innerImgDimSelect = gui.addDropdown({optio: "hello"}, ["512", "1024"] );
+    let innerImgDimSelect = gui.addDropdown(resState );
+    // let innerImgDimSelect = gui.add({option: "1024"}, ["512", "1024"] );
+    // let innerImgDimSelect = gui.add( ["512", "1024"] );
+    innerImgDimSelect.name('Inner Game Res. (px)');
+    innerImgDimSelect.onChange( function( res ) {
+      // material.color.setHex( color );
+      console.log(`now in dropdown handler, res=${res}`);
+      that.utils.setOuterState("innerImgDim", res);
+    });
 
     let rhc : any = document.querySelector('#ctrl-right');
     let guiInputRight = dat.GUIVR.addInputObject( rhc.object3D );
+    // let guiInputRight = gui.addInputObject( rhc.object3D );
     rhc.addEventListener('triggerdown', function () {
-      console.log(`rhc: now in triggerdown`);
-      guiInputRight.pressed(true);
+      // console.log(`rhc: now in triggerdown`);
+      guiInputRight.pressed(true, "abc");
     });
     rhc.addEventListener('triggerup', function () {
-      console.log(`rhc: now in triggerup`);
+      // console.log(`rhc: now in triggerup`);
       guiInputRight.pressed(false);
     });
 
     sceneObj.add( guiInputRight );
 
-
-    // let gui = window.dat.GUIVR.create();
-    // debugger;
 
   }
 

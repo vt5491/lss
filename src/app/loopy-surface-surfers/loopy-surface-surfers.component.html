@@ -22,27 +22,34 @@
       text="value: hello; width: 10"
       >
     </a-entity> -->
-    <a-entity id="customizeBtn" ui-button rotation="90 0 0"
+    <!-- <a-entity id="customizeBtn" ui-button rotation="90 0 0"
       position="0 -1 0">
       <a-entity text='value: Customize; width: 5; align: center'
         rotation='-90 0 0'
       > </a-entity>
-    </a-entity>
+    </a-entity> -->
       <!-- material="shader: html; target: #htmlElement; opacity: 0.5; side: double"> -->
+      <!-- <a routerLink="/planeScene" routerLinkActive="active">Heroes</a> -->
     <a-link href="planeScene" title="Plane"
-      image="#planeThumbnail" position="-2 0 -1"></a-link>
+      image="#planeThumbnail" position="-2.5 0 0"></a-link>
     <a-link href="cokeCanScene" title="Coke Can"
-      image="#cokeThumbnail" position="0 0 -1"></a-link>
+      image="#cokeThumbnail" position="0 0 0"></a-link>
     <a-link href="globeScene" title="Globe"
-      image="#poolHallThumbnail" position="2 0 -1"></a-link>
-    <a-entity id="dolly" position="0 0.5 3">
+      image="#poolHallThumbnail" position="2.5 0 0"></a-link>
+    <a-entity id="dolly" position="0 0 5">
       <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" wasd-controls look-controls></a-camera>
-      <a-entity id="ctrl-right" hand-controls="right" position="0.1 0 -1" controller-cursor></a-entity>
+      <a-entity id="ctrl-right" hand-controls="right" position="0.1 0 -1"
+        controller-cursor
+        maser-controls
+        saycaster="pbjects: .selectable; far: 5"
+        >
+          <!-- <a-entity maser-controls raycaster="objects: .selectable; far: 5"></a-entity> -->
+      </a-entity>
       <a-entity hand-controls="left" position="-0.1 0 -1" grab></a-entity>
     </a-entity>
     <!-- <div id="titleDiv"> -->
-      <a-text value="Loopy Surface Surfers" position="-1 2.5 -3"
-      color="#806040" side="double" id='titleText'></a-text>
+      <a-text value="Loopy Surface Surfers" position="0 2.5 0"
+      color="#806040" side="double" id='titleText' align='center'></a-text>
     <!-- </div> -->
     <!-- <a-sky color="#8080EC"></a-sky> -->
     <a-sky src="#sky" theta-length=360 id="sky"></a-sky>

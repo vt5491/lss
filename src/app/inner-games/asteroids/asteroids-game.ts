@@ -183,7 +183,7 @@ export class AsteroidsGame implements InnerGame {
 
           var selectedObject = this.scene.getObjectById((<Asteroid>hitObj).three_id);
           this.score += hitObj.hitValue;
-          console.log(`AsteroidsGame: score=${this.score}`);
+          // console.log(`AsteroidsGame: score=${this.score}`);
           // (document.querySelector('a-scene') as AFrame.Entity).emit('scoreChange', {a: 6});
           // (document.querySelector('.proj-scene') as AFrame.Entity).emit('scoreChange');
           // let rhc = this.rightHandController || this.utils.getHandControlEntity('right');
