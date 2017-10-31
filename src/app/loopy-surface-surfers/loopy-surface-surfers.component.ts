@@ -68,7 +68,8 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     this.billBoard['zOrigin'] = 0;
     let afComp = AFRAME.registerComponent('lss-aframe-component', {
       init: function() {
-        angParentComponent.initSceneAng();
+        // angParentComponent.initSceneAng();
+        // angParentComponent.initCustPanel();
 
         // var customizeBtn = document.querySelector('#customizeBtn');
         // (customizeBtn as any).addEventListener('pressed', function (e) {
@@ -98,6 +99,8 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
   ngOnInit() {
     console.log(`LoopySurfaceSurfers.ngOnInit: entered`);
+    this.initSceneAng();
+    this.initCustPanel();
   }
 
   // init the parts of the scene than cannot be done via a-frame html
@@ -118,7 +121,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     Array.prototype.forEach.call(list, (item) => {
     });
 
-    this.initCustPanel();
+    // this.initCustPanel();
 
     // var boxEl = document.querySelector('#box');
     // var boxObj = document.querySelector('#box').object3D;
@@ -156,6 +159,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   initCustPanel () {
     let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
     let sceneObj  = (sceneEl as AFrame.Entity).object3D;
+    // debugger;
     let gui = dat.GUIVR.create('Customization Panel');
     gui.position.set(-1.4, -2.5, 0);
     gui.scale.set(3, 3, 3);
@@ -164,6 +168,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     let that = this;
 
     let dollyTrackState = this.utils.getOuterState('dollyTrack');
+    // let dollyTrackState = this.utils.getOuterState('dollyTrack') || true;
     let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
     // let cameraTrackChk = gui.addCheckbox({dollyTrack: dollyTrackState}, 'dollyTrack');
     cameraTrackChk.name('Dolly Tracking');

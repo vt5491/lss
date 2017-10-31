@@ -2299,7 +2299,7 @@ function createButton() {
 var THREE$13 = require('three');
 
 function createFolder() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+  var _ref = arguments.length> 0 && arguments[0] !== undefined ? arguments[0] : {},
       textCreator = _ref.textCreator,
       name = _ref.name,
       guiAdd = _ref.guiAdd,
@@ -2362,7 +2362,21 @@ function createFolder() {
     grabber.visible = false;
   };
 
+  //vtgroup.add = function () {
   group.add = function () {
+    //vt add
+    // weird sit where in ff 'arguments' is not defined at the time of newController definition.
+    // ergo have to separate it up into the declaration of 'newController' and the assignment.
+    //var newController = arguments ? guidAdd.apply(undefinded, arguments) : guiAdd.apply(undefined, a, b);
+    //var newController;
+    //var newController;
+    //if (arguments) {
+    //  newController = guiAdd.apply(undefined, arguments);
+    //}
+    //else {
+    //  newController = guiAdd.apply(undefined, a, b);
+    //}
+    //vt end
     var newController = guiAdd.apply(undefined, arguments);
 
     if (newController) {
