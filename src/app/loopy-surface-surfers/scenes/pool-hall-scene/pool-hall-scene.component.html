@@ -2,12 +2,13 @@
   <p></p>
   <button name="vt-button" id='vt-button'>Click me</button>
 </div>
-<a-scene id="pool-hall-scene" inner-scene-renderer >
+<a-scene id="pool-hall-scene" inner-scene-renderer class="proj-scene">
   <a-assets>
     <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bullet" src="assets/sounds/asteroids/asteroids-ship-fire.wav" type="audio/wav"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
   </a-assets>
+  <a-link href="" title="Home" id="home-link" image="#homeThumbnail" visible="false"></a-link>
   <a-entity id="dolly" position="10 0 0" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"></a-camera>
     <a-entity hand-controls="right" position="-0.1 -0.2 0"

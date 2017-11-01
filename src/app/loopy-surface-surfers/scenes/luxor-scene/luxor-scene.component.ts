@@ -5,6 +5,8 @@ import { AsteroidsGameControllerListenerService } from '../../../inner-games/ast
 import { InnerSceneRendererService } from '../../../services/aframe/inner-scene-renderer.service';
 import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
+import { UtilsService } from '../../../services/utils.service';
+import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
 
 @Injectable()
 @Component({
@@ -12,20 +14,22 @@ import { BaseService } from '../../../services/base.service';
   templateUrl: './luxor-scene.component.html',
   styleUrls: ['./luxor-scene.component.css']
 })
-export class LuxorSceneComponent implements OnInit {
+export class LuxorSceneComponent extends LssScene implements OnInit {
   sceneObj : THREE.Object3D;
   pyramid : THREE.Object3D;
-  private innerSceneRenderer: InnerSceneRendererService;
+  // private innerSceneRenderer: InnerSceneRendererService;
 
   constructor(
     public innerGame: AsteroidsGame, 
     private base : BaseService,
+    private utils : UtilsService,
     public outerSceneSvc: OuterSceneService,
   ) {
+    super(base, utils); 
     let luxorSceneComponent = this;
     // Note: the client that invokes this needs an updateScene method 
     // and an 'innerGame' instance variable (they will be called back and referred to)
-    this.innerSceneRenderer = new InnerSceneRendererService(this);
+    // this.innerSceneRenderer = new InnerSceneRendererService(this);
     // note : you really need to put in a scene load handler.  This doesnt
     // always work when done in the ctor.
     // note2: not true.  A component.init is only driven once a scene has loaded.
@@ -42,6 +46,8 @@ export class LuxorSceneComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
+    this.innerSceneRenderer.init();
     this.outerSceneSvc.init();
   }
 

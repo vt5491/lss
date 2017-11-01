@@ -37,6 +37,7 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
 
   ngOnInit() {
     this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
+    this.innerSceneRenderer.init();
     this.outerSceneSvc.init();
     // console.log('PlaneSceneComponent: about to auto-enter vr');
     // debugger;

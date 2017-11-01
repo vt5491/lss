@@ -5,11 +5,14 @@
 <a-scene  id="luxor-scene"
   luxor-scene-aframe-component
   inner-scene-renderer
+  class="proj-scene"
 >
   <a-assets>
-    <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
-    <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio>
+    <app-af-assets></app-af-assets>
+    <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
+    <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio> -->
   </a-assets>
+  <a-link href="" title="Home" id="home-link" image="#homeThumbnail" visible="false"></a-link>
   <a-entity id="luxor-scene" ></a-entity>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
@@ -18,11 +21,17 @@
     ></a-entity>
   <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
   </a-entity>
+  <a-entity id='proj-entity'
+    sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20; refDistance: 2"
+    sound__thrust="src: #space-rumble; volume: 1.0;refDistance:2"
+    position="0 0 0" >
+  </a-entity>
   <a-entity id="luxor-model"
     class="proj-scene"
     gltf-model="url(assets/models/luxor/luxor_lss.gltf)"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
+    class="proj-obj"
     >
   </a-entity>
   <a-sky color="#8080EC"></a-sky>

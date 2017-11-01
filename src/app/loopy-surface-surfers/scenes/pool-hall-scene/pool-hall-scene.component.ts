@@ -54,6 +54,8 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
   }
 
   ngOnInit() {
+    this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
+    this.innerSceneRenderer.init();
     this.outerSceneSvc.init();
 
     this.initScene();
@@ -80,32 +82,7 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
     let axisHelper = new THREE.AxisHelper(10);
     this.outerSceneSvc.projScene.add(axisHelper);
 
-    // this.outerSceneSvc.projObj.translate(= new THREE.Vector3(0,0,0);
-    // console.log(`PoolHallScene: projObj.x=${this.outerSceneSvc.projObj.position.x}`);
-    // console.log(`PoolHallScene: projObj.y=${this.outerSceneSvc.projObj.position.y}`);
-    // console.log(`PoolHallScene: projObj.z=${this.outerSceneSvc.projObj.position.z}`);
-    
   };
-
-  // initOuterScene() {
-  //   console.log('PoolHallSceneComponent.initOuterScene: entered');
-  //   // this.outerScene
-
-  // }
-
-  // getProjectionMesh() : THREE.Mesh {
-  //   let projectionMesh = null;
-
-  //   if ((document.querySelector('#pool-hall-model') as any).object3D.getObjectByName('PoolBall')) {
-  //     projectionMesh = (document.querySelector('#pool-hall-model') as any)
-  //       .object3D
-  //       // .getObjectByName('PoolBall')
-  //       .getObjectByName('PoolBall_002')
-  //       .children[0]; 
-  //   }
-
-  //   return projectionMesh;
-  // }
 
   getProjectionMesh() : THREE.Mesh {
     let projectionMesh = null;

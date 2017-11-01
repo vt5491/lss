@@ -80,6 +80,7 @@ export class AsteroidsGame implements InnerGame {
   }
 
   initScene() {
+    console.log('AsteroidsGame.initScene: entered');
     this.initAsteroids();
     // development hack to make asteroid 0 bigger so we can identify it visually
     this.asteroids[0].mesh.scale.x = 2.0;

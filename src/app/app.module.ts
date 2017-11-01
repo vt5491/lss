@@ -71,10 +71,10 @@ import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.c
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame, baseService, outerSceneService) => {
-        return new LuxorSceneComponent(asteroidsGame, baseService, outerSceneService);
+      useFactory:(asteroidsGame, baseService, utilsService, outerSceneService)  =>  {
+        return new LuxorSceneComponent(asteroidsGame, baseService, utilsService, outerSceneService);
       },
-      deps: [AsteroidsGame, BaseService, OuterSceneService]
+      deps: [AsteroidsGame, BaseService, UtilsService, OuterSceneService]
     },
     {
       provide: PlaneSceneComponent,

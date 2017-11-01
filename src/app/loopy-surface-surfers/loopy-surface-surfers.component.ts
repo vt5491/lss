@@ -48,6 +48,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   parent: ViewContainerRef;
   @ViewChild('introScene') introScene: ElementRef;
   @ViewChild(LoopySurfaceSurfersComponent) lss : LoopySurfaceSurfersComponent;
+  gui: any;
 
   constructor(
     private innerGame : AsteroidsGame,
@@ -100,6 +101,8 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   ngOnInit() {
     console.log(`LoopySurfaceSurfers.ngOnInit: entered`);
     this.initSceneAng();
+    // this.gui = dat.GUIVR.create('Customization Panel');
+    // window.setTimeout( this.initCustPanel.bind(this), 1000);
     this.initCustPanel();
   }
 
@@ -161,6 +164,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     let sceneObj  = (sceneEl as AFrame.Entity).object3D;
     // debugger;
     let gui = dat.GUIVR.create('Customization Panel');
+    // let gui= this.gui;
     gui.position.set(-1.4, -2.5, 0);
     gui.scale.set(3, 3, 3);
     sceneObj.add( gui );
@@ -169,8 +173,10 @@ export class LoopySurfaceSurfersComponent implements OnInit {
 
     let dollyTrackState = this.utils.getOuterState('dollyTrack');
     // let dollyTrackState = this.utils.getOuterState('dollyTrack') || true;
-    let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
+    // let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
     // let cameraTrackChk = gui.addCheckbox({dollyTrack: dollyTrackState}, 'dollyTrack');
+    let cameraTrackChk = gui.addCheckbox( dollyTrackState, 'dollyTrack');
+    // debugger;
     cameraTrackChk.name('Dolly Tracking');
     cameraTrackChk.onChange( (val) => {
       // let lssDollyTrack = localStorage.getItem('DOLLY_TRACK');
