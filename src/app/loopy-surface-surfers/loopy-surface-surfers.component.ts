@@ -175,21 +175,37 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     // let dollyTrackState = this.utils.getOuterState('dollyTrack') || true;
     // let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
     // let cameraTrackChk = gui.addCheckbox({dollyTrack: dollyTrackState}, 'dollyTrack');
-    let cameraTrackChk = gui.addCheckbox( dollyTrackState, 'dollyTrack');
     // debugger;
-    cameraTrackChk.name('Dolly Tracking');
-    cameraTrackChk.onChange( (val) => {
-      // let lssDollyTrack = localStorage.getItem('DOLLY_TRACK');
+    let dollyTrackToggle = function () {
       let lssDollyTrack = that.utils.getOuterState('dollyTrack');
-      // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
       if (lssDollyTrack) {
-        // lssDollyTrack === 'true' ? localStorage.setItem('DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
         lssDollyTrack ? that.utils.setOuterState('dollyTrack', 'false') : that.utils.setOuterState('dollyTrack', 'true');
       }
       else {
-        // localStorage.setItem('LSS_DOLLY_TRACK', 'true');
         that.utils.setOuterState('dollyTrack', 'true');
       }
+    };
+
+    if(!dollyTrackState) {
+      // if not defined, init via toggle.
+      dollyTrackToggle();
+    }
+
+    let cameraTrackChk = gui.addCheckbox( dollyTrackState, 'dollyTrack');
+    cameraTrackChk.name('Dolly Tracking');
+    cameraTrackChk.onChange( (val) => {
+      // // let lssDollyTrack = localStorage.getItem('DOLLY_TRACK');
+      // let lssDollyTrack = that.utils.getOuterState('dollyTrack');
+      // // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
+      // if (lssDollyTrack) {
+      //   // lssDollyTrack === 'true' ? localStorage.setItem('DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+      //   lssDollyTrack ? that.utils.setOuterState('dollyTrack', 'false') : that.utils.setOuterState('dollyTrack', 'true');
+      // }
+      // else {
+      //   // localStorage.setItem('LSS_DOLLY_TRACK', 'true');
+      //   that.utils.setOuterState('dollyTrack', 'true');
+      // }
+      dollyTrackToggle();
     });
     // let cbCtrl = gui.add( {flag: true}, 'flag' );
     // cbCtrl.onChange( (val) => {

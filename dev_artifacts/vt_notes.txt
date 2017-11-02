@@ -1,0 +1,48 @@
+Altered lib file:
+node_modules/aframe/dist/aframe-master.js
+
+--> updated to deal with grab sound problem.
+
+		updateMatrixWorld: ( function () {
+
+			var position = new Vector3();
+			var quaternion = new Quaternion();
+			var scale = new Vector3();
+
+			var orientation = new Vector3();
+
+			return function updateMatrixWorld( force ) {
+
+				Object3D.prototype.updateMatrixWorld.call( this, force );
+
+				var listener = this.context.listener;
+				var up = this.up;
+
+				this.matrixWorld.decompose( position, quaternion, scale );
+
+				orientation.set( 0, 0, - 1 ).applyQuaternion( quaternion );
+
+				if ( listener.positionX ) {
+
+					listener.positionX.setValueAtTime( position.x, this.context.currentTime );
+					listener.positionY.setValueAtTime( position.y, this.context.currentTime );
+					listener.positionZ.setValueAtTime( position.z, this.context.currentTime );
+					listener.forwardX.setValueAtTime( orientation.x, this.context.currentTime );
+					listener.forwardY.setValueAtTime( orientation.y, this.context.currentTime );
+					listener.forwardZ.setValueAtTime( orientation.z, this.context.currentTime );
+					listener.upX.setValueAtTime( up.x, this.context.currentTime );
+					listener.upY.setValueAtTime( up.y, this.context.currentTime );
+					listener.upZ.setValueAtTime( up.z, this.context.currentTime );
+
+				} else {
+
+          //vt add
+          //console.log(`vt: updateMatrixWorld: position.x=${position.x},orientation.x=${orientation.x},up.x=${up.x}`);
+          if (Number.isNaN(position.x)) {
+            console.log(`vt: aframe-master.js.UpdateMatrixWorld: position.x is NaN`);
+            //debugger;
+            console.log(`vt: reseting position and orientation`);
+            position = new Vector3();
+            orientation = new Vector3();
+          }
+          //vt end

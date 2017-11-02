@@ -224,7 +224,7 @@ export class InnerSceneRendererService {
     // let tmp = this.innerGame.innerWebGLRenderer.getSize();
     let utils = this.embeddedContext.utils;
     let base = this.embeddedContext.base;
-    debugger;
+    // debugger;
     let innerImgDim = utils.getOuterState('innerImgDim') || base.innerImgDim;
     base.innerImgDim = innerImgDim;
     console.log(`InnerSceneRendererService.ctor: base.innerImgDim=${base.innerImgDim}`);

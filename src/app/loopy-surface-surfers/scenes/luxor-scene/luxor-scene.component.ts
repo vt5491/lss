@@ -56,61 +56,76 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
   }
 
   initScene() {
+    console.log(`InnerSceneRender.initScene: entered`);
+    
     this.sceneObj = (document.querySelector('a-scene') as any).object3D;
     this.pyramid = this.sceneObj.getObjectByName('Pyramid');
-    let pyramidMat = (this.pyramid as any).children[0].material;
+    // let pyramidMat = (this.pyramid as any).children[0].material;
+    let pyramidMat = (this.pyramid.getObjectByName("Cube_0") as any).material
     pyramidMat.side = THREE.DoubleSide;
     pyramidMat.needsUpdate = true;
 
     var fontLoader = new THREE.FontLoader();
 
     let img = document.querySelector('#vegas-vic-full');
-    let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/vegas_vic_full_no_wc.png" );
+    let sandDuneTexture =new THREE.TextureLoader().load( "../../../../assets/img/luxor/sand_dune_simple.jpg" ); 
+    let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vegas_vic_full_no_wc.png" );
     vegasVicTexture.flipY = false;
-    let vicHeadTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_head_texture.jpg" );
+    let vicHeadTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_head_texture.jpg" );
     vicHeadTexture.flipY = false;
-    let vegasVicStraightOnTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_shirt.png" );
+    let vegasVicStraightOnTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_shirt.png" );
     vegasVicStraightOnTexture.flipY = false;
-    let vicLegsTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_legs.png" );
+    let vicLegsTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_legs.png" );
     vicLegsTexture.flipY = false;
-    let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/vic_arm_black.png" );
+    let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_arm_black.png" );
     vicArmTexture.flipY = false;
 
     let sceneObj = (document.querySelector('a-scene') as any).object3D;
 
     //Ground
     let ground = sceneObj.getObjectByName('Ground');
-    let groundMat = (ground as any).children[0].material;
-    groundMat.map = vegasVicTexture;
+    // let groundMat = (ground as any).children[0].material;
+    let groundMat = ground.getObjectByName("Plane_0").material;
+    groundMat.side = THREE.DoubleSide;
+    groundMat.map = sandDuneTexture;
     groundMat.needsUpdate = true;
 
     // Arm
     let armMesh = sceneObj.getObjectByName('Arm');
-    let armMat = armMesh.children[0].material;
+    let armMat = armMesh.children[0].children[0].material;
+    armMat.side = THREE.DoubleSide;
     armMat.map = vegasVicTexture;
     armMat.needsUpdate = true;
 
     // Face
     let faceMesh = sceneObj.getObjectByName('Face');
-    let faceMat = faceMesh.children[0].material;
+    let faceMat = faceMesh.children[0].children[0].material;
     faceMat.side = THREE.DoubleSide;
     faceMat.map = vicHeadTexture;
     faceMat.needsUpdate = true;
 
     // Shirt
     let shirtMesh = sceneObj.getObjectByName('Shirt');
-    let shirtMat = shirtMesh.children[0].material;
+    let shirtGeom = shirtMesh.children[0].children[0].geometry;
+    // shirtGeom.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI / 1.0 ) );
+    let shirtMat = shirtMesh.children[0].children[0].material;
+    shirtMat.side = THREE.DoubleSide;
     shirtMat.map = vegasVicTexture;
     shirtMat.needsUpdate = true;
+    // shirtMesh.rotation.z = Math.PI / 1;
+    // geometry.faces[ 0 ].materials.push( material1 );
+    // geometry.faces[ 1 ].materials.push( material2 );
+    // geometry2.applyMatrix( new THREE.Matrix4().makeRotationY( Math.PI ) );
 
     // Legs
     let legsMesh = sceneObj.getObjectByName('Legs');
-    let legsMat = legsMesh.children[0].material;
+    let legsMat = legsMesh.children[0].children[0].material;
+    legsMat.side = THREE.DoubleSide;
     legsMat.map = vegasVicTexture;
     legsMat.needsUpdate = true;
 
     let loader = new THREE.TextureLoader();
-    loader.load( "../../../../assets/img/welcome_to_las_vegas.jpg", (welcomeToLasVegasTexture) => {
+    loader.load( "../../../../assets/img/luxor/welcome_to_las_vegas.jpg", (welcomeToLasVegasTexture) => {
       welcomeToLasVegasTexture.flipY = false;
 
       let objects : string[] = [];
@@ -119,7 +134,8 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
       for(let i=0; i < objects.length; i++ ) {
         let o = objects[i];
         let mesh = sceneObj.getObjectByName(o);
-        let meshMat = mesh.children[0].material;
+        let meshMat = mesh.children[0].children[0].material;
+        meshMat.side = THREE.DoubleSide;
         meshMat.map = welcomeToLasVegasTexture;
         meshMat.needsUpdate = true;
       }
@@ -132,10 +148,16 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
 
   getProjectionMesh() : THREE.Mesh {
     let projectionMesh = null;
+    let projectionMesh2 = null;
 
     if ((document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube')) {
-      projectionMesh = (document.querySelector('#luxor-model') as any).object3D.getObjectByName('Cube'); 
+      projectionMesh = (document.querySelector('#luxor-model') as any)
+        .object3D.getObjectByName('Cube').children[0]; 
     }
+    // if (document.querySelector('#aframe-sphere')) {
+    //   projectionMesh2 = (document.querySelector('#aframe-sphere') as any).object3D.children[0];
+    // }
+    // debugger;
 
     return projectionMesh;
   }
@@ -144,7 +166,8 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
   // which the inner game will also be projected.
   getBaseTexture() : THREE.Texture {
     // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
-    return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    return new THREE.Texture();
   }
 
   trackDolly (pos : THREE.Vector3 ) {

@@ -1,7 +1,7 @@
-<!-- <div id='header'>
+<div id='header'>
   <p></p>
   <button name="vt-button" id='vt-button'>Click me</button>
-</div> -->
+</div>
 <a-scene  id="luxor-scene"
   luxor-scene-aframe-component
   inner-scene-renderer
@@ -16,10 +16,10 @@
   <a-entity id="luxor-scene" ></a-entity>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
-    <a-entity hand-controls="right" position="0 0 -1"
+    <a-entity hand-controls="right" position="0.15 -0.2 0"
     asteroids-game-controller-listener
     ></a-entity>
-  <a-entity hand-controls="left" position="-2 0 -1" grab ></a-entity>
+  <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
   </a-entity>
   <a-entity id='proj-entity'
     sound__bullet="src: #bullet; volume: 1.0;on: fire-bullet;poolSize: 20; refDistance: 2"
@@ -28,11 +28,13 @@
   </a-entity>
   <a-entity id="luxor-model"
     class="proj-scene"
-    gltf-model="url(assets/models/luxor/luxor_lss.gltf)"
+    gltf-model="url(assets/models/luxor/luxor_lss.glb)"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
-    class="proj-obj"
+    class="qroj-obj"
     >
   </a-entity>
+  <!-- <a-sphere id="aframe-sphere" class="proj-obj" radius="2" position="0 2 5"></a-sphere> -->
   <a-sky color="#8080EC"></a-sky>
+  <a-entity light="color: #FFF; intensity: 1.5" position="-3 3 -2"></a-entity>
 </a-scene>
