@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
 import { IMoveableGameObject } from "../../interfaces/imoveable-game-object";
+import { Asteroid } from "./asteroid";
 
 @Injectable()
 export class Ship implements IMoveableGameObject {
@@ -27,6 +28,7 @@ export class Ship implements IMoveableGameObject {
   vScalar : number; // use this
   accelScalar : number;
   nose : THREE.Mesh;
+  // boundingBox : Object;
 
   constructor(
     private _base : BaseService,
@@ -69,6 +71,11 @@ export class Ship implements IMoveableGameObject {
     this.geom.vertices.push(new THREE.Vector3(.5 * scaleX, -1 * scaleY))
     this.geom.vertices.push(new THREE.Vector3(-.5 * scaleX, -1 * scaleY))
 
+    //set the boundingRadius
+    // this.boundingBox = {};
+    // this.boundingBox['x'] = 0.5 * scaleX;
+    // this.boundingBox['y'] = 1.0 * scaleY;
+
     // use a triangle intead of a line group
     this.geom.faces.push(new THREE.Face3(0, 2, 1));
     this.geom.computeFaceNormals();
@@ -89,6 +96,16 @@ export class Ship implements IMoveableGameObject {
     this.nose = new THREE.Mesh(noseGeom, noseMat);
 
     this.mesh.add(this.nose);
+  }
+
+  // Come here when resetting a ship after a ship kill event
+  reset() {
+    this.mesh.position.x = 0;
+    this.mesh.position.y = 0;
+    this.mesh.position.z = 0;
+
+    this.vx = 0.0;
+    this.vy = 0.0;
   }
 
   rotate() {
@@ -123,6 +140,46 @@ export class Ship implements IMoveableGameObject {
     // this.utils.updatePos(this, this.base.projectionBoundary);
     this.utils.updatePos(this, this.base.projectionBoundary, dt);
   }
+
+  collisionTest(point : THREE.Vector3) : boolean {
+    let beenHit : boolean = false;
+
+    let pointClone = point.clone();
+    if( this.mesh.geometry.boundingSphere) {
+      beenHit = this.mesh.geometry.boundingSphere.containsPoint(pointClone.sub(this.mesh.position));
+    };
+
+    return beenHit;
+  };
+
+  // test if the ship collides with the boundary of an asteroid
+  asteroidCollisionTest(asteroid: Asteroid) : boolean {
+    let shipCollided : boolean = false;
+
+    // let pointClone = point.clone();
+    if( this.mesh.geometry.boundingSphere) {
+      // beenHit = this.mesh.geometry.boundingSphere.containsPoint(pointClone.sub(this.mesh.position));
+      let shipBoundingSphere = this.mesh.geometry.boundingSphere.clone();
+      let shipPos = this.mesh.position.clone();
+      let asteroidBoundingBox = asteroid.mesh.geometry.boundingBox.clone();
+      let asteroidPos = asteroid.mesh.position.clone();
+      // shipBoundingSphere.translate(asteroidPos.multiplyScalar(1));
+      // asteroidBoundingBox.translate(shipPos.multiplyScalar(-1));
+      // asteroidBoundingBox.translate(asteroid.mesh.position);
+      // shipCollided = shipBoundingSphere.intersectsBox(asteroidBoundingBox);
+      // shipCollided = asteroidBoundingBox.distanceToPoint(shipPos) > shipBoundingSphere.radius ? true : false;
+      // shipCollided = shipBoundingSphere.distanceToPoint(asteroidPos) > shipBoundingSphere.radius ? false : true;
+      let distBetween = shipPos.distanceTo(asteroidPos);
+
+      let asteroidSize = asteroidBoundingBox.getSize();
+
+      if(distBetween < asteroidSize.x) {
+        shipCollided = true;
+      }
+    };
+
+    return shipCollided;
+  };
 
   collisionHandler() {
     return true;

@@ -58,5 +58,10 @@ export class LssScene {
     // e.g 'coke-can-scene.component.ts'
     // debugger;
     this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
+
+    // stop all sounds. If we don't do this may get "components:sound:warn All the sounds are playing."
+    // message on the console.
+    (document.querySelector('[sound__thrust]') as any).components.sound__thrust.stopSound();
+    (document.querySelector('[sound__bullet]') as any).components.sound__bullet.stopSound();
   };
 }

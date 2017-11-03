@@ -166,8 +166,15 @@ export class AsteroidsGame implements InnerGame {
     // dt movement on it.
     this.ship.rotate();
 
+    // check for asteroids hitting the ship
+    if( this.asteroidShipCollisionCheck()) {
+      console.log('ship hit');
+      // this.ship = new Ship(this.base, this.utils);
+      this.ship.reset();
+    }
     // check for bullet collisions
-    let hitObjects = this.bulletCollisionCheck();
+    let hitObjects = [];
+    hitObjects = hitObjects.concat(this.bulletCollisionCheck());
     //
     // do beenHit action on each hitObject
     for (let i = 0; i < hitObjects.length; i++) {
@@ -293,9 +300,27 @@ export class AsteroidsGame implements InnerGame {
       }
     }
 
-    //TODO: return the index of the asteroid as well.
     // return it as object, not an array.
     return collisionObjects;
+  }
+
+  asteroidShipCollisionCheck() : boolean {
+    // let collisionObjects = [];
+    let shipHit = false;
+
+    //loop through all asteroids
+    for (let i = 0; i < this.asteroids.length; i++) {
+      let asteroid = this.asteroids[i];
+      // see if it hit the ship
+      // if (this.ship.collisionTest(asteroid.mesh.position)) {
+      if (this.ship.asteroidCollisionTest(asteroid)) {
+        // collisionObjects.push({ 'idx' : i, 'obj' : this.ship});
+        shipHit = true;
+        break;
+      }
+    }
+
+    return shipHit;
   }
 
   // handle any gamepad events
@@ -351,6 +376,9 @@ export class AsteroidsGame implements InnerGame {
   get ship(): Ship {
     return this._ship;
   };
+  // set ship(ship: Ship) {
+  //   this._ship = ship;
+  // };
   get bullets(): Bullet [] {
     return this._bullets;
   };

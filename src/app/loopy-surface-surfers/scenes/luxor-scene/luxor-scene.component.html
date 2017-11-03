@@ -11,6 +11,7 @@
     <app-af-assets></app-af-assets>
     <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio> -->
+    <img id="sky" src="assets/img/skies/CGSkies_0284_free.jpg">
   </a-assets>
   <a-link href="" title="Home" id="home-link" image="#homeThumbnail" visible="false"></a-link>
   <a-entity id="luxor-scene" ></a-entity>
@@ -35,6 +36,7 @@
     >
   </a-entity>
   <!-- <a-sphere id="aframe-sphere" class="proj-obj" radius="2" position="0 2 5"></a-sphere> -->
-  <a-sky color="#8080EC"></a-sky>
+  <!-- <a-sky color="#8080EC"></a-sky> -->
+  <a-sky src="#sky" theta-length=360 id="sky"></a-sky>
   <a-entity light="color: #FFF; intensity: 1.5" position="-3 3 -2"></a-entity>
 </a-scene>
