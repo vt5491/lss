@@ -9,7 +9,6 @@ import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
 import { InnerSceneRendererService } from '../../services/aframe/inner-scene-renderer.service';
 import { AsteroidsGameControllerListenerService } from './aframe/asteroids-game-controller-listener.service';
-// import { ParmsService } from '../../services/parms.service';
 import { IMainCharacterInfo } from '../../interfaces/main-character-info';
 import { IMoveableGameObject } from '../../interfaces/imoveable-game-object';
 
@@ -25,7 +24,6 @@ export class AsteroidsGame implements InnerGame {
   private startTime : number = Date.now();
   id : number = Date.now();
   BOUND_VAL = 3.79;
-  // seedAsteroidCount : number = 4;
   seedAsteroidCount : number = 12;
   // private _gpad : Gamepad;
   // currently there are no typings for gamepad.js, so deal with it as an

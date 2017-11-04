@@ -38,6 +38,7 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
     // super(innerGame, outerSceneSvc, base);
     super(base, utils);
     this.dollyRadius = 5.0;
+    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
     // super(innerGame, outerSceneSvc);
 
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
@@ -97,8 +98,9 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
   // this is the base texture that will be wrapped around the projection Mesh, onto
   // which the inner game will also be projected.
   getBaseTexture() : THREE.Texture {
-    return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );  
     // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
+    return this.baseTexture;
   }
   
   trackDolly (pos : THREE.Vector3 ) {

@@ -7,6 +7,8 @@
 // 'udateScene' method, and an 'innerGame' object.
 // The a-frame component embedded here basically corresponds to 'projSceneComp'
 // in other modules (e.g lss-scene.ts).
+// Note: embeddedContext is referring to 'lss-scene.ts', which is the parent class to all
+// individual scenes e.g. 'planeSceneComponent'
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { BaseService } from '../base.service';
 import { UtilsService } from '../utils.service';
@@ -36,81 +38,33 @@ export class InnerSceneRendererService {
         // I need to go to time based movement instead of tick based.
         // this.tick = (AFRAME.utils as any).throttleTick(this.tick, 17, this);
         // this.init_ang(this.generateDataTexture_af);
+        // if (that.embeddedContext.projSceneComp.data.subtractiveOverlay) {
+        //   that.embeddedContext.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
+        // }
+        // we need to init the material_shader here and not in angular init because
+        // projSceneComp.data is only available at aframe init time.
         if (that.embeddedContext.projSceneComp.data.subtractiveOverlay) {
           that.embeddedContext.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
-        }
+        };
+
+        let attributes = {};
+        let uniforms = {
+          // t1: { type: "t", value: that.embeddedContext.poolBallTexture },
+          t1: { type: "t", value: that.embeddedContext.bgTexture },
+          t2: { type: "t", value: that.embeddedContext.innerGame.offscreenImageBuf }
+        };
+
+        let defines = {};
+        defines["USE_MAP"] = "";
+
+        that.embeddedContext.material_shader = new THREE.ShaderMaterial({
+          uniforms: uniforms,
+          defines: defines,
+          vertexShader: that.embeddedContext.vertShader,
+          fragmentShader: that.embeddedContext.fragShader,
+          side: THREE.DoubleSide
+        });
       },
-    //   init_ang: function (generateDataTextureFn) {
-    //     this.innerGame.webGLRenderer = (document.querySelector('a-scene') as any).renderer;
-    //     this.innerGame.innerWebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
-    //     this.innerGame.gl_innerWebGLRenderer = this.innerGame.innerWebGLRenderer.getContext();
-    //     // default size is (300, 150)
-    //     // changing the default size doesn't really make any difference
-    //     // I'm only leaving in as a reminder that I at least tried this in an
-    //     // attempt to change the inner game logical size of 3.79
-    //     // this.innerGame.innerWebGLRenderer.setSize(1024,1024);
-    //     // let tmp = this.innerGame.innerWebGLRenderer.getSize();
-    //     let innerImgDim = this.utils.getOuterState('innerImgDim') || this.base.innerImgDim;
-    //     this.base.innerImgDim = innerImgDim;
-    //     console.log(`InnerSceneRendererService.ctor: base.innerImgDim=${this.base.innerImgDim}`);
-        
-    //     this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(this.base.innerImgDim, this.base.innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
-    //     // this.innerGame.offscreenBuffer = new THREE.WebGLRenderTarget(innerImgDim, innerImgDim, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
-    //     this.innerGame.innerGameWidth = this.base.innerImgDim;
-    //     this.innerGame.innerGameHeight = this.base.innerImgDim;
-    //     this.innerGame.offscreenImageBuf = generateDataTextureFn(this.innerGame.innerGameHeight, this.innerGame.innerGameHeight, new THREE.Color(0x000000));
-    //     this.innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight);
-    //     // campera.position.z= 5.0 corresponds to BoundVal of 3.79.
-    //     // campera.position.z= 1.319 corresponds to BoundVal of 1.0.
-    //     this.innerGame.innerSceneCamera.position.z = 5.0;
-    //     // this.innerGame.innerSceneCamera.position.z = 15.0;
-    //     // this.innerGame.innerSceneCamera.position.z = 1.319;
-    //     this.bgTexture = this.getBaseTexture(); 
-    //     this.vertShader = document.getElementById('simple-vertex-shader').innerHTML;
-    //     debugger;
-    //     if(this.projSceneComp.data.subtractiveOverlay) {
-    //       this.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
-    //     }
-    //     else {
-    //       this.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
-    //     }
-    //     // let gl = this.innerGame.innerWebGLRenderer.context;
-    //     // let fragShader = gl.createShader(gl.FRAGMENT_SHADER);
-    //     // gl.shaderSource(fragShader, (document as any).LSS.simpleFragmentShaderSrc);
-    //     // gl.compileShader(fragShader);
-        
-    //     // gl.attachShader(this, fragShader);
-    //     let attributes = {};
-    //     let uniforms = {
-    //       t1: { type: "t", value: this.poolBallTexture },
-    //       t2: { type: "t", value: this.innerGame.offscreenImageBuf }
-    //     };
-
-    //     let defines = {};
-    //     defines["USE_MAP"] = "";
-
-    //     this.material_shader = new THREE.ShaderMaterial({
-    //       uniforms: uniforms,
-    //       defines: defines,
-    //       vertexShader: this.vertShader,
-    //       fragmentShader: this.fragShader,
-    //       side: THREE.DoubleSide
-    //     });
-
-    //     this.projSceneComp.el.addEventListener('togglePauseGame', () => {
-    //       console.log(`InnerSceneRender: toggle pauseGame event detected`);
-    //       this.projSceneComp.data.gamePaused = !this.projSceneComp.data.gamePaused;
-    //     });
-    //     this.projSceneComp.el.addEventListener('pauseGame', () => {
-    //       console.log(`InnerSceneRender: pauseGame event detected`);
-    //       this.projSceneComp.data.gamePaused = true;
-    //     });
-    //     this.projSceneComp.el.addEventListener('unPauseGame', () => {
-    //       console.log(`InnerSceneRender: unPauseGame event detected`);
-    //       this.projSceneComp.data.gamePaused = false;
-    //     })
-
-    //  }.bind(embeddedContext),
       tick: function(t, dt) {
         //TODO: call component.pause() instead
         if (this.projSceneComp.data.gamePaused) {
@@ -153,29 +107,30 @@ export class InnerSceneRendererService {
           console.log(`torus.proj.mainLoop: caught error ${e}`)
         }
 
-        let attributes = {};
-        let uniforms = {
-          t1: { type: "t", value: this.bgTexture },
-          t2: { type: "t", value: this.innerGame.offscreenImageBuf }
-        };
+        // let attributes = {};
+        // let uniforms = {
+        //   t1: { type: "t", value: this.bgTexture },
+        //   t2: { type: "t", value: this.innerGame.offscreenImageBuf }
+        // };
 
-        let defines = {};
-        defines["USE_MAP"] = "";
+        // let defines = {};
+        // defines["USE_MAP"] = "";
 
-        let material_shader = new THREE.ShaderMaterial({
-          uniforms: uniforms,
-          defines: defines,
-          vertexShader: this.vertShader,
-          fragmentShader: this.fragShader,
-          side: THREE.DoubleSide
-        });
+        // let material_shader = new THREE.ShaderMaterial({
+        //   uniforms: uniforms,
+        //   defines: defines,
+        //   vertexShader: this.vertShader,
+        //   fragmentShader: this.fragShader,
+        //   side: THREE.DoubleSide
+        // });
 
         this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
 
         var mesh;
         mesh = this.getProjectionMesh();
         if (mesh) {
-          mesh.material = material_shader;
+          // mesh.material = material_shader;
+          mesh.material = this.material_shader;
           mesh.material.needsUpdate = true;
           this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
         }
@@ -187,15 +142,6 @@ export class InnerSceneRendererService {
           this.trackDolly(this.innerGame.ship.mesh.position);
         }
       }.bind(embeddedContext),
-      // generateDataTexture_af: function (width, height, color) {
-      //   var size = width * height;
-      //   var data = new Uint8Array(4 * size);
-
-      //   var texture = new (THREE.DataTexture as any)(data, width, height, THREE.RGBAFormat)
-      //   texture.needsUpdate = true;
-
-      //   return texture;
-      // },
     })
   }
 
@@ -251,22 +197,27 @@ export class InnerSceneRendererService {
       this.embeddedContext.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
     // }
 
-    let attributes = {};
-    let uniforms = {
-      t1: { type: "t", value: this.embeddedContext.poolBallTexture },
-      t2: { type: "t", value: this.embeddedContext.innerGame.offscreenImageBuf }
-    };
+    // if (this.embeddedContext.projSceneComp.data.subtractiveOverlay) {
+    //   this.embeddedContext.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
+    // };
 
-    let defines = {};
-    defines["USE_MAP"] = "";
+    // let attributes = {};
+    // let uniforms = {
+    //   // t1: { type: "t", value: this.embeddedContext.poolBallTexture },
+    //   t1: { type: "t", value: this.embeddedContext.bgTexture },
+    //   t2: { type: "t", value: this.embeddedContext.innerGame.offscreenImageBuf }
+    // };
 
-    this.embeddedContext.material_shader = new THREE.ShaderMaterial({
-      uniforms: uniforms,
-      defines: defines,
-      vertexShader: this.embeddedContext.vertShader,
-      fragmentShader: this.embeddedContext.fragShader,
-      side: THREE.DoubleSide
-    });
+    // let defines = {};
+    // defines["USE_MAP"] = "";
+
+    // this.embeddedContext.material_shader = new THREE.ShaderMaterial({
+    //   uniforms: uniforms,
+    //   defines: defines,
+    //   vertexShader: this.embeddedContext.vertShader,
+    //   fragmentShader: this.embeddedContext.fragShader,
+    //   side: THREE.DoubleSide
+    // });
 
     let projSceneComp = this.embeddedContext.projSceneComp;
     projSceneComp.el.addEventListener('togglePauseGame', () => {

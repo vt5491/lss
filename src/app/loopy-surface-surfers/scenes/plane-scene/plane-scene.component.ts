@@ -29,6 +29,7 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     // an innerScene object, and that innerScene object must have an 'updateScene'
     // method (unless it's a static scene, in which case it doesn't need 'updatScene')
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
+    this.baseTexture = new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");  
   }
 
   doSomething() {
@@ -39,14 +40,6 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
     this.innerSceneRenderer.init();
     this.outerSceneSvc.init();
-    // console.log('PlaneSceneComponent: about to auto-enter vr');
-    // debugger;
-    // (document.querySelector('a-scene') as any).enterVR()
-    // let sceneEl = document.querySelector('a-scene');
-    // sceneEl.addEventListener('renderstart', () => {
-    //   console.log('rendering started');
-    //   setTimeout(function(){ (document.querySelector('a-scene') as any).enterVR() }, 3000);
-    // })
   }
 
   getProjectionMesh() : THREE.Mesh {
@@ -67,7 +60,8 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     // return new THREE.TextureLoader().load("../../../../assets/img/coke-label.jpg");  
     // return new THREE.TextureLoader().load("../../../../assets/img/notebook-paper.png");  
     // return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper.png");  
-    return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");  
+    // return new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");  
+    return this.baseTexture;
   }
 
   trackDolly (pos : THREE.Vector3 ) {

@@ -21,6 +21,7 @@ export class LssScene {
   protected dollyRadius: number;
   protected projSceneComp: AFrame.Component;
   private injector: Injector;
+  protected baseTexture : THREE.Texture;
 
   constructor(
     // Note: Do not include scope qualifers on these ("public", "private" et al.)
@@ -61,7 +62,11 @@ export class LssScene {
 
     // stop all sounds. If we don't do this may get "components:sound:warn All the sounds are playing."
     // message on the console.
-    (document.querySelector('[sound__thrust]') as any).components.sound__thrust.stopSound();
-    (document.querySelector('[sound__bullet]') as any).components.sound__bullet.stopSound();
+    // if (document.querySelector('[sound__thrust]')) {
+    //   (document.querySelector('[sound__thrust]') as any).components.sound__thrust.stopSound();
+    // }
+    // if (document.querySelector('[sound__bullet]')) {
+    //   (document.querySelector('[sound__bullet]') as any).components.sound__bullet.stopSound();
+    // }
   };
 }

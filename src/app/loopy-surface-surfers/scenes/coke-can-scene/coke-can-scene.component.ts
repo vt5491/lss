@@ -17,7 +17,7 @@ import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
   // ],
 })
 export class CokeCanSceneComponent extends LssScene implements OnInit {
-  private baseTexture : THREE.Texture;
+  // private baseTexture : THREE.Texture;
 
   constructor(
     private innerGame : AsteroidsGame,
