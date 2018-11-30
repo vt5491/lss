@@ -1,6 +1,6 @@
 ///<reference path="../../../typings/index.d.ts" />
 
-import { Component, OnInit, Injector, ViewChild, 
+import { Component, OnInit, Injector, ViewChild,
   ComponentFactoryResolver, ViewContainerRef, ElementRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { LuxorSceneComponent} from './scenes/luxor-scene/luxor-scene.component';
@@ -17,12 +17,8 @@ declare var dat: any;
   selector: 'app-loopy-surface-surfers',
   templateUrl: './loopy-surface-surfers.component.html',
   styleUrls: ['./loopy-surface-surfers.component.css'],
-  // providers: [BaseService]
 })
-// @View({
-//     // template: `<div #content></div>`,
-//     directives: [LuxorSceneComponent]
-// })
+
 export class LoopySurfaceSurfersComponent implements OnInit {
   camera : THREE.Camera;
   ocLeftController : AFrame.Component;
@@ -62,30 +58,13 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     private utils: UtilsService
   ) {
     let angParentComponent = this;
-    
+
     this.yOffset = 2.5;
     this.billBoard['xOrigin'] = 0;
     this.billBoard['yOrigin'] = 1;
     this.billBoard['zOrigin'] = 0;
     let afComp = AFRAME.registerComponent('lss-aframe-component', {
       init: function() {
-        // angParentComponent.initSceneAng();
-        // angParentComponent.initCustPanel();
-
-        // var customizeBtn = document.querySelector('#customizeBtn');
-        // (customizeBtn as any).addEventListener('pressed', function (e) {
-        //   let custDialogEl = document.querySelector('#custDialog');
-        //   if (!custDialogEl) {
-        //     var dialogEl = document.createElement('a-entity');
-        //     dialogEl.setAttribute('geometry', 'primitive: plane');
-        //     dialogEl.setAttribute('material', 'opacity: 0.5; side: double');
-        //     dialogEl.setAttribute('id', 'custDialog');
-        //     e.target.appendChild(dialogEl);
-        //   }
-        //   else {
-        //     e.target.removeChild(custDialogEl);
-        //   }
-        // });
       },
       tick:  (time, timeDelta) => {
       },
@@ -162,9 +141,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   initCustPanel () {
     let sceneEl  = document.querySelector('a-scene') as AFrame.Entity;
     let sceneObj  = (sceneEl as AFrame.Entity).object3D;
-    // debugger;
     let gui = dat.GUIVR.create('Customization Panel');
-    // let gui= this.gui;
     gui.position.set(-1.4, -2.5, 0);
     gui.scale.set(3, 3, 3);
     sceneObj.add( gui );
@@ -172,10 +149,6 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     let that = this;
 
     let dollyTrackState = this.utils.getOuterState('dollyTrack');
-    // let dollyTrackState = this.utils.getOuterState('dollyTrack') || true;
-    // let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
-    // let cameraTrackChk = gui.addCheckbox({dollyTrack: dollyTrackState}, 'dollyTrack');
-    // debugger;
     let dollyTrackToggle = function () {
       let lssDollyTrack = that.utils.getOuterState('dollyTrack');
       if (lssDollyTrack) {
@@ -194,44 +167,9 @@ export class LoopySurfaceSurfersComponent implements OnInit {
     let cameraTrackChk = gui.addCheckbox( dollyTrackState, 'dollyTrack');
     cameraTrackChk.name('Dolly Tracking');
     cameraTrackChk.onChange( (val) => {
-      // // let lssDollyTrack = localStorage.getItem('DOLLY_TRACK');
-      // let lssDollyTrack = that.utils.getOuterState('dollyTrack');
-      // // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
-      // if (lssDollyTrack) {
-      //   // lssDollyTrack === 'true' ? localStorage.setItem('DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
-      //   lssDollyTrack ? that.utils.setOuterState('dollyTrack', 'false') : that.utils.setOuterState('dollyTrack', 'true');
-      // }
-      // else {
-      //   // localStorage.setItem('LSS_DOLLY_TRACK', 'true');
-      //   that.utils.setOuterState('dollyTrack', 'true');
-      // }
       dollyTrackToggle();
     });
-    // let cbCtrl = gui.add( {flag: true}, 'flag' );
-    // cbCtrl.onChange( (val) => {
-    //   console.log(`cbCtrl.onChange: entered. val=${val}`);
-    // })
-
-    // planeEl.object3D.add( gui );
     let innerImgDimState = this.utils.getOuterState('innerImgDim');
-    // let cameraTrackChk = gui.add({dollyTrack: dollyTrackState}, 'dollyTrack');
-    // cameraTrackChk.name('Dolly Tracking');
-    // cameraTrackChk.onChange( (val) => {
-    //   let lssDollyTrack = localStorage.getItem('LSS_DOLLY_TRACK');
-    //   // let lssDollyTrack = this.utils.getOuterState('LSS_DOLLY_TRACK');
-    //   if (lssDollyTrack) {
-    //     lssDollyTrack === 'true' ? localStorage.setItem('LSS_DOLLY_TRACK', 'false') : localStorage.setItem('LSS_DOLLY_TRACK', 'true');
-    //   }
-    //   else {
-    //     localStorage.setItem('LSS_DOLLY_TRACK', 'true');
-    //   }
-    // });
-
-    // const state = {        
-    //   colors: ['0xff0000', '0x00ff00', '0x0000ff']
-    // };
-    
-    // let tmpState = { def: "8", abc: "7" };
     // create the dropdown with the current resolution as the first
     let resolutions = ["512", "1024", "1400", "2048"];
     let currentInnerGameRes = String(this.utils.getOuterState('innerImgDim'));
@@ -246,28 +184,19 @@ export class LoopySurfaceSurfersComponent implements OnInit {
         resState.push(resolutions[i]);
       }
     }
-    // let dropdown = gui.addDropdown( state, 'colors' );
-    // let innerImgDimSelect = gui.addDropdown( ["512", "1024"] );
-    // let innerImgDimSelect = gui.addDropdown({optio: "hello"}, ["512", "1024"] );
     let innerImgDimSelect = gui.addDropdown(resState );
-    // let innerImgDimSelect = gui.add({option: "1024"}, ["512", "1024"] );
-    // let innerImgDimSelect = gui.add( ["512", "1024"] );
     innerImgDimSelect.name('Inner Game Res. (px)');
     innerImgDimSelect.onChange( function( res ) {
-      // material.color.setHex( color );
       console.log(`now in dropdown handler, res=${res}`);
       that.utils.setOuterState("innerImgDim", res);
     });
 
     let rhc : any = document.querySelector('#ctrl-right');
     let guiInputRight = dat.GUIVR.addInputObject( rhc.object3D );
-    // let guiInputRight = gui.addInputObject( rhc.object3D );
     rhc.addEventListener('triggerdown', function () {
-      // console.log(`rhc: now in triggerdown`);
       guiInputRight.pressed(true, "abc");
     });
     rhc.addEventListener('triggerup', function () {
-      // console.log(`rhc: now in triggerup`);
       guiInputRight.pressed(false);
     });
 
@@ -362,7 +291,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
         let componentFactory = this._componentFactoryResolver.resolveComponentFactory(PlaneSceneComponent);
         let componentRef = this.viewContainerRef.createComponent(componentFactory);
         (document.querySelectorAll('a-scene')[1] as any).enterVR()
-        
+
         break;
 
       case /luxor/.test(evt.target.id):

@@ -10,10 +10,10 @@ import { PlaneSceneComponent } from './loopy-surface-surfers/scenes/plane-scene/
 import { PoolHallSceneComponent } from './loopy-surface-surfers/scenes/pool-hall-scene/pool-hall-scene.component';
 import {RouterModule, Routes} from '@angular/router';
 
-const appRoutes:Routes = [ 
+const appRoutes:Routes = [
   {path: '', component: LoopySurfaceSurfersComponent},
   {path: 'luxorScene', component: LuxorSceneComponent},
-  {path: 'planeScene', component: PlaneSceneComponent}, 
+  {path: 'planeScene', component: PlaneSceneComponent},
   {path: 'poolHallScene', component: PoolHallSceneComponent},
   {path: 'globeScene', component: GlobeSceneComponent},
   {path: 'cokeCanScene', component: CokeCanSceneComponent},
@@ -71,7 +71,7 @@ import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.c
     // },
     {
       provide: LuxorSceneComponent,
-      useFactory:(asteroidsGame, baseService, utilsService, outerSceneService) => {
+      useFactory: (asteroidsGame, baseService, utilsService, outerSceneService) => {
         return new LuxorSceneComponent(asteroidsGame, baseService, utilsService, outerSceneService);
       },
       deps: [AsteroidsGame, BaseService, UtilsService, OuterSceneService]
@@ -79,7 +79,7 @@ import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.c
     {
       provide: PlaneSceneComponent,
       useFactory:(asteroidsGame, outerSceneService, baseService, utilsService) => {
-        return new PlaneSceneComponent(asteroidsGame, outerSceneService, 
+        return new PlaneSceneComponent(asteroidsGame, outerSceneService,
           baseService, utilsService);
       },
       deps: [AsteroidsGame, OuterSceneService, BaseService, UtilsService]

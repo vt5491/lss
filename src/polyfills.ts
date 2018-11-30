@@ -42,7 +42,7 @@
 
 /** Evergreen browsers require these. **/
 import 'core-js/es6/reflect';
-import 'core-js/es7/reflect';
+
 
 
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/
@@ -54,6 +54,9 @@ import 'core-js/es7/reflect';
  * Zone JS is required by Angular itself.
  */
 //vt add
+import '../node_modules/aframe/dist/aframe-master';
+// import '../node_modules/aframe/dist/aframe-master_v7';
+// import '../node_modules/aframe/build/aframe';
 // import 'aframe';
 // import 'three';
 // import 'aframe-log-component';

@@ -16,18 +16,13 @@ import { UtilsService } from '../utils.service';
 @Injectable()
 export class InnerSceneRendererService {
   embeddedContext;
-  // innerGame;
-  // bgTexture;
-  // vertShader;
 
   constructor(embeddedContext: any,
-    // private base : BaseService,
-    // private utils : UtilsService
   ) {
     this.embeddedContext = embeddedContext;
     let that = this;
     AFRAME.registerComponent('inner-scene-renderer', {
-      schema : { 
+      schema : {
         gamePaused: {type : 'boolean', default: false},
         subtractiveOverlay: {type : 'boolean', default: false},
       },
@@ -49,7 +44,6 @@ export class InnerSceneRendererService {
 
         let attributes = {};
         let uniforms = {
-          // t1: { type: "t", value: that.embeddedContext.poolBallTexture },
           t1: { type: "t", value: that.embeddedContext.bgTexture },
           t2: { type: "t", value: that.embeddedContext.innerGame.offscreenImageBuf }
         };
@@ -70,21 +64,17 @@ export class InnerSceneRendererService {
         if (this.projSceneComp.data.gamePaused) {
           return;
         }
-        // let a = 1;
         let innerGame = that.embeddedContext.innerGame;
         if(!innerGame.webGLRenderer) {
           // this.innerGame.webGLRenderer = (document.querySelector('a-scene') as any).renderer;
           return;
         }
-        
+
         // the parent context needs to have an updateScene method.
-        // this.innerGame.updateScene(dt);
         innerGame.updateScene(dt);
         // this.innerGame.webGLRenderer = (document.querySelector('a-scene') as any).renderer;
         // We need to refresh this every time and cannot rely on the one initially
         // set in 'init_ang'.
-        // debugger;
-        // this.innerGame.gl_webGLRenderer = this.innerGame.webGLRenderer.getContext();
         innerGame.gl_webGLRenderer = innerGame.webGLRenderer.getContext();
 
         this.innerGame.webGLRenderer.render(
@@ -107,37 +97,16 @@ export class InnerSceneRendererService {
           console.log(`torus.proj.mainLoop: caught error ${e}`)
         }
 
-        // let attributes = {};
-        // let uniforms = {
-        //   t1: { type: "t", value: this.bgTexture },
-        //   t2: { type: "t", value: this.innerGame.offscreenImageBuf }
-        // };
-
-        // let defines = {};
-        // defines["USE_MAP"] = "";
-
-        // let material_shader = new THREE.ShaderMaterial({
-        //   uniforms: uniforms,
-        //   defines: defines,
-        //   vertexShader: this.vertShader,
-        //   fragmentShader: this.fragShader,
-        //   side: THREE.DoubleSide
-        // });
-
         this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
 
         var mesh;
         mesh = this.getProjectionMesh();
         if (mesh) {
-          // mesh.material = material_shader;
           mesh.material = this.material_shader;
           mesh.material.needsUpdate = true;
           this.innerGame.offscreenImageBuf.needsUpdate = true; //need this
         }
         // and emit an event for any observers who may need to respond to this
-        // this.innerSceneTick.emit(null);
-        // this.outerGameService.onInnerSceneTick();
-        // debugger;
         if (this.outerSceneSvc.trackDolly && this.trackDolly) {
           this.trackDolly(this.innerGame.ship.mesh.position);
         }
@@ -146,9 +115,8 @@ export class InnerSceneRendererService {
   }
 
   init() {
-    // let generateDataTexture_af = function (width, height, color) {
     console.log(`*InnerSceneRenderService.init: entered`);
-    
+
     let generateDataTextureFn = function (width, height, color) {
       var size = width * height;
       var data = new Uint8Array(4 * size);
@@ -184,40 +152,13 @@ export class InnerSceneRendererService {
     // campera.position.z= 5.0 corresponds to BoundVal of 3.79.
     // campera.position.z= 1.319 corresponds to BoundVal of 1.0.
     innerGame.innerSceneCamera.position.z = 5.0;
-    // this.innerGame.innerSceneCamera.position.z = 15.0;
+    // innerGame.innerSceneCamera.lookAt(new THREE.Vector3(0,0,0));
+    // innerGame.innerSceneCamera.position.z = 150.0;
     // this.innerGame.innerSceneCamera.position.z = 1.319;
     // this.bgTexture = this.getBaseTexture();
     this.embeddedContext.bgTexture = this.embeddedContext.getBaseTexture();
     this.embeddedContext.vertShader = document.getElementById('simple-vertex-shader').innerHTML;
-    // debugger;
-    // if (this.embeddedContext.projSceneComp.data.subtractiveOverlay) {
-    //   this.embeddedContext.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
-    // }
-    // else {
-      this.embeddedContext.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
-    // }
-
-    // if (this.embeddedContext.projSceneComp.data.subtractiveOverlay) {
-    //   this.embeddedContext.fragShader = document.getElementById('subtractive-fragment-shader').innerHTML;
-    // };
-
-    // let attributes = {};
-    // let uniforms = {
-    //   // t1: { type: "t", value: this.embeddedContext.poolBallTexture },
-    //   t1: { type: "t", value: this.embeddedContext.bgTexture },
-    //   t2: { type: "t", value: this.embeddedContext.innerGame.offscreenImageBuf }
-    // };
-
-    // let defines = {};
-    // defines["USE_MAP"] = "";
-
-    // this.embeddedContext.material_shader = new THREE.ShaderMaterial({
-    //   uniforms: uniforms,
-    //   defines: defines,
-    //   vertexShader: this.embeddedContext.vertShader,
-    //   fragmentShader: this.embeddedContext.fragShader,
-    //   side: THREE.DoubleSide
-    // });
+    this.embeddedContext.fragShader = document.getElementById('simple-fragment-shader').innerHTML;
 
     let projSceneComp = this.embeddedContext.projSceneComp;
     projSceneComp.el.addEventListener('togglePauseGame', () => {
@@ -232,6 +173,5 @@ export class InnerSceneRendererService {
       console.log(`InnerSceneRender: unPauseGame event detected`);
       projSceneComp.data.gamePaused = false;
     })
-
   }
 }

@@ -12,15 +12,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
-    "@types/aframe": "^0.5.0",
+    "@angular/common": "^7.1.1",
+    "@angular/compiler": "^7.1.1",
+    "@angular/core": "^7.1.1",
+    "@angular/forms": "^7.1.1",
+    "@angular/http": "^7.1.1",
+    "@angular/platform-browser": "^7.1.1",
+    "@angular/platform-browser-dynamic": "^7.1.1",
+    "@angular/router": "^7.1.1",
+    "@types/aframe": "^0.8.0",
     "aframe": "^0.7.0",
     "aframe-controller-cursor-component": "^0.2.6",
     "aframe-redux-component": "^3.0.2",
@@ -28,18 +28,20 @@
     "dat.gui": "^0.6.1",
     "datguivr": "^0.1.6",
     "jquery": "^3.2.1",
-    "rxjs": "^5.1.0",
+    "rxjs": "^6.3.3",
     "stats-js": "^1.0.0-alpha1",
-    "zone.js": "^0.8.7"
+    "tslib": "^1.9.0",
+    "zone.js": "^0.8.7",
+    "rxjs-compat": "^6.0.0-rc.0"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.0",
-    "@angular/compiler-cli": "^4.0.0",
+    "@angular-devkit/build-angular": "~0.11.0",
+    "@angular/cli": "^7.1.0",
+    "@angular/compiler-cli": "^7.1.1",
     "@types/core-js": "^0.9.41",
     "@types/jasmine": "2.5.38",
     "@types/jquery": "^3.2.12",
     "@types/node": "~6.0.60",
-    "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
@@ -51,6 +53,6 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "typescript": "~3.1.6"
   }
 }

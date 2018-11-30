@@ -1,22 +1,8 @@
 ///<reference path="../../../typings/index.d.ts" />
-// <reference path="../../../node_modules/es6-promise/es6-promise.d.ts" />
-//<reference path="../../../node_modules/@types/core-js/index.d.ts" />
 import { Injectable, Injector } from '@angular/core';
 import { IMoveableGameObject } from '../interfaces/imoveable-game-object';
-// import { ParmsService } from './parms.service';
 import { BaseService } from './base.service';
 import { Asteroid } from '../inner-games/asteroids/asteroid';
-// import { LssScene } from "../interfaces/lss-scene";
-// import * as _ from 'lodash';
-// import {GUI} from 'dat.GUI';
-// import {dat} from 'dat-gui/vendor/dat.gui';
-// declare var dat: any;
-// import * as dat from 'dat-gui';
-// import * as dat from 'dat';
-// import * from 'dat-gui';
-// these work
-// import * as dat from 'dat.GUI';
-// import * as Stats from 'stats-js';
 
 @Injectable()
 export class UtilsService {
@@ -32,12 +18,6 @@ export class UtilsService {
     private base : BaseService
     // private datGUI : dat.GUI
     ) {
-    // console.log(`UtilsService: now in ctor`);
-    // this.datGUI = this.injector.get(dat.GUI);
-    // this.datGUI = new dat.GUI();
-    // this.addControls();
-    // console.log(`UtilsService.cotr: datGUI=${this.datGUI}}`);
-
     this.parms = {};
 
     // Do not log in production.
@@ -610,14 +590,6 @@ export class UtilsService {
     let dolly = (document.querySelector('#dolly') as any).object3D;
 
     let hudRadius = 7;
-
-    // hudRot.x = dolly.rotation.x - projObj.rotation.x;
-    // hudRot.y = dolly.rotation.y - projObj.rotation.y;
-    // hudRot.z = dolly.rotation.z - projObj.rotation.z;
-    //
-    // hudPos.x = dolly.position.x - projObj.position.x;
-    // hudPos.y = dolly.position.y - projObj.position.y;
-    // hudPos.z = dolly.position.z - projObj.position.z;
 
     hudVec.x = dolly.position.x - projObj.position.x;
     hudVec.y = dolly.position.y - projObj.position.y;

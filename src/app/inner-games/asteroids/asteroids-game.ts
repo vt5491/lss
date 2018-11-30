@@ -53,8 +53,6 @@ export class AsteroidsGame implements InnerGame {
     private _base : BaseService,
     private injector : Injector,
     private _utils : UtilsService,
-    // private innerSceneRenderer : InnerSceneRendererService,
-    // private asteroidsGameControllerListener : AsteroidsGameControllerListenerService,
   ) {
     // I seem to have to manually inject THREE.Scene because it's a third-party Component
     // and I can't wrap it in @Ijnectable?
@@ -130,8 +128,6 @@ export class AsteroidsGame implements InnerGame {
       // save mesh id in the parent asteroid obj, to aid in deleting later.
       asteroid.three_id = asteroid.mesh.id;
       this.scene.add(asteroid.mesh);
-
-      // se
     }
   }
 
@@ -167,7 +163,6 @@ export class AsteroidsGame implements InnerGame {
     // check for asteroids hitting the ship
     if( this.asteroidShipCollisionCheck()) {
       console.log('ship hit');
-      // this.ship = new Ship(this.base, this.utils);
       this.ship.reset();
     }
     // check for bullet collisions
@@ -176,7 +171,6 @@ export class AsteroidsGame implements InnerGame {
     //
     // do beenHit action on each hitObject
     for (let i = 0; i < hitObjects.length; i++) {
-      // let hitObj = hitObjects[0];
       let hitObj = hitObjects[i]['obj'];
       let hitIdx = hitObjects[i]['idx'];
 
@@ -189,12 +183,7 @@ export class AsteroidsGame implements InnerGame {
 
           var selectedObject = this.scene.getObjectById((<Asteroid>hitObj).three_id);
           this.score += hitObj.hitValue;
-          // console.log(`AsteroidsGame: score=${this.score}`);
-          // (document.querySelector('a-scene') as AFrame.Entity).emit('scoreChange', {a: 6});
-          // (document.querySelector('.proj-scene') as AFrame.Entity).emit('scoreChange');
-          // let rhc = this.rightHandController || this.utils.getHandControlEntity('right');
           let rhc = this.rightHandController ? this.rightHandController : (this.rightHandController = this.utils.getHandControlEntity('right'));
-          // rhc.emit('scoreChange', {newScore: this.score});
           rhc.emit('scoreChange', this.gameState);
           this.scene.remove( selectedObject );
 
@@ -320,49 +309,6 @@ export class AsteroidsGame implements InnerGame {
 
     return shipHit;
   }
-
-  // handle any gamepad events
-  // gamepadHandler() : void {
-  //   var gPads = navigator.getGamepads ? navigator.getGamepads() : [];
-
-  //   if (gPads) {
-  //     var gpad = gPads[0];
-
-  //     if (gpad) {
-  //       if (gpad.buttons[0].pressed && !this.gpadFirstPressUsedUp) {
-  //         console.log(`AsteroidsGame.updateScene-2: gPad button 0 pressed`);
-  //         this.gpadFirstPressUsedUp = true;
-
-  //         this.shipFiredBullet();
-  //       }
-  //       else if (!gpad.buttons[0].pressed) {
-  //         this.gpadFirstPressUsedUp = false;
-  //       }
-
-  //       if (gpad.buttons[2].pressed) {
-  //         console.log(`AsteroidsGame.updateScene: gPad button 2 pressed`);
-  //         // scale down the thrust factor by 1/30 since the accel is tuned
-  //         // for the keyboard and kbd events only fire at approx. 1/30 the rate
-  //         // of animationFrame rates.
-  //         this.shipThrust( 1 / 120);
-  //       }
-
-  //       // this.ship.theta = gpad.axes[0] * Math.PI;
-  //       // this.ship.theta = this.utils.applyDeadzone(gpad.axes[0], 0.25) * Math.PI;
-  //       let shipRotateAxisValue= this.utils.applyDeadzone(gpad.axes[0], 0.25);
-
-  //       if (shipRotateAxisValue < 0) {
-  //         this.ship.theta += this.ship.deltaTheta * (1/3);
-  //       }
-  //       else if (shipRotateAxisValue > 0) {
-  //         this.ship.theta -= this.ship.deltaTheta * (1 / 3);
-  //       }
-
-  //       // camera movement
-  //     }
-  //   }
-  // }
-
 
   //getters and setters
   get asteroids(): Asteroid [] {

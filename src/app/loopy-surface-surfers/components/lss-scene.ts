@@ -4,12 +4,11 @@ import { InnerSceneRendererService } from '../../services/aframe/inner-scene-ren
 import { OuterSceneService } from '../../services/outer-scene.service';
 import { BaseService } from '../../services/base.service';
 import { UtilsService } from '../../services/utils.service';
-// import { AutoEnterVrService } from '../../services/aframe/auto-enter-vr.service';
 import { ShipThrustSoundService } from '../../services/aframe/ship-thrust-sound.service';
 
 export class LssScene {
-  protected innerSceneRenderer: InnerSceneRendererService;  
-  protected innerSceneScrollQuanta : number; 
+  protected innerSceneRenderer: InnerSceneRendererService;
+  protected innerSceneScrollQuanta : number;
   protected lastPhi : number;
   protected lastTheta : number;
   protected lastLongitude : number;
@@ -26,11 +25,8 @@ export class LssScene {
   constructor(
     // Note: Do not include scope qualifers on these ("public", "private" et al.)
     // Angular doesn't allow dependecy injection on common parms in base and child classes.
-    // innerGame: AsteroidsGame, 
-    // outerSceneSvc: OuterSceneService,
     base : BaseService,
     utils : UtilsService,
-    // private injector: Injector
   ) {
     console.log('LssScene.ctor: entered');
     
@@ -47,9 +43,6 @@ export class LssScene {
     this.dollyTransform = new THREE.Matrix4();
     this.dollyRadius = 10.0;
 
-    // initialize the AutoEnterVr component so we can tag <scene> with this attribute
-    // let autoEnterVr =  new AutoEnterVrService(utils);
-    // let abc = new Injector();
     let shipThrustSound =  new ShipThrustSoundService(utils, base);
   }
 
@@ -57,16 +50,6 @@ export class LssScene {
     // refer to the 'inner-scene-component' attribute (component) so the inner-scene-renderer
     // has access to itself, since most of the inner-scene-renderer component is bound to
     // e.g 'coke-can-scene.component.ts'
-    // debugger;
     this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
-
-    // stop all sounds. If we don't do this may get "components:sound:warn All the sounds are playing."
-    // message on the console.
-    // if (document.querySelector('[sound__thrust]')) {
-    //   (document.querySelector('[sound__thrust]') as any).components.sound__thrust.stopSound();
-    // }
-    // if (document.querySelector('[sound__bullet]')) {
-    //   (document.querySelector('[sound__bullet]') as any).components.sound__bullet.stopSound();
-    // }
   };
 }

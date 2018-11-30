@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/0190982444ef670839deb3fde37a26c79dfce08e/threejs/three-vreffect.d.ts",
+    "raw": "registry:dt/three-vreffect#0.0.0+20161028135557",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/0190982444ef670839deb3fde37a26c79dfce08e/threejs/three-vreffect.d.ts"
+  }
+}

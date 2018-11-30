@@ -5,35 +5,30 @@ import { OuterSceneService } from '../../../services/outer-scene.service';
 import { BaseService } from '../../../services/base.service';
 import { UtilsService } from '../../../services/utils.service';
 import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
-// import { AfAssetsComponent} from "../../../inner-games/asteroids/af-assets/af-assets.component";
 
 @Injectable()
 @Component({
   selector: 'app-coke-can-scene',
   templateUrl: './coke-can-scene.component.html',
   styleUrls: ['./coke-can-scene.component.css'],
-  // viewProviders: [
-  //   AfAssetsComponent,
-  // ],
 })
 export class CokeCanSceneComponent extends LssScene implements OnInit {
-  // private baseTexture : THREE.Texture;
 
   constructor(
     private innerGame : AsteroidsGame,
     private outerSceneSvc : OuterSceneService,
     private base : BaseService,
     private utils : UtilsService
-  ) { 
+  ) {
     super(base, utils);
-    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/coke-label-binary.jpg" );  
+    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/coke-label-binary.jpg" );
   }
 
   ngOnInit() {
     super.init();
     this.innerSceneRenderer.init();
     this.outerSceneSvc.init();
-    this.initScene();    
+    this.initScene();
   }
 
   initScene() {
@@ -52,9 +47,6 @@ export class CokeCanSceneComponent extends LssScene implements OnInit {
   }
 
   getBaseTexture() : THREE.Texture {
-    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label.jpg" );  
-    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label-binary.jpg" );  
-    // return new THREE.TextureLoader().load( "../../../../assets/img/coke-label_2-binary.jpg" );  
     return this.baseTexture;
   }
 

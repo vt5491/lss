@@ -14,37 +14,22 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class OuterSceneService {
   dollyEl : AFrame.Entity;
-  dolly : THREE.Object3D; 
+  dolly : THREE.Object3D;
   projObj : THREE.Object3D;
   projScene : THREE.Object3D;
   discreteInnerSceneScroll : Boolean;
   trackDolly : Boolean;
-  // trackDollyDefault : Boolean;
 
   constructor(
     private base: BaseService,
     private utils: UtilsService
-  ) { 
+  ) {
     this.discreteInnerSceneScroll = false;
-    // console.log(`OuterSceneService.ctor: trackDollyDefault=${this.base.dollyTrackDefault}`);
-    
-    // this.trackDolly = this.base.dollyTrackDefault;
-    // if (localStorage.getItem('LSS_DOLLY_TRACK')) {
-    // if (this.utils.getOuterState('dollyTrack')) {
-    //   // this.trackDolly = JSON.parse(localStorage.getItem('LSS_DOLLY_TRACK') as any);
-    //   this.trackDolly = this.utils.getOuterState('dollyTrack');
-    // }
-    // else {
-    //   this.trackDolly = true;
-    // }
     this.trackDolly = this.utils.getOuterState('dollyTrack');
     if (this.trackDolly == null) {
       this.trackDolly = true;
     }
     console.log(`OuterSceneService.ctor: trackDolly=${this.trackDolly}`);
-
-    // if (localStorage.getItem('lss_innerImgDim')) {
-    // }
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities
@@ -59,8 +44,6 @@ export class OuterSceneService {
     this.projScene = projSceneEl.object3D;
 
     let axisHelper = new THREE.AxisHelper(1);
-    // this.projScene.add(axisHelper);
-    // this.projScene.getObjectByProperty('type', 'LineSegments').position.x = -5;
     // This is a global stash for transferring state among disparate components.
     (document as any).LSS = {};
   }
@@ -69,4 +52,3 @@ export class OuterSceneService {
   }
 
 }
-
