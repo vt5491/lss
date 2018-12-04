@@ -117,7 +117,8 @@ describe('Service: Utils', () => {
 
       let saveObjectLoader = THREE.ObjectLoader.prototype.load;
       THREE.ObjectLoader.prototype.load = fakeJsonLoad;
-      let loadPromise: Promise<string> = utils.loadJsonModel(
+      // let loadPromise: Promise<string> = utils.loadJsonModel(
+      let loadPromise: Promise<any> = utils.loadJsonModel(
         'myPath/abc.json', scene, 'cube', sspSurfaceUpdateFn, sspMaterialUpdateFn);
 
       expect(loadPromise).toBeTruthy();

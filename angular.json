@@ -26,7 +26,8 @@
             "scripts": [
               "src/assets/components/grab.js",
               "src/assets/components/wasd-plus-controls.js",
-              "node_modules/aframe-controller-cursor-component/dist/aframe-controller-cursor-component.js"
+              "node_modules/aframe-controller-cursor-component/dist/aframe-controller-cursor-component.js",
+              "src/assets/lib/datguivr.bundle.js"
             ]
           },
           "configurations": {
@@ -73,7 +74,9 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "scripts": [
+              "node_modules/aframe/dist/aframe-master.js"
+            ],
             "styles": [
               "src/styles.css"
             ],

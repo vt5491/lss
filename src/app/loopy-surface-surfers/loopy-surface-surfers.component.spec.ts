@@ -7,6 +7,7 @@ import { AsteroidsGame } from '../inner-games/asteroids/asteroids-game';
 import { Ship } from '../inner-games/asteroids/ship';
 import { BaseService } from '../services/base.service';
 import { UtilsService } from '../services/utils.service';
+import { OuterSceneService } from '../services/outer-scene.service';
 
 describe('LoopySurfaceSurfersComponent', () => {
   let component: LoopySurfaceSurfersComponent;
@@ -23,7 +24,7 @@ describe('LoopySurfaceSurfersComponent', () => {
       imports: [RouterTestingModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers: [AsteroidsGame, Ship, UtilsService, BaseService,
-        THREE.Scene
+        THREE.Scene, OuterSceneService,
         // {
         //   provide: THREE.Scene,
         //   useClass: MockDummyService

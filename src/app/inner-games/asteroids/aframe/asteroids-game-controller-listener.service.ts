@@ -30,7 +30,16 @@ export class AsteroidsGameControllerListenerService {
     angParentComponent.utils = utils;
     angParentComponent.asteroidsGame = asteroidsGame;
 
-    angParentComponent.afc = AFRAME.registerComponent('asteroids-game-controller-listener',
+    // if (AFRAME.components['asteroids-game-controller-listener']) {
+    //   angParentComponent.afc = AFRAME.components['asteroids-game-controller-listener']
+    // }
+    // debugger;
+    // console.log(`agcl: component=${AFRAME.components['asteroids-game-controller-listener']}`);
+    // angParentComponent.afc = AFRAME.components['asteroids-game-controller-listener'];
+    // if (! angParentComponent.afc) {
+    //  console.log(`agcl: allocating new agcl`);
+
+    angParentComponent.afc = AFRAME.components['asteroids-game-controller-listener'] || AFRAME.registerComponent('asteroids-game-controller-listener',
     {
       schema : {
         shipRotFactor: {type : 'number', default: 1},
@@ -139,10 +148,31 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
         el.addEventListener('buttondown', function (e) {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
         });
+        /*
         el.addEventListener('trackpaddown', function (e) {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
-          asteroidsGame.shipFiredBullet();
+          // console.log(`trackpaddown: axis.x=${y}`);
+          // console.log(`trackpaddown: axis.y=${e.target.components['tracked-controls'].axis[1]}`);
+          let trkPadX =  e.target.components['tracked-controls'].axis[0];
+          let trkPadY =  e.target.components['tracked-controls'].axis[1];
+          // console.log(`trkPadX=${trkPadX}, trkPadY=${trkPadY}`);
+
+          if (trkPadY >= 0) {
+            console.log(`trackpaddown: upper half pressed`);
+          }
+          else  {
+            console.log(`trackpaddown: lower half pressed`);
+          }
+          // debugger;
+          // console.log(`trackpaddown: e.detail.target.object3D.position.x=${e.detail.target.object3D.position.x}`);
+          // console.log(`trackpaddown: e.detail.target.object3D.position.y=${e.detail.target.object3D.position.y}`);
+          // asteroidsGame.shipFiredBullet();
         });
+        */
+        // el.addEventListener('trackpadchanged', function (e) {
+        //   console.log(`trackpadchanged detected: e.detail.value=${e.detail.value}`);
+        //   // debugger;
+        // });
         el.addEventListener('gripdown', (e) => {
           // el.emit('fire-bullet');
           this.projEl.emit('fire-bullet');
@@ -157,6 +187,45 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.touchend: ship.theta=${asteroidsGame.ship.theta}`);
           angParentComponent.touchOn = false;
         });
+        el.addEventListener('axismove', (e) => {
+          var horizAxis = e.detail.axis[0];
+          var upAxis = e.detail.axis[1];
+          // console.log(`new axismove: horizAxis=${horizAxis}, upAxis=${upAxis}`);
+
+          // if ((upAxis > 0 && horizAxis < 0) || (upAxis > 0 && horizAxis)) {
+          // simulate being near touch pad "poles" by testing for relative ratio
+          // between x and y.  Top = rotate CW, bottom = rotate CCW.
+          // right = rotate CW, left = rotate CCW.
+          // let upRatio = horizAxis === 0 ? 9999 : Math.abs(upAxis) / Math.abs(horizAxis);
+          // let horizRatio = upAxis === 0 ? 9999 : Math.abs(horizAxis) / Math.abs(upAxis);
+          // console.log(`asixmove: upRatio=${upRatio}, horizRatio=${horizRatio}`);
+          let ratioFactor = 2.0;
+          if( Math.abs(upAxis) > ratioFactor * Math.abs(horizAxis)) {
+            if (upAxis > 0 ) {
+              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+            else {
+              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+          }
+          else if ( Math.abs(horizAxis) > ratioFactor * Math.abs(upAxis)) {
+            if (horizAxis > 0 ) {
+              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+            else {
+              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+
+          }
+          // if ((upAxis > 0 && horizAxis < 0) || (upAxis > 0 && horizAxis)) {
+          // }
+          // else {
+          // }
+        });
+        /*
+        // this is the old "touchpad twist" method which is done by dragging your
+        // finger along touchpad to essentially create an absolute rotation in
+        // correpsondence with relative ange on the touchpad.
         el.addEventListener('axismove', (e) => {
           // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: axismove event: e=${e}`);
           if (angParentComponent.touchOn) {
@@ -176,6 +245,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
             }
           }
         });
+        */
         el.addEventListener('triggerdown', function (e) {
           // console.log(`AGCLS: now emitting thrust-start`);
           angParentComponent.thrusterEngaged = true;
@@ -291,6 +361,8 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
         TWEEN.update();
       }
     })
+  // }
+    // console.log(`agcl: post: component=${AFRAME.components['asteroids-game-controller-listener']}`);
   }
 
 }

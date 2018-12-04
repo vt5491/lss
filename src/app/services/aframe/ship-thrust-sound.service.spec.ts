@@ -12,7 +12,7 @@ import { UtilsService, ThreeJsSceneProvider } from '../../services/utils.service
 import { BaseService } from '../../services/base.service';
 import { AsteroidsGameControllerListenerService} from '../../inner-games/asteroids/aframe/asteroids-game-controller-listener.service';
 import { AsteroidsGame } from '../../inner-games/asteroids/asteroids-game';
-var entityFactory = require('../../../assets/components/helpers').entityFactory;
+// var entityFactory = require('../../../assets/components/helpers').entityFactory;
 // var el;
 
 // let ElProvider: FactoryProvider = {
@@ -42,7 +42,7 @@ var entityFactory = require('../../../assets/components/helpers').entityFactory;
     // this.fixture.abc = 7;
     // this.abc =7;
 
-fdescribe('ShipThrustSoundService', () => {
+xdescribe('ShipThrustSoundService', () => {
   // const provider: ValueProvider = {provide: 'someToken', useValue: 'someValue'};
   // const ElProvider: ValueProvider = {provide: 'el', useValue: 'hi'};
   beforeEach(() => {
@@ -53,7 +53,8 @@ fdescribe('ShipThrustSoundService', () => {
       ]
     });
     // let agcl = new AsteroidsGameControllerListenerService
-    let el  = this.el = entityFactory();
+    // let el  = this.el = entityFactory();
+    let el : any = document.createElement('div');
       // done();
       // expect(this.el.getAttribute('ship-thrust-sound').tickInterval).toEqual(25);
       // assert(this.el.getAttribute('ship-thrust-sound').tickInterval).toEqual(25);
@@ -64,7 +65,8 @@ fdescribe('ShipThrustSoundService', () => {
     // el.setAttribute('sound', {src: 'url(test.ogg)'});
     el.setAttribute('sound', 'src', 'url(/base/src/assets/sounds/horse.ogg)');
     el.setAttribute('sound', 'maxDistance', '17');
-    let entity = this.entity = entityFactory();
+    // let entity = this.entity = entityFactory();
+    let entity = document.createElement('div');
     entity.setAttribute('asteroids-game-controller-listener', '');
 
     entity.appendChild(el);
@@ -116,7 +118,7 @@ fdescribe('ShipThrustSoundService', () => {
         // this.el.addEventListener('loaded', f(service));
 });
 
-fdescribe('Ship-thrust-sound2', () => {
+xdescribe('Ship-thrust-sound2', () => {
   let utils: UtilsService;
   let base: BaseService;
   let stss: ShipThrustSoundService;
@@ -134,7 +136,8 @@ fdescribe('Ship-thrust-sound2', () => {
         this.utils = new UtilsService(this.injector, base);
         this.stss = new ShipThrustSoundService(this.utils, this.base);
 
-        let el  = this.el = entityFactory();
+        // let el  = this.el = entityFactory();
+        let el : any = document.createElement('div');
 
         el.setAttribute('ship-thrust-sound');
         el.setAttribute('ship-thrust-sound', 'tickInterval', 30);
@@ -142,7 +145,8 @@ fdescribe('Ship-thrust-sound2', () => {
         el.setAttribute('sound', 'src', 'url(/base/src/assets/sounds/horse.ogg)');
         el.setAttribute('sound', 'maxDistance', '17');
 
-        let entity = this.entity = entityFactory();
+        // let entity = this.entity = entityFactory();
+        let entity = document.createElement('div');
         entity.setAttribute('asteroids-game-controller-listener', '');
 
         entity.appendChild(el);

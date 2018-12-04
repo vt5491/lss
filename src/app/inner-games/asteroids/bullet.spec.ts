@@ -4,15 +4,16 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Bullet} from './bullet';
 import { BaseService } from '../../services/base.service';
+import { UtilsService } from '../../services/utils.service';
 
-describe('Service: Asteroid Bullet', () => {
+fdescribe('Service: Asteroid Bullet', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [Bullet, BaseService]
+      providers: [Bullet, BaseService, UtilsService]
     });
   });
 
-  it('ctor works', inject([Bullet], (bullet: Bullet) => {
+  it('ctor works', inject([Bullet, UtilsService], (bullet: Bullet) => {
     expect(bullet).toBeTruthy();
     // expect(bullet.vx).toBeTruthy();
     expect(bullet.vScalar).toBeTruthy();
@@ -39,7 +40,7 @@ describe('Service: Asteroid Bullet', () => {
     expect(updatedBulletMeshY).toEqual(origBulletMeshY + bullet.vy);
   }));
 
-  it('update works when crossing the projectionBounds', 
+  it('update works when crossing the projectionBounds',
     inject([Bullet, BaseService], (bullet: Bullet, base : BaseService) => {
 
     // set the x position to be right at the edge of the projectionBoundary
@@ -65,7 +66,7 @@ describe('Service: Asteroid Bullet', () => {
     expect(bullet.ttl).toEqual(Bullet.TTL_MAX - 1);
   }));
 
-  // it('update handles bullet end of life properly', 
+  // it('update handles bullet end of life properly',
   //   inject([Bullet], (bullet: Bullet) => {
 
   //   bullet.ttl = 1;

@@ -53,6 +53,8 @@ export class AsteroidsGame implements InnerGame {
     private _base : BaseService,
     private injector : Injector,
     private _utils : UtilsService,
+    //vt-x add
+    // private asteroidsGameControllerListener : AsteroidsGameControllerListenerService,
   ) {
     // I seem to have to manually inject THREE.Scene because it's a third-party Component
     // and I can't wrap it in @Ijnectable?
@@ -67,11 +69,13 @@ export class AsteroidsGame implements InnerGame {
 
     this.initScene();
 
-    AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {
-      init: () => {
-
-      }
-    });
+    if (! AFRAME.components['asteroids-inner-scene-aframe-component']) {
+      AFRAME.registerComponent('asteroids-inner-scene-aframe-component', {
+        init: () => {
+        }
+      });
+      
+    }
 
   }
 
