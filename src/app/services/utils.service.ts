@@ -567,10 +567,10 @@ export class UtilsService {
   // };
   getHandControlEntity(pos: String) {
     // return all entites with a hand-controllers components
-    let controlEntities : any = document.querySelectorAll("[hand-controls]");
+    let controlEntities : any = document.querySelectorAll("[hand-controls-cust]");
 
     for( let i=0; i < controlEntities.length; i++) {
-      if (controlEntities[i].components['hand-controls'].attrValue === pos) {
+      if (controlEntities[i].components['hand-controls-cust'].attrValue === pos) {
 
         return controlEntities[i];
       }

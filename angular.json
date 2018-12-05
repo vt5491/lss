@@ -27,7 +27,9 @@
               "src/assets/components/grab.js",
               "src/assets/components/wasd-plus-controls.js",
               "node_modules/aframe-controller-cursor-component/dist/aframe-controller-cursor-component.js",
-              "src/assets/lib/datguivr.bundle.js"
+              "src/assets/lib/datguivr.bundle.js",
+              "src/assets/lib/aframe-cust/hand-controls-cust.js",
+              "src/assets/lib/aframe-cust/laser-controls-cust.js"
             ]
           },
           "configurations": {
