@@ -229,10 +229,10 @@
   resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-16.11.0.tgz#6e7a8a3d6c78a057ecd5605087930406d4e05800"
   integrity sha1-bnqKPWx4oFfs1WBQh5MEBtTgWAA=
 
-"@types/aframe@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@types/aframe/-/aframe-0.8.0.tgz#da691794c828cedd938955f4b456e3ed179f915e"
-  integrity sha512-ivolIx4j5d+q0Cen+UF1Qa/eILnkPhxx73jwhKnMIpieSk5Alq36cIZ3c9O5yz+U3C1/O4V003+YEQRyNCXxoA==
+"@types/aframe@^0.7.1":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@types/aframe/-/aframe-0.7.2.tgz#665b3520886b7c30615b25de2c4f2cce1002e425"
+  integrity sha512-H2SIcurkBVvH0xeUcdxSI8D7OyXW6CP8bdPx2uzLe6Au1loWbiPd/HQIWI7NDANXv7L9rkmX7tCGdLo4gaNzFw==
   dependencies:
     "@types/three" "*"
     "@types/tween.js" "*"
@@ -540,7 +540,7 @@ aframe-redux-component@^3.0.2:
   dependencies:
     redux "^3.5.2"
 
-aframe@^0.7.0:
+aframe@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/aframe/-/aframe-0.7.1.tgz#f42c520a0d7bbcff75893f2baaca740f716719ac"
   integrity sha1-9CxSCg17vP91iT8rqsp0D3FnGaw=

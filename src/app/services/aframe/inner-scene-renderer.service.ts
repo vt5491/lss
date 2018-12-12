@@ -77,6 +77,9 @@ export class InnerSceneRendererService {
         // set in 'init_ang'.
         innerGame.gl_webGLRenderer = innerGame.webGLRenderer.getContext();
 
+        //vt-x
+        // this.innerGame.innerSceneCamera.x -= 0.001;
+        //vt-x end
         this.innerGame.webGLRenderer.render(
           this.innerGame.scene,
           this.innerGame.innerSceneCamera,
@@ -151,9 +154,11 @@ export class InnerSceneRendererService {
     innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight);
     // campera.position.z= 5.0 corresponds to BoundVal of 3.79.
     // campera.position.z= 1.319 corresponds to BoundVal of 1.0.
+    innerGame.innerSceneCamera.position.x = 0.0;
+    innerGame.innerSceneCamera.position.y = 0.0;
     innerGame.innerSceneCamera.position.z = 5.0;
     // innerGame.innerSceneCamera.lookAt(new THREE.Vector3(0,0,0));
-    // innerGame.innerSceneCamera.position.z = 150.0;
+    //innerGame.innerSceneCamera.position.z = 150.0;
     // this.innerGame.innerSceneCamera.position.z = 1.319;
     // this.bgTexture = this.getBaseTexture();
     this.embeddedContext.bgTexture = this.embeddedContext.getBaseTexture();

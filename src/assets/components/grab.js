@@ -11,6 +11,7 @@ AFRAME.registerComponent('grab', {
     //vt add
     this.grabbing = false;
     this.triggering = false;
+    console.log(`grab.init: entered`);
     //vt end
     // Bind event handlers
     this.onHit = this.onHit.bind(this);
@@ -20,9 +21,6 @@ AFRAME.registerComponent('grab', {
     this.onGripDown = this.onGripDown.bind(this);
     this.onGripUp = this.onGripUp.bind(this);
     this.previousPosition = {};
-    // this.previousPosition.x = this.el.getAttribute('position').x;
-    // this.previousPosition.y = this.el.getAttribute('position').y;
-    // this.previousPosition.z = this.el.getAttribute('position').z;
     //vt end
   },
 
@@ -32,12 +30,8 @@ AFRAME.registerComponent('grab', {
     el.addEventListener('gripclose', this.onGripClose);
     el.addEventListener('gripopen', this.onGripOpen);
     //vt add
-    //el.addEventListener('gripdown', this.onGripDown, {once: false});
-    //el.addEventListener('gripdown', this.onGripDown, {once: true});
     el.addEventListener('gripdown', this.onGripDown);
     el.addEventListener('gripup', this.onGripUp);
-    // el.addEventListener('triggerdown', this.onTriggerDown);
-    // el.addEventListener('triggerup', this.onTriggerClose);
     //vt end
     // el.addEventListener('thumbup', this.onGripClose);
     // el.addEventListener('thumbdown', this.onGripOpen);
@@ -51,8 +45,6 @@ AFRAME.registerComponent('grab', {
     el.removeEventListener('gripclose', this.onGripClose);
     el.removeEventListener('gripopen', this.onGripOpen);
     //vt add
-    // el.removeEventListener('triggerdown', this.onTriggerDown);
-    // el.removeEventListener('triggerup', this.onTriggerClose);
     el.removeEventListener('gripdown', this.onGripDown);
     el.removeEventListener('gripup', this.onGripUp);
     //vt end
@@ -63,7 +55,7 @@ AFRAME.registerComponent('grab', {
   },
 
   onGripClose: function (evt) {
-    // console.log(`now in onGripClose`);
+    console.log(`now in onGripClose`);
     this.grabbing = true;
     //vt add
     this.gripping = false;
@@ -129,78 +121,51 @@ AFRAME.registerComponent('grab', {
   //   });
   // },
   tick: function () {
-    // console.log(`tick: triggering=${this.triggering}`);
-    // console.log(`grab.js.tick: gripping=${this.gripping}, grabbing=${this.grabbing}`);
     let dollyEl = document.querySelector('#dolly');
+    // console.log(`grab.tick: gripping=${this.gripping}, grabbing=${this.grabbing}`);
     if (this.gripping && !this.grabbing) {
       let cameraEl = document.querySelector('#camera');
       let cameraObj = cameraEl.object3D;
-      // console.log(`tick: would do grabbing action here`);
       var rotation;
 
+      // debugger;
       this.updateDeltaRotation();
       let pullLeverage = 0.75;
-      // let dollyObj = dollyEl.object3D;
       rotation = dollyEl.getAttribute('rotation');
-      // rotation = cameraEl.getAttribute('rotation');
+      let yRot = rotation.y - this.deltaRotation.y * pullLeverage;
+      // console.log(`grab.tick: rotation.y=${rotation.y}, deltaRotation.y=${this.deltaRotation.y},yRot=${yRot}`);
       dollyEl.setAttribute('rotation', {
-      // cameraEl.setAttribute('rotation', {
-      //   // x: rotation.x - this.deltaRotation.x * pullLeverage,
         y: rotation.y - this.deltaRotation.y * pullLeverage
-        // y: this.deltaRotation.y * pullLeverage,
-      //   // z: rotation.z - this.deltaRotation.z * pullLeverage
       });
-      // cameraObj.rotation.y += this.deltaRotation.y * pullLeverage;
+        // y: yRot,
+      // let r = dollyEl.getAttribute('rotation');
+      // console.log(`post: rotation.y=${r.y}`);
     }
     else if (this.grabbing) {
-    // if (this.triggering) {
       var position;
 
       this.updateDelta();
       let pullLeverage = 30.0;
-      // let dollyObj = dollyEl.object3D;
       position = dollyEl.getAttribute('position');
-      // console.log(`grab.js.tick: pos.x old=${position.x}`);
       dollyEl.setAttribute('position', {
         x: position.x - this.deltaPosition.x * pullLeverage,
         y: position.y - this.deltaPosition.y * pullLeverage,
         z: position.z - this.deltaPosition.z * pullLeverage
       });
-      // console.log(`grab.js.tick: pos.x new=${dollyEl.getAttribute('position').x}`);
     }
   },
 
   updateDelta: function () {
-    // debugger;
-    // console.log(`grab.js.updateDelta: this.previousPosition=${this.previousPosition}`);
-    // if (this.previousPosition) {
-    //   console.log(`grab.js.updateDelta: this.previousPosition.x=${this.previousPosition.x}`);
-    // }
     var currentPosition = this.el.getAttribute('position');
-    // console.log(`grab.js.updateDelta: currentPosition.x=${currentPosition.x}`);
-    // var previousPosition = this.previousPosition || currentPosition;
-    // var previousPosition = {};
     if (Object.keys(this.previousPosition).length === 0) {
       // need to do a deep copy
       this.previousPosition = Object.assign({}, currentPosition);
     }
-    // else{
-    //   console.log(`previousPosition not set...setting`);
-    //   // previousPosition = currentPosition;
-    //   this.previousPosition['x'] = currentPosition.x;
-    //   this.previousPosition['y'] = currentPosition.y;
-    //   this.previousPosition['z'] = currentPosition.z;
-    // }
     var deltaPosition = {
       x: currentPosition.x - this.previousPosition.x,
       y: currentPosition.y - this.previousPosition.y,
       z: currentPosition.z - this.previousPosition.z
     };
-    // console.log(`grab.js.updateDelta: deltaPosition.x=${deltaPosition.x}`);
-    // this.previousPosition = currentPosition;
-    // this.previousPosition['x'] = currentPosition.x;
-    // this.previousPosition['y'] = currentPosition.y;
-    // this.previousPosition['z'] = currentPosition.z;
     this.previousPosition = Object.assign({}, currentPosition);
 
     this.deltaPosition = deltaPosition;
@@ -209,13 +174,30 @@ AFRAME.registerComponent('grab', {
   //vt add
   updateDeltaRotation: function () {
     var currentRotation = this.el.getAttribute('rotation');
-    var previousRotation = this.previousRotation || currentRotation;
+    // var previousRotation = this.previousRotation || currentRotation;
+    // var previousRotation = {};
+    // if (Object.keys(this.previousRotation).length === 0 && this.previousRotation.constructor === Object) {
+    if (Object.keys(this.previousRotation).length === 0) {
+      // previousRotation = currentRotation;
+      // need to do a deep copy
+      this.previousRotation = Object.assign({}, currentRotation);
+    }
+    // else {
+    //   previousRotation = this.previousRotation;
+    // }
+    // console.log(`grab.updateDeltaRotation: currentRot.y=${currentRotation.y},prevRot.y=${previousRotation.y}`);
+
     var deltaRotation = {
-      x: currentRotation.x - previousRotation.x,
-      y: currentRotation.y - previousRotation.y,
-      z: currentRotation.z - previousRotation.z
+      x: currentRotation.x - this.previousRotation.x,
+      y: currentRotation.y - this.previousRotation.y,
+      z: currentRotation.z - this.previousRotation.z
     };
-    this.previousRotation = currentRotation;
+    // this.previousRotation = currentRotation;
+    // this.previousRotation.x = currentRotation.x;
+    // this.previousRotation.y = currentRotation.y;
+    // this.previousRotation.z = currentRotation.z;
+    this.previousRotation = Object.assign({}, currentRotation);
+
     this.deltaRotation = deltaRotation;
   }
   //vt end

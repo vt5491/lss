@@ -54,9 +54,14 @@ import 'core-js/es6/reflect';
  * Zone JS is required by Angular itself.
  */
 //vt add
+// works mostly..use this
 import '../node_modules/aframe/dist/aframe-master';
-// import '../node_modules/aframe/dist/aframe-master_v7';
-// import '../node_modules/aframe/build/aframe';
+// import 'assets/lib/aframe-master_120618.js';
+// import 'assets/lib/aframe-v0.8.2.js';
+//import 'assets/lib/aframe-master-0.8.2-121018.js';
+//import '../node_modules/aframe/dist/aframe-master_v7';
+// sound works with build and no anchoring issues
+// import '../node_modules/aframe/build/aframe.js';
 // import 'aframe';
 // import 'three';
 // import 'aframe-log-component';

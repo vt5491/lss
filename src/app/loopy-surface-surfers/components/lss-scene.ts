@@ -29,7 +29,7 @@ export class LssScene {
     utils : UtilsService,
   ) {
     console.log('LssScene.ctor: entered');
-    
+
     this.innerSceneRenderer = new InnerSceneRendererService(this);
     this.innerSceneScrollQuanta = base.ONE_DEG * 30.0;
     this.lastPhi = 0.0;
@@ -47,9 +47,10 @@ export class LssScene {
   }
 
   init() {
-    // refer to the 'inner-scene-component' attribute (component) so the inner-scene-renderer
-    // has access to itself, since most of the inner-scene-renderer component is bound to
-    // e.g 'coke-can-scene.component.ts'
+    // refer to the 'inner-scene-component' attribute (component) so the
+    // inner-scene-renderer has access to itself, since most of the
+    // inner-scene-renderer component is bound to e.g
+    // 'coke-can-scene.component.ts'
     this.projSceneComp = (document.querySelector('.proj-scene') as any).components['inner-scene-renderer'];
   };
 }

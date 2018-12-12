@@ -47,7 +47,8 @@ export class AsteroidsGameControllerListenerService {
         fireSoundStopCount: {type: 'number', default: 0},
         spaceRumble: {type: 'audio'},
         bgSound: {type: 'audio'},
-        thrustSound: {type: 'audio'}
+        thrustSound: {type: 'audio'},
+        controllerType: {type: 'string'}
       },
       init: function () {
         var el = this.el;
@@ -67,15 +68,19 @@ export class AsteroidsGameControllerListenerService {
         this.data.spaceRumble = document.getElementById('space-rumble');
         this.data.spaceRumble.volume = 0.1;
         angParentComponent.spaceRumble = this.data.spaceRumble;
-        this.data.bgSound = document.getElementById('bg-sound');
-        this.data.bgSound.volume = 0.04;
-        this.data.bgSound.loop = true;
+        //vt-x
+        // this.data.bgSound = document.getElementById('bg-sound');
+        // this.data.bgSound.volume = 0.04;
+        // this.data.bgSound.loop = true;
+        // this.data.bgSound.play();
         this.data.thrustSound = this.projEl.components.sound__thrust;
-        this.data.bgSound.play();
         this.data.spaceRumble.addEventListener('ship-thrust-reset', () => {
           // set a global variable so others can know.
           (document as any).LSS['ship-thrust-reset'] = true;
         });
+        // debugger;
+        // el.components[tracked-controls] not set at init time.
+        // this.data.controllerType = angParentComponent.utils.getControllerType(this.el);
         // we can't define these functions at the a-frame component level because
         // then they're not accessible from event handler.  Thus we define locally to
         // init and them reference them via closures in the event handlers.
@@ -180,7 +185,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           asteroidsGame.shipFiredBullet();
         });
         el.addEventListener('touchstart',  (e) => {
-          console.log(`AsteroidsGameControllerListenerService.AFRAME.touchstart: ship.theta=${asteroidsGame.ship.theta}`);
+          // console.log(`AsteroidsGameControllerListenerService.AFRAME.touchstart: ship.theta=${asteroidsGame.ship.theta}`);
           angParentComponent.touchOn = true;
         });
         el.addEventListener('touchend', (e) => {
@@ -190,6 +195,11 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
         el.addEventListener('axismove', (e) => {
           var horizAxis = e.detail.axis[0];
           var upAxis = e.detail.axis[1];
+          // debugger;
+          // console.log(`axisMove: ctrlType=${angParentComponent.utils.getControllerType(this.el)}`);
+          let ctrlType = this.data.controllerType || angParentComponent.utils.getControllerType(this.el);
+          // console.log(`axisMove: ctrlType-2=${ctrlType}`);
+          if (ctrlType === 'vive') {
           // console.log(`new axismove: horizAxis=${horizAxis}, upAxis=${upAxis}`);
 
           // if ((upAxis > 0 && horizAxis < 0) || (upAxis > 0 && horizAxis)) {
@@ -221,6 +231,26 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           // }
           // else {
           // }
+        }
+        else {
+          // console.log(`axisMove: now in oculus path`);
+          if (angParentComponent.touchOn) {
+            var horizAxis = e.detail.axis[0];
+            var upAxis = e.detail.axis[1];
+            var theta = -Math.atan2(e.detail.axis[0], e.detail.axis[1]);
+            // round to tenths to reduce sensitivity
+            theta = Number(theta.toFixed(1));
+            // console.log(`Listener: this.shipRotFactor=${this.data.shipRotFactor}`);
+
+
+            if (theta > 0) {
+              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+            else if (theta < 0) {
+              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+            }
+          }
+        }
         });
         /*
         // this is the old "touchpad twist" method which is done by dragging your
@@ -306,7 +336,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
             rhcEntity.removeAttribute('controller-cursor');
 
             // and restore background sound
-            this.data.bgSound.play();
+            //vt-x this.data.bgSound.play();
             // and thrust listener
             el.addEventListener('thrust-start', thrustStartHandler);
           }
@@ -314,7 +344,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
             // pause the game
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
             asteroidsGame.gamePaused = true;
-            this.data.bgSound.pause();
+            //vt-xthis.data.bgSound.pause();
             // temporarily turn of thrust-start, so when they select an object with the
             // cursor we don't get a thruster blast.
             el.removeEventListener('thrust-start', thrustStartHandler);

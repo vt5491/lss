@@ -1,3 +1,9 @@
 #header {
   height: 30px;
 }
+
+a-scene {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}

@@ -74,7 +74,7 @@ export class AsteroidsGame implements InnerGame {
         init: () => {
         }
       });
-      
+
     }
 
   }
@@ -108,6 +108,7 @@ export class AsteroidsGame implements InnerGame {
     this.scene.add(gridYMesh);
 
     let axisHelper = new THREE.AxisHelper(1);
+    // let axisHelper = new THREE.AxesHelper(1);
     this.scene.add(axisHelper);
   };
 

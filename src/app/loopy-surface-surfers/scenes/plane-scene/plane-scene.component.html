@@ -1,10 +1,11 @@
-<div>
+<!-- <div>
   <audio controls id='audio-ctrl'>
     <source src="assets/sounds/horse.ogg" id="horse" type="audio/ogg">
   </audio>
-</div>
+</div> -->
 <a-scene plane-scene-aframe-component id="plane-scene" class="proj-scene"
  inner-scene-renderer="subtractiveOverlay: true" stats
+ ttyle="position: absolute; height: 100%; width: 100%;"
  >
   <a-assets>
     <app-af-assets></app-af-assets>
@@ -15,6 +16,7 @@
   </a-link>
   <a-entity id="dolly" position="0 0 8" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
+    <!-- <a-entity camera look-controls near="0.1" position="0 0 0" id="camera"></a-entity> -->
     <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
     <a-entity hand-controls-cust="right" position="0.1 -0.2 0"
     asteroids-game-controller-listener="shipRotFactor: -1;"

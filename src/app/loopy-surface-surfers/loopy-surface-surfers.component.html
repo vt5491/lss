@@ -1,9 +1,9 @@
-<div id='header'>
+<!-- <div id='header'>
   <button (click)="actionButtonClick($event)">action</button>
   <p>
   </p>
-</div>
-<div #parent>
+</div> -->
+<div #parent ttyle="position: absolute; height: 100%; width: 100%;">
   <a-scene lss-aframe-component tats #introScene>
     <!-- <ng-template appGameScene></ng-template> -->
     <a-assets>
@@ -22,7 +22,7 @@
       image="#poolHallThumbnail" position="2.5 0 0"></a-link>
     <a-link href="luxorScene" title="Luxor"
       image="#poolHallThumbnail" position="5.0 0 0"></a-link>
-    <a-entity id="dolly" position="0 0 5">
+    <a-entity id="dolly" position="0 0 10">
       <a-camera near="0.1" user-height="0" position="0 0 0" id="camera" wasd-controls look-controls></a-camera>
       <a-entity id="ctrl-right" hand-controls-cust="right" position="0.1 0 -1"
         controller-cursor

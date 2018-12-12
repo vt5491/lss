@@ -622,6 +622,22 @@ export class UtilsService {
     localStorage.setItem(key, val)
   }
 
+  getControllerType(el: Element) {
+    let trackedControls = (el as any).components['tracked-controls'];
+    let controllerId = trackedControls && trackedControls.controller &&
+       trackedControls.controller.id;
+
+    let controllerType = null;
+    if (controllerId && controllerId.match(/oculus/i)) {
+      controllerType = 'oculus';
+    }
+    else if (controllerId && controllerId.indexOf('OpenVR ') === 0) {
+      controllerType = 'vive';
+    }
+
+    return controllerType;
+  }
+
 } // end UtilsService class def
 
 
