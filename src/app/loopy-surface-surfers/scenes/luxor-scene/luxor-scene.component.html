@@ -12,12 +12,13 @@
     <!-- <audio id="space-rumble" src="assets/sounds/asteroids/space-rumble.ogg" type="audio/ogg"></audio>
     <audio id="bg-sound" src="assets/sounds/asteroids/bg-rumble.ogg" loop type="audio/ogg"></audio> -->
     <img id="sky" src="assets/img/skies/CGSkies_0284_free.jpg">
+    <a-asset-item id="lux-mdl" src="assets/models/tmp/luxor/collada/luxor_lss.dae"></a-asset-item>
   </a-assets>
   <a-link href="" title="Home" id="home-link" image="#homeThumbnail" visible="false"></a-link>
   <a-entity id="luxor-scene" ></a-entity>
   <a-entity id="dolly" position="0 0.5 13" wasd-plus-controls>
     <a-camera near="0.1" user-height="0" position="0 0 0" id="camera"  vt-vr-state="off"></a-camera>
-    <a-entity hand-controls="right" position="0.15 -0.2 0"
+    <a-entity hand-controls-cust="right" position="0.15 -0.2 0"
     asteroids-game-controller-listener
     ></a-entity>
   <a-entity hand-controls="left" position="-0.1 -0.2 0" grab ></a-entity>
@@ -29,13 +30,16 @@
   </a-entity>
   <a-entity id="luxor-model"
     class="proj-scene"
-    gltf-model="url(assets/models/luxor/luxor_lss.glb)"
+    hltf-model="url(assets/models/luxor/luxor_lss.glb)"
+    collada-model="url(assets/models/luxor/collada/luxor_lss.dae)"
+    dollada-model="#lux-mdl"
     animation-mixer="duration : 5"
     (model-loaded)="initScene($event)"
     class="qroj-obj"
     >
   </a-entity>
-  <!-- <a-sphere id="aframe-sphere" class="proj-obj" radius="2" position="0 2 5"></a-sphere> -->
+  <!-- a-sphere is a dummy object to appease the need for an element of class "proj-obj" -->
+  <a-sphere id="aframe-sphere" class="proj-obj" radius="0" position="0 2 5"></a-sphere>
   <!-- <a-sky color="#8080EC"></a-sky> -->
   <a-sky src="#sky" theta-length=360 id="sky"></a-sky>
   <a-entity light="color: #FFF; intensity: 1.5" position="-3 3 -2"></a-entity>
