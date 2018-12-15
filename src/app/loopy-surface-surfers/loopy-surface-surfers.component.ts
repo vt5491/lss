@@ -12,6 +12,8 @@ import { UtilsService } from '../services/utils.service';
 // import * as dat from 'datGUIVR';
 // import * as datGUIVR from 'datGUIVR';
 declare var dat: any;
+declare var require: any
+const { version: appVersion } = require('../../../package.json');
 
 @Component({
   selector: 'app-loopy-surface-surfers',
@@ -78,7 +80,7 @@ export class LoopySurfaceSurfersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(`LoopySurfaceSurfers.ngOnInit: entered`);
+    console.log(`LoopySurfaceSurfers.ngOnInit: appVersion=${appVersion}`);
     this.initSceneAng();
     // this.gui = dat.GUIVR.create('Customization Panel');
     // window.setTimeout( this.initCustPanel.bind(this), 1000);

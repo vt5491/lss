@@ -10,6 +10,8 @@ import { BaseService } from '../services/base.service';
 import { UtilsService } from '../services/utils.service';
 
 import { Injectable } from '@angular/core';
+declare var require: any
+const { version: appVersion } = require('../../../package.json');
 
 @Injectable()
 export class OuterSceneService {
@@ -30,6 +32,7 @@ export class OuterSceneService {
       this.trackDolly = true;
     }
     console.log(`OuterSceneService.ctor: trackDolly=${this.trackDolly}`);
+    console.log(`OuterSceneService.ctor: appVersion=${appVersion}`);
   }
 
   // init is for things that are not available when the ctor runs e.g certain dom entities
