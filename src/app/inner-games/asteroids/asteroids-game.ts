@@ -12,8 +12,8 @@ import { AsteroidsGameControllerListenerService } from './aframe/asteroids-game-
 import { IMainCharacterInfo } from '../../interfaces/main-character-info';
 import { IMoveableGameObject } from '../../interfaces/imoveable-game-object';
 
-@Component({
-})
+//@Component({
+//})
 @Injectable()
 export class AsteroidsGame implements InnerGame {
 

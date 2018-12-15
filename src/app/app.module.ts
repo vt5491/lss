@@ -45,7 +45,8 @@ import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.c
     PoolHallSceneComponent,
     GlobeSceneComponent,
     CokeCanSceneComponent,
-    AfAssetsComponent
+    AfAssetsComponent,
+    //AsteroidsGame,
   ],
   imports: [
     BrowserModule,

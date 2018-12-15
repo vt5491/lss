@@ -652,12 +652,16 @@ export let WebGLRenderTargetProvider = {
   },
 };
 
+export function sceneFactory() {
+  return new THREE.Scene();
+}
+
 export let ThreeJsSceneProvider = {
   provide: THREE.Scene,
-  // useFactory: () => {
-  useFactory: function () {
-    return new THREE.Scene();
-  },
+//  useFactory: function () {
+//    return new THREE.Scene();
+//  },
+  useFactory: sceneFactory,
 };
 
 export let ThreeJsWebGLRendererProvider = {
