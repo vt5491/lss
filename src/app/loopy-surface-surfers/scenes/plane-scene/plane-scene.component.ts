@@ -29,7 +29,9 @@ export class PlaneSceneComponent extends LssScene implements OnInit {
     // an innerScene object, and that innerScene object must have an 'updateScene'
     // method (unless it's a static scene, in which case it doesn't need 'updatScene')
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.baseTexture = new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");
+    // this.baseTexture = new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper-binary.png");
+    // this.baseTexture = new THREE.TextureLoader().load("../../../../assets/img/yellow-notebook-paper.png");
+    this.baseTexture = new THREE.TextureLoader().load("assets/img/yellow-notebook-paper.png");
   }
 
   doSomething() {

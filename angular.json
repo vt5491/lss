@@ -30,7 +30,9 @@
               "src/assets/lib/datguivr.bundle.js",
               "src/assets/lib/aframe-cust/hand-controls-cust.js",
               "src/assets/lib/aframe-cust/laser-controls-cust.js"
-            ]
+            ],
+            "deployUrl" : "/apps/lss/",
+            "baseHref" : "/apps/lss/"
           },
           "configurations": {
             "production": {

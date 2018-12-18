@@ -26,7 +26,8 @@ export class PoolHallSceneComponent extends LssScene implements OnInit {
     // super(innerGame, outerSceneSvc, base);
     super(base, utils);
     this.dollyRadius = 5.0;
-    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );
+    // this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/two_ball.jpg" );
+    this.baseTexture = new THREE.TextureLoader().load( "assets/img/two_ball.jpg" );
   }
 
   ngOnInit() {

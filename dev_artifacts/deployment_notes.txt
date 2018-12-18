@@ -1,0 +1,26 @@
+# 2018-12-17
+1) check out on EC2 to $LSS
+2) You can only do a "dev" build and not a full production build because the code is not fully aot compatible (I have things like js deconstruction that aren't allows in aot builds)
+
+# this builds, but do any optimization.  You also need to specify the "--base-href"
+#ng build
+
+# this is better
+ng build --base-href='/apps/lss/' --deploy-url='/apps/lss' --configuration=dev
+
+Note: if using configuration=dev you shouldn't need to specify '--configuration'
+because I specified:
+
+              "deployUrl" : "/apps/lss/",
+              "baseHref" : "/apps/lss/"
+
+in angular.json
+
+# note closing and ending "/" are important
+
+3) Copy from dist to $LSS_DEPLOY dir:
+a) cd $LSS_DEPLOY
+b) sudo rm -rf *
+c) sudo cp -R $LSS/dist/* .
+
+( or sudo cp -R /home/ubuntu/resources/github/lss/dist/* .)
