@@ -15,9 +15,10 @@ import { UtilsService } from '../utils.service';
 
 @Injectable()
 export class InnerSceneRendererService {
-  embeddedContext;
+  public embeddedContext;
 
-  constructor(embeddedContext: any,
+  constructor(
+    embeddedContext: any,
   ) {
     this.embeddedContext = embeddedContext;
     let that = this;
@@ -113,7 +114,8 @@ export class InnerSceneRendererService {
         if (this.outerSceneSvc.trackDolly && this.trackDolly) {
           this.trackDolly(this.innerGame.ship.mesh.position);
         }
-      }.bind(embeddedContext),
+      // }.bind(embeddedContext),
+    }.bind(this.embeddedContext),
     })
   }
 
@@ -152,6 +154,7 @@ export class InnerSceneRendererService {
     innerGame.innerGameHeight = base.innerImgDim;
     innerGame.offscreenImageBuf = generateDataTextureFn(innerGame.innerGameHeight, innerGame.innerGameHeight, new THREE.Color(0x000000));
     innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, window.innerHeight / window.innerHeight);
+    // innerGame.innerSceneCamera = new THREE.PerspectiveCamera(75, 1.0);
     // campera.position.z= 5.0 corresponds to BoundVal of 3.79.
     // campera.position.z= 1.319 corresponds to BoundVal of 1.0.
     innerGame.innerSceneCamera.position.x = 0.0;

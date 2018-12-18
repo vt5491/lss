@@ -31,6 +31,8 @@ export class LssScene {
     console.log('LssScene.ctor: entered');
 
     this.innerSceneRenderer = new InnerSceneRendererService(this);
+    // this.innerSceneRenderer = new InnerSceneRendererService();
+    this.innerSceneRenderer.embeddedContext = this;
     this.innerSceneScrollQuanta = base.ONE_DEG * 30.0;
     this.lastPhi = 0.0;
     this.lastTheta = 0.0;

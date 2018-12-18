@@ -24,6 +24,7 @@ export class Asteroid implements IMoveableGameObject {
   vScalar: number = 0.004;
   bBox : THREE.Box3;
   lifeCycleStage: number;
+  // parms : Object;
 
   constructor (
     private _base : BaseService,
@@ -34,6 +35,7 @@ export class Asteroid implements IMoveableGameObject {
     this.vx = 0.003;
     this.vy = 0;
 
+    // this.parms = {};
     this.init();
   };
 
@@ -88,6 +90,7 @@ export class Asteroid implements IMoveableGameObject {
         this.utils,
         {width : this.width * this.LIFECYLE_SCALE_FACTOR, height : this.height * this.LIFECYLE_SCALE_FACTOR}
       );
+      // splitAst1.parms = {width : this.width * this.LIFECYLE_SCALE_FACTOR, height : this.height * this.LIFECYLE_SCALE_FACTOR}
 
       splitAst1.mesh.position.x = this.mesh.position.x;
       splitAst1.mesh.position.y = this.mesh.position.y;
@@ -104,6 +107,7 @@ export class Asteroid implements IMoveableGameObject {
         this.utils,
         {width : this.width * this.LIFECYLE_SCALE_FACTOR, height : this.height * this.LIFECYLE_SCALE_FACTOR}
       );
+      // splitAst2.parms = {width : this.width * this.LIFECYLE_SCALE_FACTOR, height : this.height * this.LIFECYLE_SCALE_FACTOR};
 
       splitAst2.mesh.position.x = this.mesh.position.x;
       splitAst2.mesh.position.y = this.mesh.position.y;
@@ -159,3 +163,17 @@ export class Asteroid implements IMoveableGameObject {
     return hitValue;
   }
 }
+
+export function asteroidNoParmsFactory() {
+  return new Asteroid(this.base, this.utils, {});
+  // return new Asteroid(this.base, this.utils);
+}
+
+export let AsteroidNoParmsProvider = {
+    provide: Asteroid,
+    // useFactory: (base, utils) => {
+    //   return new Asteroid(base, utils, {});
+    // },
+    useFactory: asteroidNoParmsFactory,
+    deps: [BaseService, UtilsService]
+  }

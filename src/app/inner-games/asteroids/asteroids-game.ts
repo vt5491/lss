@@ -1,6 +1,6 @@
 ///<reference path="../../../../typings/index.d.ts" />
 import { Component, Injectable, Injector } from '@angular/core';
-import { Asteroid } from './asteroid';
+import { Asteroid, AsteroidNoParmsProvider } from './asteroid';
 import { Bullet } from './bullet';
 import { Ship } from './ship';
 import { InnerGame } from '../../interfaces/inner-game';
@@ -11,6 +11,7 @@ import { InnerSceneRendererService } from '../../services/aframe/inner-scene-ren
 import { AsteroidsGameControllerListenerService } from './aframe/asteroids-game-controller-listener.service';
 import { IMainCharacterInfo } from '../../interfaces/main-character-info';
 import { IMoveableGameObject } from '../../interfaces/imoveable-game-object';
+
 
 //@Component({
 //})
@@ -64,7 +65,9 @@ export class AsteroidsGame implements InnerGame {
     this.base.projectionBoundary = this.base.projectionBoundary;
     // we don't DI this because we need to bind it to our runtime 'this'
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base, this._utils);
+    // this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this, this._base, this._utils);
+    this.asteroidsGameControllerListener = new AsteroidsGameControllerListenerService(this._base, this._utils);
+    this.asteroidsGameControllerListener.asteroidsGame = this;
     // this.rightHandController = this.utils.getHandControlEntity('right');
 
     this.initScene();
@@ -115,6 +118,10 @@ export class AsteroidsGame implements InnerGame {
   initAsteroids() {
     for (let i = 0; i < this.seedAsteroidCount; i++) {
       let asteroid = new Asteroid(this.base, this.utils, {});
+      // let asteroid = new Asteroid(this.base, this.utils);
+      // let asteroid = new Asteroid(this.base, this.utils, {} as any);
+      // let asteroid = new Asteroid(this.base, this.utils);
+      // let asteroid = new AsteroidNoParmsProvider(this.base, this.utils);
 
       // set position between projection bounds
       let boundVal = this.base.projectionBoundary;

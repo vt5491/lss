@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
-import { AsteroidsGame } from '../asteroids-game'
+import { AsteroidsGame } from '../asteroids-game';
 import { BaseService } from '../../../services/base.service';
 import { UtilsService } from '../../../services/utils.service';
 import * as $ from 'jquery';
@@ -18,17 +18,20 @@ export class AsteroidsGameControllerListenerService {
   private spaceRumble : HTMLElement;
 
   constructor(
-    asteroidsGame: AsteroidsGame,
+    // angParentComponent.asteroidsGame: angParentComponent.asteroidsGame,
     base: BaseService,
     utils: UtilsService
   ) {
     let angParentComponent = this;
-    //Note: apprently 'this' is not fully defined until the ctor completes.  And the aframe
-    // component defintion, uses the 'this' as it exists at the time of its defintion (in this ctor).
-    // Thus, we have to build up 'angParentComponent' manually, and we have to add to it without
-    // specifying 'this' e.g 'utils' not 'this.utils'
+    //Note: apprently 'this' is not fully defined until the ctor completes.  And
+    //the aframe component defintion, uses the 'this' as it exists at the time
+    //of its defintion (in this ctor). Thus, we have to build up
+    //'angParentComponent' manually, and we have to add to it without specifying
+    //'this' e.g 'utils' not 'this.utils'
     angParentComponent.utils = utils;
-    angParentComponent.asteroidsGame = asteroidsGame;
+    //Note: setting angParentComponent.asteroidsGame now has to be done by whoever instantiates
+    // an 'angParentComponent.asteroidsGameControllerListenerService'
+    // angParentComponent.angParentComponent.asteroidsGame = angParentComponent.asteroidsGame;
 
     // if (AFRAME.components['asteroids-game-controller-listener']) {
     //   angParentComponent.afc = AFRAME.components['asteroids-game-controller-listener']
@@ -151,11 +154,11 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
         el.addEventListener('sound-loaded', ()=> {console.log('sound loaded')});
 
         el.addEventListener('buttondown', function (e) {
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
+          // console.log(`angParentComponent.asteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
         });
         /*
         el.addEventListener('trackpaddown', function (e) {
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
+          // console.log(`angParentComponent.asteroidsGameControllerListenerService.AFRAME.init: buttondown event: e=${e}`);
           // console.log(`trackpaddown: axis.x=${y}`);
           // console.log(`trackpaddown: axis.y=${e.target.components['tracked-controls'].axis[1]}`);
           let trkPadX =  e.target.components['tracked-controls'].axis[0];
@@ -171,7 +174,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           // debugger;
           // console.log(`trackpaddown: e.detail.target.object3D.position.x=${e.detail.target.object3D.position.x}`);
           // console.log(`trackpaddown: e.detail.target.object3D.position.y=${e.detail.target.object3D.position.y}`);
-          // asteroidsGame.shipFiredBullet();
+          // angParentComponent.asteroidsGame.shipFiredBullet();
         });
         */
         // el.addEventListener('trackpadchanged', function (e) {
@@ -182,14 +185,15 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           // el.emit('fire-bullet');
           this.projEl.emit('fire-bullet');
           this.data.fireSoundStartCount++;
-          asteroidsGame.shipFiredBullet();
+          // angParentComponent.asteroidsGame.shipFiredBullet();
+          angParentComponent.asteroidsGame.shipFiredBullet();
         });
         el.addEventListener('touchstart',  (e) => {
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.touchstart: ship.theta=${asteroidsGame.ship.theta}`);
+          // console.log(`angParentComponent.asteroidsGameControllerListenerService.AFRAME.touchstart: ship.theta=${angParentComponent.asteroidsGame.ship.theta}`);
           angParentComponent.touchOn = true;
         });
         el.addEventListener('touchend', (e) => {
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.touchend: ship.theta=${asteroidsGame.ship.theta}`);
+          // console.log(`angParentComponent.asteroidsGameControllerListenerService.AFRAME.touchend: ship.theta=${angParentComponent.asteroidsGame.ship.theta}`);
           angParentComponent.touchOn = false;
         });
         el.addEventListener('axismove', (e) => {
@@ -212,18 +216,18 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           let ratioFactor = 2.0;
           if( Math.abs(upAxis) > ratioFactor * Math.abs(horizAxis)) {
             if (upAxis > 0 ) {
-              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
             else {
-              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
           }
           else if ( Math.abs(horizAxis) > ratioFactor * Math.abs(upAxis)) {
             if (horizAxis > 0 ) {
-              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
             else {
-              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
 
           }
@@ -244,10 +248,10 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
 
 
             if (theta > 0) {
-              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
             else if (theta < 0) {
-              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
           }
         }
@@ -257,7 +261,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
         // finger along touchpad to essentially create an absolute rotation in
         // correpsondence with relative ange on the touchpad.
         el.addEventListener('axismove', (e) => {
-          // console.log(`AsteroidsGameControllerListenerService.AFRAME.init: axismove event: e=${e}`);
+          // console.log(`angParentComponent.asteroidsGameControllerListenerService.AFRAME.init: axismove event: e=${e}`);
           if (angParentComponent.touchOn) {
             var horizAxis = e.detail.axis[0];
             var upAxis = e.detail.axis[1];
@@ -268,10 +272,10 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
 
 
             if (theta > 0) {
-              asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta -= this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
             else if (theta < 0) {
-              asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (asteroidsGame.shipRotFactor - 1);
+              angParentComponent.asteroidsGame.ship.theta += this.data.shipRotFactor * base.ONE_DEG * (angParentComponent.asteroidsGame.shipRotFactor - 1);
             }
           }
         });
@@ -309,9 +313,9 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
             infoPane.setAttribute('position', '-0.15 -0.05 -0.1');
             infoPane.setAttribute('material', 'side: double; opacity: 0.6');
             infoPane.setAttribute('rotation', '0 0 90');
-            // infoPane.setAttribute('text', this.formatInfoText(angParentComponent.asteroidsGame.gameState));
+            // infoPane.setAttribute('text', this.formatInfoText(angParentComponent.angParentComponent.asteroidsGame.gameState));
             infoPane.setAttribute('text', formatInfoText(angParentComponent.asteroidsGame.gameState));
-              // `value: score: ${angParentComponent.asteroidsGame.score}; width : 1; align: center`);
+              // `value: score: ${angParentComponent.angParentComponent.asteroidsGame.score}; width : 1; align: center`);
             infoPane.setAttribute('id', 'right-hand-info-pane');
             e.target.appendChild(infoPane);
           }
@@ -330,7 +334,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           if (homeEl.getAttribute('visible')) {
             homeEl.setAttribute('visible', false);
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('unPauseGame');
-            asteroidsGame.gamePaused = false;
+            angParentComponent.asteroidsGame.gamePaused = false;
 
             // remove laser pointer
             rhcEntity.removeAttribute('controller-cursor');
@@ -343,7 +347,7 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           else {
             // pause the game
             (document.querySelector('.proj-scene') as AFrame.Entity).emit('pauseGame');
-            asteroidsGame.gamePaused = true;
+            angParentComponent.asteroidsGame.gamePaused = true;
             //vt-xthis.data.bgSound.pause();
             // temporarily turn of thrust-start, so when they select an object with the
             // cursor we don't get a thruster blast.
@@ -374,16 +378,16 @@ Active Asteroids: ${gameState.asteroidsRemaining}`;
           // and finally update the info pane if active
           let rhInfoPane = document.querySelector('#right-hand-info-pane') as AFrame.Entity;
           if (rhInfoPane) {
-            rhInfoPane.setAttribute('text', formatInfoText(asteroidsGame.gameState));
+            rhInfoPane.setAttribute('text', formatInfoText(angParentComponent.asteroidsGame.gameState));
           }
         })
       },
       tick: function () {
         if (angParentComponent.thrusterEngaged) {
           // I don't know why I have to add 90 deg, but I do as empirically determined
-          asteroidsGame.ship.vx += asteroidsGame.ship.deltaVx * Math.cos(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
+          angParentComponent.asteroidsGame.ship.vx += angParentComponent.asteroidsGame.ship.deltaVx * Math.cos(angParentComponent.asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
 
-          asteroidsGame.ship.vy += asteroidsGame.ship.deltaVy * Math.sin(asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
+          angParentComponent.asteroidsGame.ship.vy += angParentComponent.asteroidsGame.ship.deltaVy * Math.sin(angParentComponent.asteroidsGame.ship.theta + Math.PI / 2.0) * 0.2 * this.shipDeltaFactor;
 
           // and emit an event for any observers who may need to respond to this
           // this.shipMove.emit(null);

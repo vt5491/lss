@@ -21,8 +21,8 @@ export class UtilsService {
     this.parms = {};
 
     // Do not log in production.
-    var debug = window.location.protocol !== 'https:';
-    this.log = debug ? console.log.bind(console) : function () {};
+    //var debug = window.location.protocol !== 'https:';
+    //this.log = debug ? console.log.bind(console) : function () {};
   }
 
   doNothing() {
@@ -649,6 +649,7 @@ export let WebGLRenderTargetProvider = {
   provide: THREE.WebGLRenderTarget,
   useFactory: () => {
     return new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
+    // return new THREE.WebGLRenderTarget(500, 500, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter })
   },
 };
 
@@ -664,20 +665,32 @@ export let ThreeJsSceneProvider = {
   useFactory: sceneFactory,
 };
 
+export function webGLRendererFactory () {
+  return new THREE.WebGLRenderer({antialias : true});
+}
+
 export let ThreeJsWebGLRendererProvider = {
   provide: THREE.WebGLRenderer,
-  useFactory: () => {
-    return new THREE.WebGLRenderer({antialias : true});
-  },
+  // useFactory: () => {
+  //   return new THREE.WebGLRenderer({antialias : true});
+  // },
+  useFactory: webGLRendererFactory,
 };
 
-export let AsteroidNoParmsProvider = {
-    provide: Asteroid,
-    useFactory: (base, utils) => {
-      return new Asteroid(base, utils, {});
-    },
-    deps: [BaseService, UtilsService]
-  }
+// Note: asteroidNoParmsFactory et al. has been moved to
+// 'inner-games/asteroids/asteroid.ts'
+// export function asteroidNoParmsFactory() {
+//   return new Asteroid(this.base, this.utils, {});
+// }
+//
+// export let AsteroidNoParmsProvider = {
+//     provide: Asteroid,
+//     // useFactory: (base, utils) => {
+//     //   return new Asteroid(base, utils, {});
+//     // },
+//     useFactory: asteroidNoParmsFactory,
+//     deps: [BaseService, UtilsService]
+//   }
 // experimental
 // export let DatGUIProvider = {
 //   provide: dat.GUI,
