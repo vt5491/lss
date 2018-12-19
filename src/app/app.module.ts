@@ -50,7 +50,7 @@ import { AfAssetsComponent } from './inner-games/asteroids/af-assets/af-assets.c
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, {useHash: true}),
+    RouterModule.forRoot(appRoutes, {useHash: false}),
     FormsModule,
     HttpModule
   ],

@@ -69,16 +69,22 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
     var fontLoader = new THREE.FontLoader();
 
     let img = document.querySelector('#vegas-vic-full');
-    let sandDuneTexture =new THREE.TextureLoader().load( "../../../../assets/img/luxor/sand_dune_simple.jpg" );
-    let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vegas_vic_full_no_wc.png" );
+    // let sandDuneTexture =new THREE.TextureLoader().load( "../../../../assets/img/luxor/sand_dune_simple.jpg" );
+    let sandDuneTexture =new THREE.TextureLoader().load( "assets/img/luxor/sand_dune_simple.jpg" );
+    // let vegasVicTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vegas_vic_full_no_wc.png" );
+    let vegasVicTexture = new THREE.TextureLoader().load( "assets/img/luxor/vegas_vic_full_no_wc.png" );
     vegasVicTexture.flipY = false;
-    let vicHeadTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_head_texture.jpg" );
+    // let vicHeadTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_head_texture.jpg" );
+    let vicHeadTexture = new THREE.TextureLoader().load( "assets/img/luxor/vic_head_texture.jpg" );
     vicHeadTexture.flipY = false;
-    let vegasVicStraightOnTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_shirt.png" );
+    // let vegasVicStraightOnTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_shirt.png" );
+    let vegasVicStraightOnTexture = new THREE.TextureLoader().load( "assets/img/luxor/vic_shirt.png" );
     vegasVicStraightOnTexture.flipY = false;
-    let vicLegsTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_legs.png" );
+    // let vicLegsTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_legs.png" );
+    let vicLegsTexture = new THREE.TextureLoader().load( "assets/img/luxor/vic_legs.png" );
     vicLegsTexture.flipY = false;
-    let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_arm_black.png" );
+    // let vicArmTexture = new THREE.TextureLoader().load( "../../../../assets/img/luxor/vic_arm_black.png" );
+    let vicArmTexture = new THREE.TextureLoader().load( "assets/img/luxor/vic_arm_black.png" );
     vicArmTexture.flipY = false;
 
     let sceneObj = (document.querySelector('a-scene') as any).object3D;
@@ -133,7 +139,8 @@ export class LuxorSceneComponent extends LssScene implements OnInit {
     legsMat.needsUpdate = true;
 
     let loader = new THREE.TextureLoader();
-    loader.load( "../../../../assets/img/luxor/welcome_to_las_vegas.jpg", (welcomeToLasVegasTexture) => {
+    // loader.load( "../../../../assets/img/luxor/welcome_to_las_vegas.jpg", (welcomeToLasVegasTexture) => {
+    loader.load( "assets/img/luxor/welcome_to_las_vegas.jpg", (welcomeToLasVegasTexture) => {
       welcomeToLasVegasTexture.flipY = false;
 
       let objects : string[] = [];

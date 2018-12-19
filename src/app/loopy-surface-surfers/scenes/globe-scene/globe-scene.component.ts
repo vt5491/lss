@@ -14,7 +14,7 @@ import { LssScene } from "../../../loopy-surface-surfers/components/lss-scene";
   styleUrls: ['./globe-scene.component.css']
 })
 export class GlobeSceneComponent extends LssScene implements OnInit {
-  // private innerSceneRenderer: InnerSceneRendererService;  
+  // private innerSceneRenderer: InnerSceneRendererService;
   // private baseTexture : THREE.Texture;
 
   constructor(
@@ -22,12 +22,13 @@ export class GlobeSceneComponent extends LssScene implements OnInit {
     private outerSceneSvc : OuterSceneService,
     private base : BaseService,
     private utils : UtilsService
-  ) { 
+  ) {
     super(base, utils);
     // super(innerGame, outerSceneSvc, base);
     this.dollyRadius = 10.0
     // this.innerSceneRenderer = new InnerSceneRendererService(this);
-    this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/world_satellite_2.png" );  
+    // this.baseTexture = new THREE.TextureLoader().load( "../../../../assets/img/world_satellite_2.png" );
+    this.baseTexture = new THREE.TextureLoader().load( "assets/img/world_satellite_2.png" );  
   }
 
   ngOnInit() {
@@ -47,7 +48,7 @@ export class GlobeSceneComponent extends LssScene implements OnInit {
   }
 
   getBaseTexture() : THREE.Texture {
-    // return new THREE.TextureLoader().load( "../../../../assets/img/world_satellite_2.png" );  
+    // return new THREE.TextureLoader().load( "../../../../assets/img/world_satellite_2.png" );
     return this.baseTexture;
   }
 

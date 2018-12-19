@@ -18,6 +18,17 @@ in angular.json
 
 # note closing and ending "/" are important
 
+bottom line:
+use:
+ng build
+
+if doing a debug type of thing (code won't be minified)
+
+use:
+ng build configuration=dev
+
+for a standard optimized (but non-aot) build.
+
 3) Copy from dist to $LSS_DEPLOY dir:
 a) cd $LSS_DEPLOY
 b) sudo rm -rf *
